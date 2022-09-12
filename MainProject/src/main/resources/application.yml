@@ -10,10 +10,10 @@ spring:
 #    import: 'aws-parameterstore:'
   datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-  #    url: jdbc:mysql://rds-pre-029.cnuf9an3lpvk.ap-northeast-2.rds.amazonaws.com:13306/test
+  #    url: jdbc:mysql://{rds ??:port/db??}
       url: jdbc:h2:mem:test
-  #    username: admin
-  #    password: Eulja2013*
+  #    username: {admin}
+  #    password: {password}
   jpa:
     hibernate:
       ddl-auto: create  # (1) ??? ?? ??
@@ -43,10 +43,6 @@ spring:
 
 #server:
 #  port: 8085
-#  ssl:
-#    key-store: classpath:localhost.p12
-#    key-store-type: PKCS12
-#    key-store-password: changeit
 
 
 #logging:
