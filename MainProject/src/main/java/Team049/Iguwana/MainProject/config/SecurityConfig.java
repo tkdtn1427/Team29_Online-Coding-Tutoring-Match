@@ -1,5 +1,9 @@
 package Team049.Iguwana.MainProject.config;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
+import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
+import Team049.Iguwana.MainProject.filter.JwtAuthenticationFilter;
+import Team049.Iguwana.MainProject.filter.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +24,11 @@ public class SecurityConfig {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -30,29 +39,28 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-//                .apply(new CustomDsl())
-//                .and()
+                .apply(new CustomDsl())
+                .and()
                 .authorizeRequests()
 //                .antMatchers("/v1/members/join","/v1/members/refresh","/login","/join")
 //                .permitAll()
-//                .antMatchers("/**")
-//                .access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/v1/members/myPage", "v1/teachers/myPage")
+                .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll();
         return http.build();
     }
 
-//    public class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity> {
-//
-//        @Override
-//        public void configure(HttpSecurity builder) throws Exception {
-//            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-////            final JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,memberRepository,bCryptPasswordEncoder);
-////            jwtAuthenticationFilter.setFilterProcessesUrl("/v1/members/login");
-//            builder
-//                    .addFilter(corsFilter)
-//                    .addFilter(new JwtAuthenticationFilter(authenticationManager, memberRepository, bCryptPasswordEncoder))
-////                    .addFilter(jwtAuthenticationFilter)
-//                    .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository));
-//        }
-//    }
+    public class CustomDsl extends AbstractHttpConfigurer<CustomDsl, HttpSecurity> {
+
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+            final JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,studentRepository, teacherRepository);
+            jwtAuthenticationFilter.setFilterProcessesUrl("/v1/user/login");
+            builder
+                    .addFilter(corsFilter)
+                    .addFilter(jwtAuthenticationFilter)
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager, studentRepository, teacherRepository));
+        }
+    }
 }
