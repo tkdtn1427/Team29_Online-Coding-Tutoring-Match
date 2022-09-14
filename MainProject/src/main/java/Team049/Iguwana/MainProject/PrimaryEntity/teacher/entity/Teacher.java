@@ -40,6 +40,12 @@ public class Teacher {
     @Column(columnDefinition = "Text")
     private String aboutMe;
 
+    @Column
+    private String password;
+
+    @Column
+    private String nickName;
+
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
     private List<SkillTable> skillTableList = new ArrayList<>();
 
