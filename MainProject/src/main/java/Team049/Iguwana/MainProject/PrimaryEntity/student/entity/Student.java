@@ -32,7 +32,13 @@ public class Student {
     private String aboutMe;
 
     @Column
+    private String password;
+
+    @Column
     private String roles;
+
+    @Column
+    private String nickName;
 
     @OneToMany(mappedBy = "student")
     private List<Tutoring> tutoringList = new ArrayList<>();
