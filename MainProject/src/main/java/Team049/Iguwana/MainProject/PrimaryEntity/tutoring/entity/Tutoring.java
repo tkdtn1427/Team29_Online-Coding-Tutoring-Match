@@ -56,7 +56,4 @@ public class Tutoring {
             this.teacher.addTutoring(this);
         }
     }
-
-//    @Column
-//    private String secretCode;
 }
