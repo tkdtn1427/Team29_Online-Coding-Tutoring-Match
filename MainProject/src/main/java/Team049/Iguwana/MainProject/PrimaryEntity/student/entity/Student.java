@@ -40,23 +40,13 @@ public class Student {
     @Column
     private String nickName;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private List<Tutoring> tutoringList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "student")
-    private List<Review> reviewList = new ArrayList<>();
 
     public void addTutoring(Tutoring tutoring){
         this.tutoringList.add(tutoring);
         if(tutoring.getStudent() != this){
             tutoring.setStudent(this);
-        }
-    }
-
-    public void addReview(Review review){
-        this.reviewList.add(review);
-        if(review.getStudent() != this){
-            review.setStudent(this);
         }
     }
 

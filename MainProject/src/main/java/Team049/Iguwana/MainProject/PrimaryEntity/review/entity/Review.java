@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,9 +21,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
 
-    @Column
-    private long tutoringId;
-
     @Column(columnDefinition = "Text")
     private String content;
 
@@ -33,21 +31,14 @@ public class Review {
     @JoinColumn(name = "TEACHER_ID")
     private Teacher teacher;
 
-    @ManyToOne
-    @JoinColumn(name = "STUDENT_ID")
-    private Student student;
+    private long studentId;
+
+    private LocalDate date = LocalDate.now();
 
     public void setTeacher(Teacher teacher){
         this.teacher = teacher;
         if(!this.teacher.getReviewList().contains(this)){
             this.teacher.addReview(this);
-        }
-    }
-
-    public void setStudent(Student student){
-        this.student = student;
-        if(!this.student.getReviewList().contains(this)){
-            this.student.addReview(this);
         }
     }
 }

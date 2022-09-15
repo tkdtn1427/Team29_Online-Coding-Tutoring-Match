@@ -1,7 +1,6 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.controller;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.dto.TeacherDto;
-import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.mapper.TeacherMapper;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.service.TeacherService;
 import org.springframework.http.HttpStatus;
@@ -27,8 +26,7 @@ public class TeacherController {
 
     @PostMapping("/join")
     public ResponseEntity joinTeacher(@Validated @RequestBody TeacherDto.Join join){
-        Teacher teacher = teacherMapper.teacherJoinToTeacher(join);
-        teacherService.createTeacher(teacher);
+        teacherService.createTeacher(teacherMapper.teacherJoinToTeacher(join));
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }

@@ -49,10 +49,10 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
     private List<SkillTable> skillTableList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
     private List<Tutoring> tutoringList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
     private List<Review> reviewList = new ArrayList<>();
 
     public void addReview(Review review){
