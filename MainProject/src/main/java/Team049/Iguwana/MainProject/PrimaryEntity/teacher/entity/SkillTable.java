@@ -35,7 +35,7 @@ public class SkillTable {
 
     public void setSkill(Skill skill){
         this.skill = skill;
-        if(!skill.getSkillTableList().contains(this)){
+        if(!this.skill.getSkillTableList().contains(this)){
             this.skill.addSkillTable(this);
         }
     }

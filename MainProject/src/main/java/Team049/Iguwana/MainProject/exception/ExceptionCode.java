@@ -4,7 +4,11 @@ import lombok.Getter;
 
 public enum ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member not found"),
-    TEMP_NOT_FOUND(404, "temp exception Code");
+    TEMP_NOT_FOUND(404, "temp exception Code"),
+
+    SKILL_EXISTS(409,"skill is exists"),
+
+    SKILL_NOT_FOUND(404, "skill not found");
 
 
 
