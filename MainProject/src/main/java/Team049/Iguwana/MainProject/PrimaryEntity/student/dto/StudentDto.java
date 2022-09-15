@@ -1,11 +1,14 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.student.dto;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.dto.TutoringDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 public class StudentDto {
     @Getter
@@ -49,6 +52,8 @@ public class StudentDto {
     }
 
     @Getter
+    @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class Response {
         private long studentId;
@@ -60,5 +65,7 @@ public class StudentDto {
         private String aboutMe;
 
         private String email;
+
+        private List<TutoringDto.Response> tutoringList;
     }
 }

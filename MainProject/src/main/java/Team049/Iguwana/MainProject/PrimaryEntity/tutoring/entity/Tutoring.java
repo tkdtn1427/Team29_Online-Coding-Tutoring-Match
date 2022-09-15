@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Setter
@@ -27,10 +27,10 @@ public class Tutoring {
     private String content;
 
     @Column
-    private LocalDateTime start_pd;
+    private LocalDate start_pd;
 
     @Column
-    private LocalDateTime end_pd;
+    private LocalDate end_pd;
 
     @Column
     private String time;

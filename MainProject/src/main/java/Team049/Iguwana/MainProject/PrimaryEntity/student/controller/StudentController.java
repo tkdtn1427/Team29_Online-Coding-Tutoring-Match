@@ -5,6 +5,8 @@ import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.mapper.StudentMapper;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
+import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.mapper.TutoringMapper;
+import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,10 +20,14 @@ public class StudentController {
     private final StudentMapper studentMapper;
 
     private final StudentService studentService;
+    
+    private final TutoringMapper tutoringMapper;
 
-    public StudentController(StudentMapper studentMapper, StudentService studentService){
+    public StudentController(StudentMapper studentMapper, StudentService studentService,
+                             TutoringMapper tutoringMapper){
         this.studentMapper = studentMapper;
         this.studentService = studentService;
+        this.tutoringMapper = tutoringMapper;
     }
 
     @PostMapping("/join")
@@ -41,7 +47,9 @@ public class StudentController {
     public ResponseEntity showStudent(@PathVariable("student-id") long studentId){
         Student student = studentService.findVerfiedStudent(studentId);
 
-        return new ResponseEntity(HttpStatus.OK);
+        StudentDto.Response response = studentMapper.studentToStudentResponse(student);
+        studentService.setTutoring(response);
+        return new ResponseEntity(response,HttpStatus.OK);
     }
 
     @PatchMapping("/update/{student-id}")
@@ -50,7 +58,9 @@ public class StudentController {
         patch.setStudentId(studentId);
         Student student = studentMapper.studentPatchToStudent(patch);
         Student updateStudent = studentService.updateStudent(student);
-        return new ResponseEntity(studentMapper.studentToStudentResponse(updateStudent), HttpStatus.OK);
+        StudentDto.Response response = studentMapper.studentToStudentResponse(updateStudent);
+        studentService.setTutoring(response);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PatchMapping("/password/{student-id}")

@@ -2,9 +2,9 @@ package Team049.Iguwana.MainProject.PrimaryEntity.student.service;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.student.dto.StudentDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
-import Team049.Iguwana.MainProject.PrimaryEntity.student.mapper.StudentMapper;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.service.TeacherService;
+import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
 import Team049.Iguwana.MainProject.exception.BusinessLogicException;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import org.springframework.context.annotation.Lazy;
@@ -23,10 +23,14 @@ public class StudentService {
 
     private final TeacherService teacherService;
 
-    public StudentService(StudentRepository studentRepository, BCryptPasswordEncoder bCryptPasswordEncoder, @Lazy TeacherService teacherService){
+    private final TutoringService tutoringService;
+
+    public StudentService(StudentRepository studentRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
+                          @Lazy TeacherService teacherService, TutoringService tutoringService){
         this.studentRepository = studentRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.teacherService = teacherService;
+        this.tutoringService = tutoringService;
     }
 
     public void createStudent(Student student){
@@ -74,5 +78,9 @@ public class StudentService {
 
     public String transPassword(String password){
         return bCryptPasswordEncoder.encode(password);
+    }
+    public StudentDto.Response setTutoring(StudentDto.Response response){
+        response.setTutoringList(tutoringService.findTutoringByUserId(response.getStudentId(), "student"));
+        return response;
     }
 }
