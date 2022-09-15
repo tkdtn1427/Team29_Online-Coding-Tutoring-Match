@@ -79,7 +79,6 @@ public class StudentService {
     public String transPassword(String password){
         return bCryptPasswordEncoder.encode(password);
     }
-
     public StudentDto.Response setTutoring(StudentDto.Response response){
         response.setTutoringList(tutoringService.findTutoringByUserId(response.getStudentId(), "student"));
         return response;

@@ -46,7 +46,6 @@ public class TeacherService {
     public String transPassword(String password){
         return bCryptPasswordEncoder.encode(password);
     }
-
     public Teacher findVerfiedTeacher(long teacherId){
         Optional<Teacher> optionalStudent = teacherRepository.findById(teacherId);
         Teacher teacher = optionalStudent.orElseThrow( () -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
