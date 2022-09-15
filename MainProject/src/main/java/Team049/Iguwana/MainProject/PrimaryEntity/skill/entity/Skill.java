@@ -21,7 +21,7 @@ public class Skill {
     private long skillId;
 
     @Column
-    private String skill;
+    private String name;
 
     @OneToMany(mappedBy = "skill")
     private List<SkillTable> skillTableList = new ArrayList<>();
