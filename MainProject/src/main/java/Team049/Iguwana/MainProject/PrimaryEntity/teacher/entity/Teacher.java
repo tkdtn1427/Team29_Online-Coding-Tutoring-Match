@@ -25,6 +25,9 @@ public class Teacher {
     @Column
     private String name;
 
+    @Column
+    private String password;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -41,12 +44,9 @@ public class Teacher {
     private String aboutMe;
 
     @Column
-    private String password;
-
-    @Column
     private String nickName;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     private List<SkillTable> skillTableList = new ArrayList<>();
 
     @OneToMany(mappedBy = "teacher")
@@ -54,6 +54,10 @@ public class Teacher {
 
     @OneToMany(mappedBy = "teacher")
     private List<Review> reviewList = new ArrayList<>();
+
+    /*@JsonManagedReference
+    @OneToOne(mappedBy = "teacher", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Images image;*/
 
     public void addReview(Review review){
         this.reviewList.add(review);
