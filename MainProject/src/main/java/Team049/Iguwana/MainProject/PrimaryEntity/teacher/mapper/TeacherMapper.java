@@ -51,7 +51,7 @@ public interface TeacherMapper {
         response.setCareer(teacher.getCareer());
         response.setAboutMe(teacher.getAboutMe());
         response.setNickName(teacher.getNickName());
-
+        response.setCount(teacher.getCount());
 
 
         List<TeacherDto.SkillResponse> skillTableList=

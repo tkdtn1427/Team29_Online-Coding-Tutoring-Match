@@ -1,5 +1,6 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.dto;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.review.dto.ReviewDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.review.entity.Review;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.SkillTable;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.entity.Tutoring;
@@ -68,8 +69,8 @@ public class TeacherDto {
         private String name;
 
         private String email;
-
-        private long reputation;
+        //double형으로 변경
+        private double reputation;
 
         private String career;
 
@@ -81,7 +82,9 @@ public class TeacherDto {
 
         private List<Tutoring> tutoringList;
 
-        private List<Review> reviewList;
+        private List<ReviewDto.Response> reviewList;
+        //count 추가
+        private int count;
     }
 
     @Getter
