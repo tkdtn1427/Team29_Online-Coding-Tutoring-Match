@@ -2,6 +2,7 @@ package Team049.Iguwana.MainProject.PrimaryEntity.teacher.dto;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.review.entity.Review;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.SkillTable;
+import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.dto.TutoringDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.entity.Tutoring;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -79,7 +80,7 @@ public class TeacherDto {
 
         private List<SkillResponse> skillTableList;
 
-        private List<Tutoring> tutoringList;
+        private List<TutoringDto.Response> tutoringList;
 
         private List<Review> reviewList;
     }
