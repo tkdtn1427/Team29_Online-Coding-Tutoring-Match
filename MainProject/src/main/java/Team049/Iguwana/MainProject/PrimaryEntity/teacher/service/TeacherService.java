@@ -132,14 +132,14 @@ public class TeacherService {
         response.setTutoringList(tutoringService.findTutoringByUserId(response.getTeacherId(), "teacher"));
         return response;
     }
-    public List<TeacherDto.Response> setTutorings(List<TeacherDto.Response> responses){
+    public List<TeacherDto.Response> setTutorings(List<TeacherDto.Response> responses) {
 
         return responses.stream()
                 .map(response -> {
                     response.setTutoringList(tutoringService.findTutoringByUserId(response.getTeacherId(), "teacher"));
                     return response;
                 }).collect(Collectors.toList());
-
+    }
     //수정 - 평판 변경 로직
     public void updateReputation(long teacherId, double reputation, double preReputation, String str){
         Teacher teacher = findVerfiedTeacher(teacherId);
@@ -163,7 +163,7 @@ public class TeacherService {
             updateReputation /= (double) (reviewCount-1);
             teacher.setCount(reviewCount - 1);
             if(reviewCount == 1){
-                teacher.setReputation(Double.parseDouble(String.format("%.3f", 0)));
+                teacher.setReputation(0);
             }else{
                 teacher.setReputation(Double.parseDouble(String.format("%.3f", updateReputation)));
             }
