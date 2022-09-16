@@ -120,4 +120,35 @@ public class TeacherService {
         Teacher teacher = optionalStudent.orElseThrow( () -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
         return teacher;
     }
+    //수정 - 평판 변경 로직
+    public void updateReputation(long teacherId, double reputation, double preReputation, String str){
+        Teacher teacher = findVerfiedTeacher(teacherId);
+        int reviewCount = teacher.getCount();
+        double nowReputation = teacher.getReputation();
+        double updateReputation ;
+        if(str.equals("create")){
+            if(reviewCount == 0){
+                updateReputation = reputation;
+            }else{
+                updateReputation = (((double)reviewCount * nowReputation) + reputation) / (double)(reviewCount+1) ;
+            }
+            teacher.setCount(reviewCount + 1);
+            teacher.setReputation(Double.parseDouble(String.format("%.3f", updateReputation)));
+        }else if (str.equals("update")){
+            updateReputation = ((double)reviewCount * nowReputation) - preReputation + reputation;
+            updateReputation /= (double) reviewCount;
+            teacher.setReputation(Double.parseDouble(String.format("%.3f", updateReputation)));
+        }else{
+            updateReputation = ((double)reviewCount * nowReputation) - preReputation;
+            updateReputation /= (double) (reviewCount-1);
+            teacher.setCount(reviewCount - 1);
+            if(reviewCount == 1){
+                teacher.setReputation(Double.parseDouble(String.format("%.3f", 0)));
+            }else{
+                teacher.setReputation(Double.parseDouble(String.format("%.3f", updateReputation)));
+            }
+
+        }
+        teacherRepository.save(teacher);
+    }
 }
