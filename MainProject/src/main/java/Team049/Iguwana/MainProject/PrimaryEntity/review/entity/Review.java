@@ -25,13 +25,15 @@ public class Review {
     private String content;
 
     @Column
-    private long reputation;
+    private double reputation;
 
     @ManyToOne
     @JoinColumn(name = "TEACHER_ID")
     private Teacher teacher;
 
     private long studentId;
+
+    private long tutoringId;
 
     private LocalDate date = LocalDate.now();
 

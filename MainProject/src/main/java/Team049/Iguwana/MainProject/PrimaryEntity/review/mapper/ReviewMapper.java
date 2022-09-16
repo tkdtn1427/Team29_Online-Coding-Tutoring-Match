@@ -4,6 +4,7 @@ import Team049.Iguwana.MainProject.PrimaryEntity.review.dto.ReviewDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.review.entity.Review;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
@@ -17,7 +18,13 @@ public interface ReviewMapper {
         review.setContent(requestBody.getContent());
         review.setStudentId(requestBody.getStudentId());
         review.setReputation(requestBody.getReputation());
+        review.setTutoringId(requestBody.getTutoringId());
 
         return review;
     }
+
+    Review reviewPatchToReview(ReviewDto.Patch requestBody);
+
+    @Mapping(target = "teacherId", expression = "java(review.getTeacher().getTeacherId())")
+    ReviewDto.Response reviewToReviewResponse(Review review);
 }

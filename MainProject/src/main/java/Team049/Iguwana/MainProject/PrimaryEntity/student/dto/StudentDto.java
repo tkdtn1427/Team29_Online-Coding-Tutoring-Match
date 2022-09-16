@@ -67,5 +67,7 @@ public class StudentDto {
         private String email;
 
         private List<TutoringDto.Response> tutoringList;
+
+        private long tutoringcount;
     }
 }

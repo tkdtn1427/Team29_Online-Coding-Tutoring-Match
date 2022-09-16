@@ -33,9 +33,9 @@ public class Teacher {
 
     @Column
     private String roles;
-
+    //double 형으로 수정
     @Column
-    private long reputation;
+    private double reputation;
 
     @Column(columnDefinition = "Text")
     private String career;
@@ -46,7 +46,7 @@ public class Teacher {
     @Column
     private String nickName;
 
-    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.ALL})
     private List<SkillTable> skillTableList = new ArrayList<>();
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
@@ -86,4 +86,7 @@ public class Teacher {
         }
         return new ArrayList<>();
     }
+    
+    //리뷰 개수 카운트 추가
+    private int count;
 }
