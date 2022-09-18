@@ -52,7 +52,7 @@ public interface TeacherMapper {
         response.setAboutMe(teacher.getAboutMe());
         response.setNickName(teacher.getNickName());
         response.setCount(teacher.getCount());
-
+        response.setImageUrl(teacher.getImageUrl());
 
         List<TeacherDto.SkillResponse> skillTableList=
                 teacher.getSkillTableList().stream()
@@ -67,6 +67,15 @@ public interface TeacherMapper {
                         }).collect(Collectors.toList());
         response.setSkillTableList(skillTableList);
 
+        String fourCode = teacher.getTeacherId() + "";
+        fourCode.trim();
+        if (fourCode.length() < 4) {
+            for (int i = 0; i < 6 - fourCode.length(); i++) {
+                fourCode = "0" + fourCode;
+            }
+        }
+        fourCode = "@" + fourCode;
+        response.setCode(fourCode);
         return response;
     }
 

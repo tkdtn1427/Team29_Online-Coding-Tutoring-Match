@@ -86,6 +86,10 @@ public class TeacherDto {
         private List<ReviewDto.Response> reviewList;
         //count 추가
         private int count;
+
+        private String code;
+
+        private String imageUrl;
     }
 
     @Getter

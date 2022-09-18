@@ -56,4 +56,6 @@ public class Student {
         }
         return new ArrayList<>();
     }
+
+    private String imageUrl="x";
 }

@@ -1,5 +1,7 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.service;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.email.entity.Email;
+import Team049.Iguwana.MainProject.PrimaryEntity.email.repository.EmailRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.repository.SkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
@@ -8,8 +10,10 @@ import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.SkillTableRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
+import Team049.Iguwana.MainProject.event.MemberRegistrationApplicationEvent;
 import Team049.Iguwana.MainProject.exception.BusinessLogicException;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,23 +39,43 @@ public class TeacherService {
     private final SkillTableRepository skillTableRepository;
 
     private final TutoringService tutoringService;
+
+    private final ApplicationEventPublisher publisher;
+    private Random random = new Random();
+    private final EmailRepository emailRepository;
     public TeacherService(TeacherRepository teacherRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                          StudentService studentService, SkillRepository skillRepository, SkillTableRepository skillTableRepository, TutoringService tutoringService){
+                          StudentService studentService, SkillRepository skillRepository, SkillTableRepository skillTableRepository, TutoringService tutoringService, ApplicationEventPublisher publisher, EmailRepository emailRepository){
         this.teacherRepository = teacherRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.studentService = studentService;
         this.skillRepository = skillRepository;
         this.skillTableRepository = skillTableRepository;
         this.tutoringService = tutoringService;
+        this.publisher = publisher;
+        this.emailRepository = emailRepository;
     }
 
     public void createTeacher(Teacher teacher){
         verifyExistsEMail(teacher.getEmail());
         studentService.verifyExistsEMail(teacher.getEmail());
+        /*String code = random.nextInt()+"";
+        publisher.publishEvent(new MemberRegistrationApplicationEvent(this, teacher,code,teacher.getEmail()));
+        Email email = new Email();
+        email.setName(teacher.getName());
+        email.setPassword(teacher.getPassword());
+        email.setEmail(teacher.getEmail());
+        email.setCareer(teacher.getCareer());
+        email.setAboutMe(teacher.getAboutMe());
+        email.setNickName(teacher.getNickName());
+        email.setCode(code);
+        email.setUsers("teacher");
+        emailRepository.save(email);*/
         teacher.setPassword(transPassword(teacher.getPassword()));
         teacher.setRoles("ROLE_TEACHER");
         teacherRepository.save(teacher);
     }
+
+
 
     public Teacher updateTeacher(Teacher teacher){
         Teacher findTeacher = findVerfiedTeacher(teacher.getTeacherId());

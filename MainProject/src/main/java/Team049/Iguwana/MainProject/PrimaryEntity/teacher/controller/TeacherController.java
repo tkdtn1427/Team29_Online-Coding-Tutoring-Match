@@ -1,5 +1,8 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.controller;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.email.service.EmailService;
+import Team049.Iguwana.MainProject.PrimaryEntity.review.dto.ReviewDto;
+import Team049.Iguwana.MainProject.PrimaryEntity.review.service.ReviewService;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.dto.TeacherDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.mapper.TeacherMapper;
@@ -12,8 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
@@ -25,16 +31,21 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     private final SkillTableRepository skillTableRepository;
-    public TeacherController(TeacherMapper teacherMapper, TeacherService teacherService, SkillTableRepository skillTableRepository) {
+
+    private final ReviewService reviewService;
+
+    public TeacherController(TeacherMapper teacherMapper, TeacherService teacherService, SkillTableRepository skillTableRepository, ReviewService reviewService) {
         this.teacherMapper = teacherMapper;
         this.teacherService = teacherService;
         this.skillTableRepository = skillTableRepository;
+        this.reviewService = reviewService;
     }
 
     @PostMapping("/join")
-    public ResponseEntity joinTeacher(@Validated @RequestBody TeacherDto.Join join){
+    @ResponseStatus(HttpStatus.OK)
+    public String joinTeacher(@Validated @RequestBody TeacherDto.Join join, HttpServletResponse response) throws IOException {
         teacherService.createTeacher(teacherMapper.teacherJoinToTeacher(join));
-        return new ResponseEntity(HttpStatus.CREATED);
+        return "메시지 전송 완료";
     }
 
     @PatchMapping("/update/{teacher-id}")
@@ -45,15 +56,22 @@ public class TeacherController {
         requestBody.setTeacherId(teacherId);
         Teacher teacher = teacherService.updateTeacher(teacherMapper.teacherPatchToTeacher(requestBody,skillTableRepository));
         TeacherDto.Response answer = teacherMapper.teacherToResponse(teacher);
-        teacherService.setTutoring(answer);
+
+
         return new ResponseEntity(answer, HttpStatus.OK);
     }
 
     @GetMapping("/{teacher-id}")
-    public ResponseEntity getTeacher(@PathVariable("teacher-id") long teacherId){
+    public ResponseEntity getTeacher(
+            @PathVariable("teacher-id") long teacherId,
+            @Positive @RequestParam int page,
+            @Positive @RequestParam int size
+    ){
         Teacher teacher = teacherService.findVerfiedTeacher(teacherId);
         TeacherDto.Response response = teacherMapper.teacherToResponse(teacher);
         teacherService.setTutoring(response);
+        List<ReviewDto.Response> list =reviewService.findByTeacherId(page-1, size, teacherId);
+        response.setReviewList(list);
         return new ResponseEntity(response,HttpStatus.OK);
     }
     @GetMapping
@@ -67,7 +85,7 @@ public class TeacherController {
         if (!skill.equals("x")) {
             teachers = teacherService.skillCheck(teachers, skill);
         }
-        List<TeacherDto.Response> list = teacherService.setTutorings(teacherMapper.teachersToResponses(teachers));
+        List<TeacherDto.Response> list = teacherMapper.teachersToResponses(teachers);
         return new ResponseEntity<>(new MultiResponseDto<>(list, pages),
                 HttpStatus.OK);
     }
