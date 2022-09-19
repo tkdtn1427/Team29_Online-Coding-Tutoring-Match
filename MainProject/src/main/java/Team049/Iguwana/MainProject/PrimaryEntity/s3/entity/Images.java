@@ -25,6 +25,6 @@ public class Images {
 
     private long memberId;
 
-    private String users;
+    private String role;
 
 }*/

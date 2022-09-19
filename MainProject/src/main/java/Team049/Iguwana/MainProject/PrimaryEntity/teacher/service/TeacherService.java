@@ -42,9 +42,6 @@ public class TeacherService {
     private final SkillRepository skillRepository;
     private final SkillTableRepository skillTableRepository;
 
-
-    private final TutoringService tutoringService;
-
     //private final ApplicationEventPublisher publisher;
     //private Random random = new Random();
     //private final EmailRepository emailRepository;
@@ -82,7 +79,8 @@ public class TeacherService {
         email.setNickName(teacher.getNickName());
         email.setCode("1");
         email.setUsers("teacher");
-        emailRepository.save(email);*/
+        emailRepository.save(email);
+*/
         teacher.setPassword(transPassword(teacher.getPassword()));
         teacher.setRoles("ROLE_TEACHER");
         teacherRepository.save(teacher);
