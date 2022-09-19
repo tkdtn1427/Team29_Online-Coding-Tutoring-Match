@@ -49,11 +49,13 @@ public class StudentController {
     public ResponseEntity showStudent(@PathVariable("student-id") long studentId){
         Student student = studentService.findVerfiedStudent(studentId);
 
-        StudentDto.Response response = studentMapper.studentToStudentResponse(student);
-        studentService.setTutoring(response);
+
+        StudentDto.Response response = studentMapper.studentToStudentResponse(student, tutoringMapper);
+        studentService.setCode(response);
         if (!response.getImageUrl().equals("x")) {
             response.setImageUrl("https://pre-029-bucket.s3.ap-northeast-2.amazonaws.com/"+response.getImageUrl());
         }
+
         return new ResponseEntity(response,HttpStatus.OK);
     }
 
@@ -63,8 +65,8 @@ public class StudentController {
         patch.setStudentId(studentId);
         Student student = studentMapper.studentPatchToStudent(patch);
         Student updateStudent = studentService.updateStudent(student);
-        StudentDto.Response response = studentMapper.studentToStudentResponse(updateStudent);
-        studentService.setTutoring(response);
+        StudentDto.Response response = studentMapper.studentToStudentResponse(updateStudent, tutoringMapper);
+        studentService.setCode(response);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 

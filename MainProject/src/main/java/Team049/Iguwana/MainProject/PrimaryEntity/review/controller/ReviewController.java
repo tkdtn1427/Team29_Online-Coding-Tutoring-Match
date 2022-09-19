@@ -31,8 +31,8 @@ public class ReviewController {
     @PostMapping("/register")
     public ResponseEntity registerReview(@RequestBody ReviewDto.Register register){
         Review review = reviewMapper.reviewRegisterToReview(register);
-        reviewService.createReview(review);
-        return new ResponseEntity(HttpStatus.CREATED);
+        Review resposne = reviewService.createReview(review);
+        return new ResponseEntity(reviewMapper.reviewToReviewResponse(resposne),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{review-id}")
@@ -50,6 +50,7 @@ public class ReviewController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+
     @GetMapping("/{teacher-id}")
     public ResponseEntity getReview(
             @PathVariable("teacher-id") long teacherId,
@@ -62,4 +63,5 @@ public class ReviewController {
         return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewToReviewResponses(list), reviews),
                 HttpStatus.OK);
     }
+
 }

@@ -36,7 +36,7 @@ public class ReviewService {
         this.reviewMapper = reviewMapper;
     }
 
-    public void createReview(Review review){
+    public Review createReview(Review review){
         Teacher teacher = teacherService.findVerfiedTeacher(review.getTeacher().getTeacherId());
         tutoringService.findVerfiedTutoring(review.getTutoringId());
         if(isStudentRegisterReview(review.getTutoringId(), review.getStudentId())){
@@ -44,7 +44,7 @@ public class ReviewService {
         }
         review.setTeacher(teacher);
         teacherService.updateReputation(teacher.getTeacherId(), review.getReputation(), 0,"create");
-        reviewRepository.save(review);
+        return reviewRepository.save(review);
     }
 
     public Review updateReview(Review review){
@@ -77,6 +77,7 @@ public class ReviewService {
             return false;
         }
     }
+    
     // Teacher 쪽에서 리뷰 목록 가져오기 위한 코드
     //리턴 타입 Page<Review>에서 List<ReviewDto.Response>로 변경 -도윤
     public Page<Review> findByTeacherId(int page, int size,String arrange, long teacherId){
