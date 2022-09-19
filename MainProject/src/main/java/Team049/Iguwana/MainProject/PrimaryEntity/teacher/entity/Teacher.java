@@ -46,7 +46,7 @@ public class Teacher {
     @Column
     private String nickName;
 
-    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "teacher", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<SkillTable> skillTableList = new ArrayList<>();
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)

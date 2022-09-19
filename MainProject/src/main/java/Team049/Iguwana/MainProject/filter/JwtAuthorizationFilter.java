@@ -4,13 +4,16 @@ import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
+import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import Team049.Iguwana.MainProject.oauth.PrincipalDetails;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -35,7 +38,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         System.out.println("인증이나 권한이 필요한 주소 요청 됨.");
 
-        String jwtHeader = request.getHeader("Authorization");
+        String jwtHeader = request.getHeader("AccessToken");
 
         if(jwtHeader == null || !jwtHeader.startsWith("Bearer")) {
             System.out.println("토큰 문제");
@@ -44,7 +47,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         String jwtToken = jwtHeader.replace("Bearer ", "");
-        String email = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("email").asString();
+        String email;
+        try {
+            email = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("email").asString();
+        }catch (TokenExpiredException e){
+            throw new TokenExpiredException("JWT 토큰 만료");
+        }
         String role = JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken).getClaim("role").asString();
         System.out.println("유효성 검증 통과");
 

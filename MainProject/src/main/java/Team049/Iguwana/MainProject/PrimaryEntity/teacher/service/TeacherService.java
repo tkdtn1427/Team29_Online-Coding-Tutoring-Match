@@ -1,5 +1,6 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.service;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.jwtToken.service.JwtTokenService;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.repository.SkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
@@ -33,15 +34,17 @@ public class TeacherService {
     private final SkillRepository skillRepository;
     private final SkillTableRepository skillTableRepository;
 
-    private final TutoringService tutoringService;
+    //Sangsoo 추가분 
+    private final JwtTokenService jwtTokenService;
     public TeacherService(TeacherRepository teacherRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                          StudentService studentService, SkillRepository skillRepository, SkillTableRepository skillTableRepository, TutoringService tutoringService){
+                          StudentService studentService, SkillRepository skillRepository, SkillTableRepository skillTableRepository,
+                          JwtTokenService jwtTokenService){
         this.teacherRepository = teacherRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.studentService = studentService;
         this.skillRepository = skillRepository;
         this.skillTableRepository = skillTableRepository;
-        this.tutoringService = tutoringService;
+        this.jwtTokenService = jwtTokenService;
     }
 
     public void createTeacher(Teacher teacher){
@@ -100,13 +103,12 @@ public class TeacherService {
                     result.add(teachers.get(i));
                 }
             }
-
         }
-
         return result;
     }
     public void deleteTeacher(long teacherId) {
         Teacher teacher = findVerfiedTeacher(teacherId);
+        jwtTokenService.deleteJwtToken(teacherId,"teacher");
         teacherRepository.delete(teacher);
     }
 
