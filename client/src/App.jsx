@@ -1,5 +1,7 @@
 import { Global } from '@emotion/react';
-import reset from './styles/reset.jsx';
+import reset from './styles/reset';
+import './styles/root.css';
+
 import Navbar from './components/nav/Navbar.jsx';
 import Footer from './components/footer/Footer.jsx';
 
