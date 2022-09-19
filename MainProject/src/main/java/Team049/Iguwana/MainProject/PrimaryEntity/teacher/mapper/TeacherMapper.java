@@ -53,6 +53,9 @@ public interface TeacherMapper {
         response.setNickName(teacher.getNickName());
         response.setCount(teacher.getCount());
         response.setImageUrl(teacher.getImageUrl());
+        if (!response.getImageUrl().equals("x")) {
+            response.setImageUrl("https://pre-029-bucket.s3.ap-northeast-2.amazonaws.com/"+response.getImageUrl());
+        }
 
         List<TeacherDto.SkillResponse> skillTableList=
                 teacher.getSkillTableList().stream()

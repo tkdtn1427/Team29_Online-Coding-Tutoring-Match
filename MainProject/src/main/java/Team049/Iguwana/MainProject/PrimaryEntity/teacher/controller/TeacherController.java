@@ -1,6 +1,6 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.controller;
 
-import Team049.Iguwana.MainProject.PrimaryEntity.email.service.EmailService;
+//import Team049.Iguwana.MainProject.PrimaryEntity.email.service.EmailService;
 import Team049.Iguwana.MainProject.PrimaryEntity.review.dto.ReviewDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.review.service.ReviewService;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.dto.TeacherDto;
@@ -63,15 +63,13 @@ public class TeacherController {
 
     @GetMapping("/{teacher-id}")
     public ResponseEntity getTeacher(
-            @PathVariable("teacher-id") long teacherId,
-            @Positive @RequestParam int page,
-            @Positive @RequestParam int size
+            @PathVariable("teacher-id") long teacherId
     ){
         Teacher teacher = teacherService.findVerfiedTeacher(teacherId);
         TeacherDto.Response response = teacherMapper.teacherToResponse(teacher);
-        teacherService.setTutoring(response);
+/*        teacherService.setTutoring(response);
         List<ReviewDto.Response> list =reviewService.findByTeacherId(page-1, size, teacherId);
-        response.setReviewList(list);
+        response.setReviewList(list);*/
         return new ResponseEntity(response,HttpStatus.OK);
     }
     @GetMapping

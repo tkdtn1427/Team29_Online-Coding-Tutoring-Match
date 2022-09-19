@@ -1,3 +1,4 @@
+/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email.service;
 
 
@@ -60,7 +61,7 @@ public class EmailService {
 
                 String password = email.getPassword();
 
-                student.setPassword(transPassword(student.getPassword()));
+                student.setPassword(transPassword(password));
                 student.setRoles("ROLE_USER");
                 studentRepository.save(student);
             }
@@ -74,3 +75,4 @@ public class EmailService {
         return bCryptPasswordEncoder.encode(password);
     }
 }
+*/

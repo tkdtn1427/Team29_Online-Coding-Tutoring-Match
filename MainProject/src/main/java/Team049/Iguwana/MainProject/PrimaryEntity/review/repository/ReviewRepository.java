@@ -14,5 +14,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Optional<Review> findByIds(long tutoringId, long studentId);
     @Query(value = "select * from review where teacher_id = :teacherId", nativeQuery = true)
     Page<Review> findByteacherId(long teacherId, Pageable pageable);
+    @Query(value = "select * from review where teacher_id = :teacherId", nativeQuery = true)
+    Optional<List<Review>> findByTeacher(long teacherId);
 
 }

@@ -49,14 +49,17 @@ public class ReviewController {
         reviewService.deleteReview(reviewId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    // 제대로 가져와지나 테스트 코드
-//    @GetMapping
-//    public ResponseEntity testReview(){
-//        Page<Review> reviewPage = reviewService.findBYTeacherId(0, 2, 1);
-//        List<Review> reviews = reviewPage.getContent();
-//        List<ReviewDto.Response> responseList = reviews.stream().map(review -> {
-//            return reviewMapper.reviewToReviewResponse(review);
-//        }).collect(Collectors.toList());
-//        return new ResponseEntity(new MultiResponseDto<>(responseList,reviewPage),HttpStatus.OK);
-//    }
+
+    @GetMapping("/{teacher-id}")
+    public ResponseEntity getReview(
+            @PathVariable("teacher-id") long teacherId,
+            @Positive @RequestParam int page,
+            @Positive @RequestParam int size,
+            @RequestParam String arrange
+            ) {
+        Page<Review> reviews = reviewService.findByTeacherId(page-1,size,arrange,teacherId);
+        List<Review> list = reviews.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewToReviewResponses(list), reviews),
+                HttpStatus.OK);
+    }
 }

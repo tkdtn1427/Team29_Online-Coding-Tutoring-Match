@@ -1,7 +1,7 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.service;
 
-import Team049.Iguwana.MainProject.PrimaryEntity.email.entity.Email;
-import Team049.Iguwana.MainProject.PrimaryEntity.email.repository.EmailRepository;
+//import Team049.Iguwana.MainProject.PrimaryEntity.email.entity.Email;
+//import Team049.Iguwana.MainProject.PrimaryEntity.email.repository.EmailRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.repository.SkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
@@ -10,7 +10,7 @@ import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.SkillTableRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
-import Team049.Iguwana.MainProject.event.MemberRegistrationApplicationEvent;
+//import Team049.Iguwana.MainProject.event.MemberRegistrationApplicationEvent;
 import Team049.Iguwana.MainProject.exception.BusinessLogicException;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import org.springframework.context.ApplicationEventPublisher;
@@ -40,26 +40,27 @@ public class TeacherService {
 
     private final TutoringService tutoringService;
 
-    private final ApplicationEventPublisher publisher;
-    private Random random = new Random();
-    private final EmailRepository emailRepository;
+    //private final ApplicationEventPublisher publisher;
+    //private Random random = new Random();
+    //private final EmailRepository emailRepository;
     public TeacherService(TeacherRepository teacherRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                          StudentService studentService, SkillRepository skillRepository, SkillTableRepository skillTableRepository, TutoringService tutoringService, ApplicationEventPublisher publisher, EmailRepository emailRepository){
+                          StudentService studentService, SkillRepository skillRepository, SkillTableRepository skillTableRepository, TutoringService tutoringService){
         this.teacherRepository = teacherRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.studentService = studentService;
         this.skillRepository = skillRepository;
         this.skillTableRepository = skillTableRepository;
         this.tutoringService = tutoringService;
-        this.publisher = publisher;
-        this.emailRepository = emailRepository;
+        //this.publisher = publisher;
+
     }
 
     public void createTeacher(Teacher teacher){
         verifyExistsEMail(teacher.getEmail());
         studentService.verifyExistsEMail(teacher.getEmail());
-        /*String code = random.nextInt()+"";
-        publisher.publishEvent(new MemberRegistrationApplicationEvent(this, teacher,code,teacher.getEmail()));
+/*
+        String code = random.nextInt()+"";
+        publisher.publishEvent(new MemberRegistrationApplicationEvent(this, teacher,"1",teacher.getEmail()));
         Email email = new Email();
         email.setName(teacher.getName());
         email.setPassword(teacher.getPassword());
@@ -67,7 +68,7 @@ public class TeacherService {
         email.setCareer(teacher.getCareer());
         email.setAboutMe(teacher.getAboutMe());
         email.setNickName(teacher.getNickName());
-        email.setCode(code);
+        email.setCode("1");
         email.setUsers("teacher");
         emailRepository.save(email);*/
         teacher.setPassword(transPassword(teacher.getPassword()));
@@ -153,7 +154,7 @@ public class TeacherService {
     }
 
 
-    public TeacherDto.Response setTutoring(TeacherDto.Response response){
+/*    public TeacherDto.Response setTutoring(TeacherDto.Response response){
         response.setTutoringList(tutoringService.findTutoringByUserId(response.getTeacherId(), "teacher"));
         return response;
     }
@@ -164,7 +165,7 @@ public class TeacherService {
                     response.setTutoringList(tutoringService.findTutoringByUserId(response.getTeacherId(), "teacher"));
                     return response;
                 }).collect(Collectors.toList());
-    }
+    }*/
     //수정 - 평판 변경 로직
     public void updateReputation(long teacherId, double reputation, double preReputation, String str){
         Teacher teacher = findVerfiedTeacher(teacherId);

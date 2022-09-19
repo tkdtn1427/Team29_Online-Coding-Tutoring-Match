@@ -79,14 +79,12 @@ public class ReviewService {
     }
     // Teacher 쪽에서 리뷰 목록 가져오기 위한 코드
     //리턴 타입 Page<Review>에서 List<ReviewDto.Response>로 변경 -도윤
-    public List<ReviewDto.Response> findByTeacherId(int page, int size, long teacherId){
-
+    public Page<Review> findByTeacherId(int page, int size,String arrange, long teacherId){
+        teacherService.findVerfiedTeacher(teacherId);
         Page<Review> reviewPage = reviewRepository.findByteacherId(teacherId,
-                PageRequest.of(page, size, Sort.by("date").descending()));
+                PageRequest.of(page, size, Sort.by(arrange).descending()));
 
-        List<Review> list = reviewPage.getContent();
-
-        return reviewMapper.reviewToReviewResponses(list);
+        return reviewPage;
     }
 
 }

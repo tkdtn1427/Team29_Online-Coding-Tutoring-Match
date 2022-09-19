@@ -69,5 +69,7 @@ public class StudentDto {
         private List<TutoringDto.Response> tutoringList;
 
         private long tutoringcount;
+
+        private String imageUrl;
     }
 }

@@ -1,3 +1,4 @@
+/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,3 +34,4 @@ public class TemplateEmailSendable implements EmailSendable {
 
     }
 }
+*/

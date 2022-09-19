@@ -10,7 +10,9 @@ public enum ExceptionCode {
 
     SKILL_NOT_FOUND(404, "skill not found"),
     CODE_NOT_FOUND(404, "Code not found"),
-    IMAGE_EXISTS(409, "image is exists");
+    IMAGE_EXISTS(409, "image is exists"),
+    IMAGE_NOT_FOUND(404, "image not found"),
+    IMAGE_CHECK(404, "image not include");
 
 
 

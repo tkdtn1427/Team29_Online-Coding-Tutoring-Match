@@ -1,7 +1,7 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.review.entity.Review;
-import Team049.Iguwana.MainProject.PrimaryEntity.s3.entity.Images;
+//import Team049.Iguwana.MainProject.PrimaryEntity.s3.entity.Images;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.entity.Tutoring;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;

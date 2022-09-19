@@ -1,4 +1,4 @@
-package Team049.Iguwana.MainProject.PrimaryEntity.email.entity;
+/*package Team049.Iguwana.MainProject.PrimaryEntity.email.entity;
 
 
 
@@ -45,4 +45,4 @@ public class Email {
     private String users;
 
 
-}
+}*/

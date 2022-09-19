@@ -1,3 +1,4 @@
+/*
 package Team049.Iguwana.MainProject.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -32,4 +33,4 @@ public class AwsS3Config {
                 .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
                 .build();
     }
-}
+}*/

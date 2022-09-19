@@ -1,3 +1,4 @@
+/*
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.service;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.s3.entity.Images;
@@ -10,6 +11,7 @@ import Team049.Iguwana.MainProject.exception.BusinessLogicException;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -119,34 +121,62 @@ public class ImagesService {
         return Optional.empty();
     }
 
-    /*public void remove(long memberId) {
-        Member member = memberService.findVerifiedMember(memberId);
-        if (member.getImage() == null) {
-            throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
+    public void remove(long memberId,String users) {
+        Object member=null;
+        String key = "";
+        if (users.equals("teacher")) {
+            member = teacherService.findVerfiedTeacher(memberId);
+            if (((Teacher) member).getImageUrl().equals("x")) {
+                throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
+            }
+            key = ((Teacher) member).getImageUrl();
+        }else{
+            member = studentService.findVerfiedStudent(memberId);
+            if (((Student) member).getImageUrl().equals("x")) {
+                throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
+            }
+            key = ((Student) member).getImageUrl();
         }
 
-        String key = member.getImage().getImagesKey();
-
-        if (!amazonS3.doesObjectExist(bucket, key)) {
+        if (!amazonS3.doesObjectExist(bucket,key)) {
             throw new AmazonS3Exception("Object " + key + " does not exist!");
         }
         amazonS3.deleteObject(bucket, key);
-        repository.delete(member.getImage());
-        member.setImage(null);
+        if (users.equals("teacher")) {
+            repository.delete(repository.findByKeys(((Teacher) member).getImageUrl()).get());
+            ((Teacher) member).setImageUrl("x");
+        }else{
+            repository.delete(repository.findByKeys(((Student) member).getImageUrl()).get());
+            ((Student) member).setImageUrl("x");
+        }
+
     }
 
-    public Images update(MultipartFile multipartFile, long memberId) throws IOException {
-        Member member = memberService.findVerifiedMember(memberId);
+    public Images update(MultipartFile multipartFile, long memberId,String users) throws IOException {
+        Object member=null;
         if (multipartFile == null) {
-            throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.IMAGE_CHECK);
         }
-        if (member.getImage() == null) {
-            return upload(multipartFile, memberId);
-        } else {
-            remove(memberId);
-            return upload(multipartFile, memberId);
-        }
-    }*/
 
+        if(users.equals("teacher")) {
+            member = teacherService.findVerfiedTeacher(memberId);
+            if (((Teacher) member).getImageUrl().equals("x")) {
+                throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
+            }
+
+        }else{
+            member = studentService.findVerfiedStudent(memberId);
+            if (((Student) member).getImageUrl().equals("x")) {
+                throw new BusinessLogicException(ExceptionCode.IMAGE_NOT_FOUND);
+            }
+
+        }
+
+
+        remove(memberId,users);
+        return upload(multipartFile, memberId,users);
+
+    }
 
 }
+*/

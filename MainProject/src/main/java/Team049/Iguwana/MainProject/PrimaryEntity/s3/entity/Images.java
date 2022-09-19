@@ -1,8 +1,8 @@
+/*
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.entity;
 
 
-import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,4 +27,4 @@ public class Images {
 
     private String users;
 
-}
+}*/

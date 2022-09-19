@@ -1,3 +1,4 @@
+/*
 package Team049.Iguwana.MainProject.event;
 
 
@@ -18,3 +19,4 @@ public class MemberRegistrationApplicationEvent extends ApplicationEvent {
         this.email=email;
     }
 }
+*/
