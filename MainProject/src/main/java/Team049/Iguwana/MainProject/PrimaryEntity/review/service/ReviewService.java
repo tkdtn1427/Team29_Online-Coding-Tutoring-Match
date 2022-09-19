@@ -36,7 +36,7 @@ public class ReviewService {
         this.reviewMapper = reviewMapper;
     }
 
-    public void createReview(Review review){
+    public Review createReview(Review review){
         Teacher teacher = teacherService.findVerfiedTeacher(review.getTeacher().getTeacherId());
         tutoringService.findVerfiedTutoring(review.getTutoringId());
         if(isStudentRegisterReview(review.getTutoringId(), review.getStudentId())){
@@ -44,7 +44,7 @@ public class ReviewService {
         }
         review.setTeacher(teacher);
         teacherService.updateReputation(teacher.getTeacherId(), review.getReputation(), 0,"create");
-        reviewRepository.save(review);
+        return reviewRepository.save(review);
     }
 
     public Review updateReview(Review review){
@@ -81,6 +81,7 @@ public class ReviewService {
     public Page<Review> findBYTeacherId(int page, int size, long teacherId){
         Page<Review> reviewPage = reviewRepository.findByteacherId(teacherId, PageRequest.of(page, size,
                 Sort.by("date").descending()));
+        System.out.println(reviewPage.getContent());
         return reviewPage;
     }
 }

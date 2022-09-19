@@ -31,8 +31,8 @@ public class ReviewController {
     @PostMapping("/register")
     public ResponseEntity registerReview(@RequestBody ReviewDto.Register register){
         Review review = reviewMapper.reviewRegisterToReview(register);
-        reviewService.createReview(review);
-        return new ResponseEntity(HttpStatus.CREATED);
+        Review resposne = reviewService.createReview(review);
+        return new ResponseEntity(reviewMapper.reviewToReviewResponse(resposne),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{review-id}")
@@ -49,14 +49,5 @@ public class ReviewController {
         reviewService.deleteReview(reviewId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    // 제대로 가져와지나 테스트 코드
-//    @GetMapping
-//    public ResponseEntity testReview(){
-//        Page<Review> reviewPage = reviewService.findBYTeacherId(0, 2, 1);
-//        List<Review> reviews = reviewPage.getContent();
-//        List<ReviewDto.Response> responseList = reviews.stream().map(review -> {
-//            return reviewMapper.reviewToReviewResponse(review);
-//        }).collect(Collectors.toList());
-//        return new ResponseEntity(new MultiResponseDto<>(responseList,reviewPage),HttpStatus.OK);
-//    }
+
 }

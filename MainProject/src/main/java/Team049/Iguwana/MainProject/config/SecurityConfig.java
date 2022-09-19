@@ -1,5 +1,6 @@
 package Team049.Iguwana.MainProject.config;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.jwtToken.repository.JwtTokenRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
 import Team049.Iguwana.MainProject.filter.JwtAuthenticationFilter;
@@ -30,6 +31,9 @@ public class SecurityConfig {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private JwtTokenRepository jwtTokenRepository;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable();
@@ -42,10 +46,10 @@ public class SecurityConfig {
                 .apply(new CustomDsl())
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/v1/members/join","/v1/members/refresh","/login","/join")
+//                .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login")
 //                .permitAll()
-                .antMatchers("/v1/members/myPage", "v1/teachers/myPage")
-                .access("hasRole('ROLE_USER')")
+//                .antMatchers("/v1/students/password/**")
+//                .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll();
         return http.build();
     }
@@ -55,7 +59,7 @@ public class SecurityConfig {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-            final JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,studentRepository, teacherRepository);
+            final JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,studentRepository, teacherRepository,jwtTokenRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/v1/user/login");
             builder
                     .addFilter(corsFilter)

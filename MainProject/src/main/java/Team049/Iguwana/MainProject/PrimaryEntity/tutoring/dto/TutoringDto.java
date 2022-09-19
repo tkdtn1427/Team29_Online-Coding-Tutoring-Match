@@ -20,10 +20,10 @@ public class TutoringDto {
     @AllArgsConstructor // TODO 테스트를 위해 추가됨
     public static class Register {
         @NotNull(message = "TeacherId can't blank.")
-        private Long teacherId;
+        private String teacherId;
 
         @NotNull(message = "StudentId can't blank.")
-        private Long studentId;
+        private String studentId;
 
         @NotBlank(message = "subject can't blank")
         private String subject;
@@ -61,9 +61,9 @@ public class TutoringDto {
     public static class Response {
         private long tutoringId;
 
-        private long teacherId;
+        private String teacherId;
 
-        private long studentId;
+        private String studentId;
 
         private String subject;
 

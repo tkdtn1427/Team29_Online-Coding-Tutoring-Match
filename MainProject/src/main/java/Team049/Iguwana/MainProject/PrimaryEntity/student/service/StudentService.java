@@ -1,8 +1,13 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.student.service;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.jwtToken.service.JwtTokenService;
+import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
+import Team049.Iguwana.MainProject.PrimaryEntity.skill.repository.SkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.dto.StudentDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
+import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.StudentSkill;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
+import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentSkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.service.TeacherService;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
 import Team049.Iguwana.MainProject.exception.BusinessLogicException;
@@ -12,25 +17,30 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class StudentService {
     private final StudentRepository studentRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
     private final TeacherService teacherService;
+    private final StudentSkillRepository studentSkillRepository;
+    private final SkillRepository skillRepository;
 
-    private final TutoringService tutoringService;
+    private final JwtTokenService jwtTokenService;
 
     public StudentService(StudentRepository studentRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                          @Lazy TeacherService teacherService, TutoringService tutoringService){
+                          @Lazy TeacherService teacherService, SkillRepository skillRepository, StudentSkillRepository studentSkillRepository,
+                          JwtTokenService jwtTokenService){
         this.studentRepository = studentRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.teacherService = teacherService;
-        this.tutoringService = tutoringService;
+        this.skillRepository = skillRepository;
+        this.studentSkillRepository = studentSkillRepository;
+        this.jwtTokenService = jwtTokenService;
     }
 
     public void createStudent(Student student){
@@ -43,6 +53,7 @@ public class StudentService {
 
     public void deleteStudent(long studentId){
         Student student = findVerfiedStudent(studentId);
+        jwtTokenService.deleteJwtToken(studentId,"student");
         studentRepository.delete(student);
     }
 
@@ -51,6 +62,18 @@ public class StudentService {
 
         Optional.ofNullable(student.getNickName()).ifPresent(nickName -> findStudent.setNickName(nickName));
         Optional.ofNullable(student.getAboutMe()).ifPresent(aboutMe -> findStudent.setAboutMe(aboutMe));
+        Optional.ofNullable(student.getStudentSkillList()).ifPresent(studentSkillList -> {
+            for (int i=0; i< findStudent.getStudentSkillList().size(); i++)
+                studentSkillRepository.delete(findStudent.getStudentSkillList().get(i));
+
+            for (int i=0; i< studentSkillList.size(); i++){
+                Optional<Skill> response = skillRepository.findByName(studentSkillList.get(i).getSkill().getName());
+                Skill answer = response.orElseThrow(()->new BusinessLogicException(ExceptionCode.SKILL_NOT_FOUND));
+                student.getStudentSkillList().get(i).setSkill(answer);
+            }
+
+            findStudent.setStudentSkillList(student.getStudentSkillList());
+        });
 
         return studentRepository.save(findStudent);
     }
@@ -79,8 +102,16 @@ public class StudentService {
     public String transPassword(String password){
         return bCryptPasswordEncoder.encode(password);
     }
-    public StudentDto.Response setTutoring(StudentDto.Response response){
-        response.setTutoringList(tutoringService.findTutoringByUserId(response.getStudentId(), "student"));
+    public StudentDto.Response setCode(StudentDto.Response response){
+        response.setCode(codeInit(response.getStudentId()));
         return response;
+    }
+
+    public String codeInit(long studentId){
+        StringBuilder sb = new StringBuilder("#");
+        int len = String.valueOf(studentId).length();
+        for(int i=0; i<4-len; i++) sb.append("0");
+        sb.append(studentId);
+        return sb.toString();
     }
 }
