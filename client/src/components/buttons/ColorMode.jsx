@@ -23,16 +23,16 @@ const COLOR = {
 
 function FilterMode({ mode, ...props }) {
   const { bgcolor, ftcolor } = COLOR[mode];
-  return <FilterButton ftcolor={ftcolor} bgcolor={bgcolor} />;
+  return <FilterButton ftcolor={ftcolor} bgcolor={bgcolor} text={props.text} />;
 }
 
 function IconMode({ mode, ...props }) {
   const { bgcolor, ftcolor } = COLOR[mode];
-  return <IconButton ftcolor={ftcolor} bgcolor={bgcolor} />;
+  return <IconButton ftcolor={ftcolor} bgcolor={bgcolor} text={props.text} />;
 }
 
 function TextMode({ mode, ...props }) {
   const { bgcolor, ftcolor } = COLOR[mode];
-  return <TextButton ftcolor={ftcolor} bgcolor={bgcolor} />;
+  return <TextButton ftcolor={ftcolor} bgcolor={bgcolor} text={props.text} />;
 }
 export { FilterMode, IconMode, TextMode };
