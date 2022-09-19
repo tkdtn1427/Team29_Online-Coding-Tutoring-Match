@@ -83,6 +83,10 @@ public class TeacherDto {
 
         //count 추가
         private int count;
+
+        private String code;
+
+        private String imageUrl;
     }
 
     @Getter

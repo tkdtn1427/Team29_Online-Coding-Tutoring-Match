@@ -70,6 +70,10 @@ public class StudentDto {
 
         private List<TutoringDto.Response> tutoringList;
 
+        private long tutoringcount;
+
+        private String imageUrl;
+
         private String code;
 
         private List<SkillResponse> skillResponseList;
@@ -95,5 +99,6 @@ public class StudentDto {
         private String name;
 
         private String color;
+
     }
 }

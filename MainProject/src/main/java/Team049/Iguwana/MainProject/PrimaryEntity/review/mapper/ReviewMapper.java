@@ -6,6 +6,8 @@ import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
 
@@ -27,4 +29,7 @@ public interface ReviewMapper {
 
     @Mapping(target = "teacherId", expression = "java(review.getTeacher().getTeacherId())")
     ReviewDto.Response reviewToReviewResponse(Review review);
+
+    //아래 코드 추가 -도윤
+    List<ReviewDto.Response> reviewToReviewResponses(List<Review> reviews);
 }

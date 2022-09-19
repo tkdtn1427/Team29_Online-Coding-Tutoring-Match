@@ -30,11 +30,13 @@ public class StudentController {
         this.tutoringMapper = tutoringMapper;
     }
 
+    //jungdoyoon 수정분
     @PostMapping("/join")
-    public ResponseEntity joinStudent(@Validated @RequestBody StudentDto.Join join){
+    @ResponseStatus(HttpStatus.OK)
+    public String joinStudent(@Validated @RequestBody StudentDto.Join join){
         Student student = studentMapper.studentJoinToStudent(join);
         studentService.createStudent(student);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return "메시지 전송 완료";
     }
 
     @DeleteMapping("/delete/{student-id}")
@@ -47,8 +49,13 @@ public class StudentController {
     public ResponseEntity showStudent(@PathVariable("student-id") long studentId){
         Student student = studentService.findVerfiedStudent(studentId);
 
+
         StudentDto.Response response = studentMapper.studentToStudentResponse(student, tutoringMapper);
         studentService.setCode(response);
+        if (!response.getImageUrl().equals("x")) {
+            response.setImageUrl("https://pre-029-bucket.s3.ap-northeast-2.amazonaws.com/"+response.getImageUrl());
+        }
+
         return new ResponseEntity(response,HttpStatus.OK);
     }
 

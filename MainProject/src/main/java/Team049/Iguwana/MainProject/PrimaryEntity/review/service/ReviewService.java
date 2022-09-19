@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -77,11 +77,15 @@ public class ReviewService {
             return false;
         }
     }
+    
     // Teacher 쪽에서 리뷰 목록 가져오기 위한 코드
-    public Page<Review> findBYTeacherId(int page, int size, long teacherId){
-        Page<Review> reviewPage = reviewRepository.findByteacherId(teacherId, PageRequest.of(page, size,
-                Sort.by("date").descending()));
-        System.out.println(reviewPage.getContent());
+    //리턴 타입 Page<Review>에서 List<ReviewDto.Response>로 변경 -도윤
+    public Page<Review> findByTeacherId(int page, int size,String arrange, long teacherId){
+        teacherService.findVerfiedTeacher(teacherId);
+        Page<Review> reviewPage = reviewRepository.findByteacherId(teacherId,
+                PageRequest.of(page, size, Sort.by(arrange).descending()));
+
         return reviewPage;
     }
+
 }

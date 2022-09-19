@@ -50,4 +50,18 @@ public class ReviewController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+
+    @GetMapping("/{teacher-id}")
+    public ResponseEntity getReview(
+            @PathVariable("teacher-id") long teacherId,
+            @Positive @RequestParam int page,
+            @Positive @RequestParam int size,
+            @RequestParam String arrange
+            ) {
+        Page<Review> reviews = reviewService.findByTeacherId(page-1,size,arrange,teacherId);
+        List<Review> list = reviews.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewToReviewResponses(list), reviews),
+                HttpStatus.OK);
+    }
+
 }

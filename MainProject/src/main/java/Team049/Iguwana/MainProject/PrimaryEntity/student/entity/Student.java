@@ -57,6 +57,9 @@ public class Student {
         return new ArrayList<>();
     }
 
+
+    private String imageUrl="x";
+
     @OneToMany(mappedBy = "student", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<StudentSkill> studentSkillList = new ArrayList<>();
 
@@ -66,4 +69,5 @@ public class Student {
             studentSkill.setStudent(this);
         }
     }
+
 }
