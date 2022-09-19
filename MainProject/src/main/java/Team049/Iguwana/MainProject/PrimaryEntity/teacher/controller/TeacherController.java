@@ -44,15 +44,16 @@ public class TeacherController {
     ) {
         requestBody.setTeacherId(teacherId);
         Teacher teacher = teacherService.updateTeacher(teacherMapper.teacherPatchToTeacher(requestBody,skillTableRepository));
-
-        return new ResponseEntity(teacherMapper.teacherToResponse(teacher), HttpStatus.OK);
+        TeacherDto.Response answer = teacherMapper.teacherToResponse(teacher);
+        teacherService.setTutoring(answer);
+        return new ResponseEntity(answer, HttpStatus.OK);
     }
 
     @GetMapping("/{teacher-id}")
     public ResponseEntity getTeacher(@PathVariable("teacher-id") long teacherId){
         Teacher teacher = teacherService.findVerfiedTeacher(teacherId);
         TeacherDto.Response response = teacherMapper.teacherToResponse(teacher);
-
+        teacherService.setTutoring(response);
         return new ResponseEntity(response,HttpStatus.OK);
     }
     @GetMapping
@@ -66,7 +67,8 @@ public class TeacherController {
         if (!skill.equals("x")) {
             teachers = teacherService.skillCheck(teachers, skill);
         }
-        return new ResponseEntity<>(new MultiResponseDto<>(teacherMapper.teachersToResponses(teachers), pages),
+        List<TeacherDto.Response> list = teacherService.setTutorings(teacherMapper.teachersToResponses(teachers));
+        return new ResponseEntity<>(new MultiResponseDto<>(list, pages),
                 HttpStatus.OK);
     }
 

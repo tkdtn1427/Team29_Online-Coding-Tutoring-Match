@@ -4,9 +4,11 @@ import Team049.Iguwana.MainProject.PrimaryEntity.jwtToken.service.JwtTokenServic
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.repository.SkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
+import Team049.Iguwana.MainProject.PrimaryEntity.teacher.dto.TeacherDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.SkillTableRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
+import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
 import Team049.Iguwana.MainProject.exception.BusinessLogicException;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,6 +34,7 @@ public class TeacherService {
     private final SkillRepository skillRepository;
     private final SkillTableRepository skillTableRepository;
 
+    //Sangsoo 추가분 
     private final JwtTokenService jwtTokenService;
     public TeacherService(TeacherRepository teacherRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
                           StudentService studentService, SkillRepository skillRepository, SkillTableRepository skillTableRepository,
@@ -124,6 +128,20 @@ public class TeacherService {
         Teacher teacher = optionalStudent.orElseThrow( () -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
         return teacher;
     }
+
+
+    public TeacherDto.Response setTutoring(TeacherDto.Response response){
+        response.setTutoringList(tutoringService.findTutoringByUserId(response.getTeacherId(), "teacher"));
+        return response;
+    }
+    public List<TeacherDto.Response> setTutorings(List<TeacherDto.Response> responses) {
+
+        return responses.stream()
+                .map(response -> {
+                    response.setTutoringList(tutoringService.findTutoringByUserId(response.getTeacherId(), "teacher"));
+                    return response;
+                }).collect(Collectors.toList());
+    }
     //수정 - 평판 변경 로직
     public void updateReputation(long teacherId, double reputation, double preReputation, String str){
         Teacher teacher = findVerfiedTeacher(teacherId);
@@ -154,5 +172,6 @@ public class TeacherService {
 
         }
         teacherRepository.save(teacher);
+
     }
 }
