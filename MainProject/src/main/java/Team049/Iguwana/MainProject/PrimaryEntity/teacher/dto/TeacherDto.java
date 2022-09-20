@@ -81,11 +81,12 @@ public class TeacherDto {
 
         private List<SkillResponse> skillTableList;
 
-        private List<TutoringDto.Response> tutoringList;
-
-        private List<ReviewDto.Response> reviewList;
         //count 추가
         private int count;
+
+        private String code;
+
+        private String imageUrl;
     }
 
     @Getter

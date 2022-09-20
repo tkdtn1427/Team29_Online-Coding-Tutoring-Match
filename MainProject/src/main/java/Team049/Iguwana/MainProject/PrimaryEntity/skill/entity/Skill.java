@@ -1,5 +1,6 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.skill.entity;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.StudentSkill;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.SkillTable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,16 @@ public class Skill {
         this.skillTableList.add(skillTable);
         if(skillTable.getSkill() != this){
             skillTable.setSkill(this);
+        }
+    }
+
+    @OneToMany(mappedBy = "skill")
+    private List<StudentSkill> studentSkillList = new ArrayList<>();
+
+    public void addstudentSkill(StudentSkill studentSkill){
+        this.studentSkillList.add(studentSkill);
+        if(studentSkill.getSkill() != this){
+            studentSkill.setSkill(this);
         }
     }
 }

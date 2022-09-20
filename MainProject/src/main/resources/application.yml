@@ -51,3 +51,28 @@ spring:
 #      springframework:
 #        orm:
 #          jpa: DEBUG
+#mail:
+#  smtp:
+#    host: smtp.gmail.com
+#    port: 587
+#    username:
+#    password:
+#    auth: true
+#    starttls:
+#      enable: true
+#  subject:
+#    member:
+#      registration: Nice Meet you! We are Iguana!
+
+#cloud:
+#  aws:
+#    credentials:
+#      accessKey:
+#      secretKey:
+#    s3:
+#      bucket:
+#      dir: /profile
+#    region:
+#      static: ap-northeast-2
+#    stack:
+#      auto: false

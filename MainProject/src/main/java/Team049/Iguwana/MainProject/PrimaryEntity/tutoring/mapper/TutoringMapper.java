@@ -42,8 +42,16 @@ public interface TutoringMapper {
 
     default TutoringDto.Response tutoringToTutoringResponse(Tutoring requestBody){
         TutoringDto.Response response = new TutoringDto.Response();
-        response.setStudentId(requestBody.getStudent().getStudentId());
-        response.setTeacherId(requestBody.getTeacher().getTeacherId());
+//        StringBuilder sbS = new StringBuilder("#");
+//        StringBuilder sbT = new StringBuilder("#");
+//        int lenStudent = String.valueOf(requestBody.getStudent().getStudentId()).length();
+//        int lenTeacher = String.valueOf(requestBody.getTeacher().getTeacherId()).length();
+//        for(int i=0; i<4-lenStudent; i++) sbS.append("0");
+//        sbS.append(requestBody.getStudent().getStudentId());
+//        for(int i=0; i<4-lenTeacher; i++) sbT.append("0");
+//        sbT.append(requestBody.getTeacher().getTeacherId());
+        response.setStudentId(userIdToCode(requestBody.getStudent().getStudentId(),"student"));
+        response.setTeacherId(userIdToCode(requestBody.getTeacher().getTeacherId(),"teacher"));
         response.setTutoringId(requestBody.getTutoringId());
         response.setSubject(requestBody.getSubject());
         response.setContent(requestBody.getContent());
@@ -61,5 +69,15 @@ public interface TutoringMapper {
         response.setTime(timeSet);
 
         return response;
+    }
+
+    default String userIdToCode(long userId, String find){
+        StringBuilder sb;
+        if(find.equals("student")) sb = new StringBuilder("#");
+        else sb = new StringBuilder("@");
+        int len = String.valueOf(userId).length();
+        for(int i=0; i<4-len; i++) sb.append("0");
+        sb.append(userId);
+        return sb.toString();
     }
 }

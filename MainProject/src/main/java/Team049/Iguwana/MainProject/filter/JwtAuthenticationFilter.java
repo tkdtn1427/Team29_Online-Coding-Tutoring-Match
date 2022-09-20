@@ -1,5 +1,7 @@
 package Team049.Iguwana.MainProject.filter;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.jwtToken.entity.JwtToken;
+import Team049.Iguwana.MainProject.PrimaryEntity.jwtToken.repository.JwtTokenRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
@@ -9,6 +11,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,7 +27,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private StudentRepository studentRepository;
@@ -32,11 +35,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private TeacherRepository teacherRepository;
 
+    private JwtTokenRepository jwtTokenRepository;
+
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, StudentRepository studentRepository,
-                                   TeacherRepository teacherRepository){
+                                   TeacherRepository teacherRepository, JwtTokenRepository jwtTokenRepository){
         this.authenticationManager = authenticationManager;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.jwtTokenRepository = jwtTokenRepository;
     }
 
     @Override
@@ -69,25 +75,78 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("successfulAuthentication");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         if(request.getHeader("role").equals("student")){
-            String jwtToken = JWT.create()
+            String accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 30)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
                     .withClaim("email", principalDetails.getStudent().getEmail())
                     .withClaim("name", principalDetails.getStudent().getName())
                     .withClaim("role", principalDetails.getRole())
                     .sign(Algorithm.HMAC512("cos_jwt_token"));
-            response.addHeader("Authorization", "Bearer " + jwtToken);
-            response.addHeader("StudentId", String.valueOf(principalDetails.getStudent().getStudentId()));
-        }else{
-            String jwtToken = JWT.create()
+
+            String refreshToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 30)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
+                    .withClaim("email", principalDetails.getStudent().getEmail())
+                    .withClaim("name", principalDetails.getStudent().getName())
+                    .withClaim("role", principalDetails.getRole())
+                    .sign(Algorithm.HMAC512("cos_jwt_token"));
+
+
+            response.addHeader("AccessToken", "Bearer " + accessToken);
+            response.addHeader("RefreshToken", "Bearer " + refreshToken);
+            response.addHeader("UserId", String.valueOf(principalDetails.getStudent().getStudentId()));
+
+            saveJwtToken(principalDetails, accessToken, refreshToken,"student");
+
+        }else{
+            String accessToken = JWT.create()
+                    .withSubject("cos jwt token")
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
                     .withClaim("email", principalDetails.getTeacher().getEmail())
                     .withClaim("name", principalDetails.getTeacher().getName())
                     .withClaim("role", principalDetails.getRole())
                     .sign(Algorithm.HMAC512("cos_jwt_token"));
-            response.addHeader("Authorization", "Bearer " + jwtToken);
-            response.addHeader("TeacherID", String.valueOf(principalDetails.getTeacher().getTeacherId()));
+
+            String refreshToken = JWT.create()
+                    .withSubject("cos jwt token")
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
+                    .withClaim("email", principalDetails.getTeacher().getEmail())
+                    .withClaim("name", principalDetails.getTeacher().getName())
+                    .withClaim("role", principalDetails.getRole())
+                    .sign(Algorithm.HMAC512("cos_jwt_token"));
+
+            response.addHeader("AccessToken", "Bearer " + accessToken);
+            response.addHeader("RefreshToken", "Bearer " + refreshToken);
+            response.addHeader("UserId", String.valueOf(principalDetails.getTeacher().getTeacherId()));
+
+            saveJwtToken(principalDetails, accessToken, refreshToken,"teacher");
+        }
+    }
+
+    public void saveJwtToken(PrincipalDetails principalDetails, String accessToken, String refreshToken, String role){
+        JwtToken jwtToken;
+        if(role.equals("student")){
+            jwtToken = new JwtToken();
+            jwtToken.setAccessToken(accessToken);
+            jwtToken.setRefreshToken(refreshToken);
+            jwtToken.setUserId(principalDetails.getStudent().getStudentId());
+            jwtToken.setRole(role);
+        }else{
+            jwtToken = new JwtToken();
+            jwtToken.setAccessToken(accessToken);
+            jwtToken.setRefreshToken(refreshToken);
+            jwtToken.setUserId(principalDetails.getTeacher().getTeacherId());
+            jwtToken.setRole(role);
+        }
+
+        Optional<JwtToken> optionalJwtToken = jwtTokenRepository.findByUserId(jwtToken.getUserId(), jwtToken.getRole());
+        if(optionalJwtToken.isEmpty()){
+            jwtTokenRepository.save(jwtToken);
+        }else{
+            JwtToken preJwtToken = optionalJwtToken.get();
+            preJwtToken.setAccessToken(jwtToken.getAccessToken());
+            preJwtToken.setRefreshToken(jwtToken.getRefreshToken());
+            jwtTokenRepository.save(preJwtToken);
         }
     }
 }

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -36,15 +36,15 @@ public class ReviewService {
         this.reviewMapper = reviewMapper;
     }
 
-    public void createReview(Review review){
+    public Review createReview(Review review){
         Teacher teacher = teacherService.findVerfiedTeacher(review.getTeacher().getTeacherId());
         tutoringService.findVerfiedTutoring(review.getTutoringId());
         if(isStudentRegisterReview(review.getTutoringId(), review.getStudentId())){
-            throw new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.STUDENT_ALREADY_EXISTS);
         }
         review.setTeacher(teacher);
         teacherService.updateReputation(teacher.getTeacherId(), review.getReputation(), 0,"create");
-        reviewRepository.save(review);
+        return reviewRepository.save(review);
     }
 
     public Review updateReview(Review review){
@@ -59,7 +59,7 @@ public class ReviewService {
 
     public Review findverifiedReview(long reviewId){
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
-        Review review = optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
+        Review review = optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
         return review;
     }
 
@@ -77,10 +77,15 @@ public class ReviewService {
             return false;
         }
     }
+    
     // Teacher 쪽에서 리뷰 목록 가져오기 위한 코드
-    public Page<Review> findBYTeacherId(int page, int size, long teacherId){
-        Page<Review> reviewPage = reviewRepository.findByteacherId(teacherId, PageRequest.of(page, size,
-                Sort.by("date").descending()));
+    //리턴 타입 Page<Review>에서 List<ReviewDto.Response>로 변경 -도윤
+    public Page<Review> findByTeacherId(int page, int size,String arrange, long teacherId){
+        teacherService.findVerfiedTeacher(teacherId);
+        Page<Review> reviewPage = reviewRepository.findByteacherId(teacherId,
+                PageRequest.of(page, size, Sort.by(arrange).descending()));
+
         return reviewPage;
     }
+
 }

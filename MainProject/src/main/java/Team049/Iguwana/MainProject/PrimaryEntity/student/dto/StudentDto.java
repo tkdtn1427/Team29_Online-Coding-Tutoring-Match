@@ -39,6 +39,8 @@ public class StudentDto {
         private String aboutMe;
 
         private String nickName;
+
+        private List<SkillList> skillTableList;
     }
 
     @Getter
@@ -68,6 +70,33 @@ public class StudentDto {
 
         private List<TutoringDto.Response> tutoringList;
 
-        private long tutoringcount;
+        private String imageUrl;
+
+        private String code;
+
+        private List<SkillResponse> skillResponseList;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    public static class SkillList {
+
+        private String name;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    public static class SkillResponse {
+
+        private long skillId;
+
+        private String name;
+
+        private String color;
+
     }
 }

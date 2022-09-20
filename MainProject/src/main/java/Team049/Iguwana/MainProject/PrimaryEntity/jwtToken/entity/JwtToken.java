@@ -17,10 +17,10 @@ public class JwtToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long jwtTokenId;
 
-    @Column
+    @Column(columnDefinition = "Text")
     private String accessToken;
 
-    @Column
+    @Column(columnDefinition = "Text")
     private String refreshToken;
 
     @Column
