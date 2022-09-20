@@ -118,13 +118,13 @@ public class StudentService {
     public void verifyExistsEMail(String email){
         Optional<Student> optionalStudent = studentRepository.findByEmail(email);
         if(optionalStudent.isPresent()){
-            throw new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
     }
 
     public Student findVerfiedStudent(long studentId){
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
-        Student student = optionalStudent.orElseThrow( () -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
+        Student student = optionalStudent.orElseThrow( () -> new BusinessLogicException(ExceptionCode.STUDENT_NOT_FOUND));
         return student;
     }
 

@@ -148,7 +148,7 @@ public class TeacherService {
     public void verifyExistsEMail(String email){
         Optional<Teacher> optionalTeacher = teacherRepository.findByEmail(email);
         if(optionalTeacher.isPresent()){
-            throw new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
     }
 
@@ -158,7 +158,7 @@ public class TeacherService {
 
     public Teacher findVerfiedTeacher(long teacherId){
         Optional<Teacher> optionalStudent = teacherRepository.findById(teacherId);
-        Teacher teacher = optionalStudent.orElseThrow( () -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
+        Teacher teacher = optionalStudent.orElseThrow( () -> new BusinessLogicException(ExceptionCode.TEACHER_NOT_FOUND));
         return teacher;
     }
 

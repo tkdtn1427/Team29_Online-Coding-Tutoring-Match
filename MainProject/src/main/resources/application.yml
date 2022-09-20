@@ -63,7 +63,7 @@ spring:
 #  subject:
 #    member:
 #      registration: Nice Meet you! We are Iguana!
-
+#
 #cloud:
 #  aws:
 #    credentials:
