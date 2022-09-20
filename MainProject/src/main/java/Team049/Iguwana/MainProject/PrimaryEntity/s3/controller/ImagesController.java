@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.controller;
 
 
@@ -29,9 +28,9 @@ public class ImagesController {
     public ResponseEntity uploadImage(
             @PathVariable("member-id") @Positive long memberId,
             @RequestPart("file") MultipartFile multipartFile,
-            @RequestParam("users") String users
+            @RequestParam("role") String role
     ) throws IOException {
-        return new ResponseEntity<>(imageService.upload(multipartFile,memberId,users)
+        return new ResponseEntity<>(imageService.upload(multipartFile,memberId,role)
                 ,HttpStatus.CREATED);
     }
 
@@ -39,20 +38,19 @@ public class ImagesController {
     public ResponseEntity patchImage(
             @PathVariable("member-id") @Positive long memberId,
             @RequestPart("file") MultipartFile multipartFile,
-            @RequestParam("users") String users
+            @RequestParam("role") String role
     ) throws IOException {
-        return new ResponseEntity<>(imageService.update(multipartFile,memberId,users)
+        return new ResponseEntity<>(imageService.update(multipartFile,memberId,role)
                 ,HttpStatus.OK);
     }
 
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteImage(
             @PathVariable("member-id") @Positive long memberId,
-            @RequestParam("users") String users
+            @RequestParam("role") String role
 
     ) {
-        imageService.remove(memberId,users);
+        imageService.remove(memberId,role);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-*/

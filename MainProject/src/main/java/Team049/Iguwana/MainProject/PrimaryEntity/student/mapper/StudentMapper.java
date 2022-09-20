@@ -59,6 +59,7 @@ public interface StudentMapper {
         response.setEmail(requestBody.getEmail());
         response.setName(requestBody.getName());
         response.setNickName(requestBody.getNickName());
+        response.setImageUrl(requestBody.getImageUrl());
         response.setTutoringList(requestBody.getTutoringList().stream().map(tutoring -> {
             return tutoringMapper.tutoringToTutoringResponse(tutoring);
         }).collect(Collectors.toList()));

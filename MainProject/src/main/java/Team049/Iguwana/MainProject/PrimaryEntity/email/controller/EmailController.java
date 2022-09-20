@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email.controller;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.email.service.EmailService;
@@ -28,4 +27,3 @@ public class EmailController {
         return "인증 완료";
     }
 }
-*/

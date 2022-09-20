@@ -12,7 +12,15 @@ public enum ExceptionCode {
     CODE_NOT_FOUND(404, "Code not found"),
     IMAGE_EXISTS(409, "image is exists"),
     IMAGE_NOT_FOUND(404, "image not found"),
-    IMAGE_CHECK(404, "image not include");
+    IMAGE_CHECK(404, "image not include"),
+
+
+
+
+
+
+    TEACHER_NOT_FOUND(404, "teacher not found"),
+    TEACHER_EXISTS(409,"teacher is exists");
 
 
 

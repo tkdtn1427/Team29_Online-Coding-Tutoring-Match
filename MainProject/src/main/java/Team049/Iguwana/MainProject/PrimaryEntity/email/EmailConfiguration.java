@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -56,4 +55,3 @@ public class EmailConfiguration {
         return mailSender;
     }
 }
-*/
