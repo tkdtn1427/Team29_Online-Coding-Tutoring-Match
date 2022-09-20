@@ -57,7 +57,7 @@ public class JwtTokenService {
         if(student != null){
             accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (20 * 1000)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
                     .withClaim("email", student.getEmail())
                     .withClaim("name", student.getName())
                     .withClaim("role", "student")
@@ -65,7 +65,7 @@ public class JwtTokenService {
         }else{
             accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (20 * 1000)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
                     .withClaim("email", teacher.getEmail())
                     .withClaim("name", teacher.getName())
                     .withClaim("role", "teacher")

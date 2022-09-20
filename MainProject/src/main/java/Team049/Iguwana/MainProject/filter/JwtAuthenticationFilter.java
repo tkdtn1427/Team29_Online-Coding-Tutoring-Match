@@ -77,7 +77,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         if(request.getHeader("role").equals("student")){
             String accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (20 * 1000)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
                     .withClaim("email", principalDetails.getStudent().getEmail())
                     .withClaim("name", principalDetails.getStudent().getName())
                     .withClaim("role", principalDetails.getRole())
@@ -85,7 +85,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             String refreshToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 5)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
                     .withClaim("email", principalDetails.getStudent().getEmail())
                     .withClaim("name", principalDetails.getStudent().getName())
                     .withClaim("role", principalDetails.getRole())
@@ -101,7 +101,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }else{
             String accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
                     .withClaim("email", principalDetails.getTeacher().getEmail())
                     .withClaim("name", principalDetails.getTeacher().getName())
                     .withClaim("role", principalDetails.getRole())
@@ -109,7 +109,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             String refreshToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 5)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
                     .withClaim("email", principalDetails.getTeacher().getEmail())
                     .withClaim("name", principalDetails.getTeacher().getName())
                     .withClaim("role", principalDetails.getRole())
