@@ -59,7 +59,7 @@ public class ReviewService {
 
     public Review findverifiedReview(long reviewId){
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
-        Review review = optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
+        Review review = optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
         return review;
     }
 
