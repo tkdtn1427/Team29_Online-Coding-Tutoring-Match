@@ -79,8 +79,7 @@ public class TeacherService {
         email.setUsers("teacher");
         emailRepository.save(email);
 
-      */
-        teacher.setPassword(transPassword(teacher.getPassword()));
+      /*teacher.setPassword(transPassword(teacher.getPassword()));
         teacher.setRoles("ROLE_TEACHER");
         teacherRepository.save(teacher);*/
     }
