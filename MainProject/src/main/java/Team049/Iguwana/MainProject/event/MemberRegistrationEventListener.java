@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.event;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.email.EmailSender;
@@ -43,4 +42,3 @@ public class MemberRegistrationEventListener {
         }
     }
 }
-*/

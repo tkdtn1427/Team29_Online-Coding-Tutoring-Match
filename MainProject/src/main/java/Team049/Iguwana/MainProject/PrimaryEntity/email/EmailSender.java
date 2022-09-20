@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email;
 
 import org.springframework.mail.MailSendException;
@@ -20,4 +19,3 @@ public class EmailSender {
         emailSendable.send(to, subject, message);
     }
 }
-*/

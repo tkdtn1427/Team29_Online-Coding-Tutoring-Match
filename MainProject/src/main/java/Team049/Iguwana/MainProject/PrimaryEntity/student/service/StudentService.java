@@ -1,8 +1,8 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.student.service;
 
 
-//import Team049.Iguwana.MainProject.PrimaryEntity.email.entity.Email;
-//import Team049.Iguwana.MainProject.PrimaryEntity.email.repository.EmailRepository;
+import Team049.Iguwana.MainProject.PrimaryEntity.email.entity.Email;
+import Team049.Iguwana.MainProject.PrimaryEntity.email.repository.EmailRepository;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.jwtToken.service.JwtTokenService;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
@@ -15,7 +15,7 @@ import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepos
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentSkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.service.TeacherService;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
-//import Team049.Iguwana.MainProject.event.MemberRegistrationApplicationEvent;
+import Team049.Iguwana.MainProject.event.MemberRegistrationApplicationEvent;
 import Team049.Iguwana.MainProject.exception.BusinessLogicException;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import org.springframework.context.ApplicationEventPublisher;
@@ -43,11 +43,11 @@ public class StudentService {
     private final ApplicationEventPublisher publisher;
     private Random random = new Random();
 
-    //private final EmailRepository emailRepository;
+    private final EmailRepository emailRepository;
 
     public StudentService(StudentRepository studentRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
                           @Lazy TeacherService teacherService, SkillRepository skillRepository, StudentSkillRepository studentSkillRepository,
-                          JwtTokenService jwtTokenService, ApplicationEventPublisher publisher){
+                          JwtTokenService jwtTokenService, ApplicationEventPublisher publisher, EmailRepository emailRepository){
         this.studentRepository = studentRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.teacherService = teacherService;
@@ -55,7 +55,7 @@ public class StudentService {
         this.studentSkillRepository = studentSkillRepository;
         this.jwtTokenService = jwtTokenService;
         this.publisher = publisher;
-        //this.emailRepository = emailRepository;
+        this.emailRepository = emailRepository;
     }
 
     //jungdoyoon 수정분
@@ -63,21 +63,21 @@ public class StudentService {
         verifyExistsEMail(student.getEmail());
         teacherService.verifyExistsEMail(student.getEmail());
 
-        /*String code = random.nextInt()+"";
-        publisher.publishEvent(new MemberRegistrationApplicationEvent(this, student,"2",student.getEmail()));
+        String code = random.nextInt()+"";
+        publisher.publishEvent(new MemberRegistrationApplicationEvent(this, student,code,student.getEmail()));
         Email email = new Email();
         email.setName(student.getName());
         email.setPassword(student.getPassword());
         email.setEmail(student.getEmail());
         email.setAboutMe(student.getAboutMe());
         email.setNickName(student.getNickName());
-        email.setCode("2");
+        email.setCode(code);
         email.setUsers("student");
-        emailRepository.save(email);*/
+        emailRepository.save(email);
 
-        student.setPassword(transPassword(student.getPassword()));
+/*        student.setPassword(transPassword(student.getPassword()));
         student.setRoles("ROLE_USER");
-        studentRepository.save(student);
+        studentRepository.save(student);*/
     }
 
     public void deleteStudent(long studentId){

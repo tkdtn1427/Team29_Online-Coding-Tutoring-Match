@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.controller;
 
 
@@ -55,4 +54,3 @@ public class ImagesController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-*/

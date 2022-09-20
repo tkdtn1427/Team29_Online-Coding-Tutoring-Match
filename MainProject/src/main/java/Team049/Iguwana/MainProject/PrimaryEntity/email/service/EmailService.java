@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email.service;
 
 
@@ -75,4 +74,3 @@ public class EmailService {
         return bCryptPasswordEncoder.encode(password);
     }
 }
-*/

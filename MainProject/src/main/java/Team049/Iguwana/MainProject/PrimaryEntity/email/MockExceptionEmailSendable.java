@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email;
 
 import org.springframework.mail.MailSendException;
@@ -10,4 +9,3 @@ public class MockExceptionEmailSendable implements EmailSendable {
         throw new MailSendException("error while sending Mock email");
     }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.entity;
 
 
@@ -27,4 +26,4 @@ public class Images {
 
     private String role;
 
-}*/
+}

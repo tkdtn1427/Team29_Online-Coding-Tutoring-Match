@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.repository;
 
 
@@ -13,4 +12,3 @@ public interface ImagesRepository extends JpaRepository<Images, Long> {
     @Query(value ="select * from images where images_key = :keys", nativeQuery = true)
     Optional<Images> findByKeys(String keys);
 }
-*/

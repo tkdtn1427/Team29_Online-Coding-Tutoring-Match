@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.email.repository;
 
 
@@ -16,4 +15,3 @@ public interface EmailRepository extends JpaRepository<Email,Long> {
 
 
 }
-*/

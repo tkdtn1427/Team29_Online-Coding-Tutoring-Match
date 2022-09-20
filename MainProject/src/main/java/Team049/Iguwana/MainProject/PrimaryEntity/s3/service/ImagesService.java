@@ -1,4 +1,3 @@
-/*
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.service;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.s3.entity.Images;
@@ -85,7 +84,7 @@ public class ImagesService {
         removeFile(file);
         Images image = new Images();
         image.setImagesKey(key);
-        image.setUsers(users);
+        image.setRole(users);
         image.setMemberId(memberId);
         return image;
 
@@ -111,11 +110,12 @@ public class ImagesService {
 
     public Optional<File> convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
         File file = new File(multipartFile.getOriginalFilename());
-        System.out.println(file.getName());
+
         if (file.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(file)) {
                 fos.write(multipartFile.getBytes());
             }
+
             return Optional.of(file);
         }
         return Optional.empty();
@@ -179,4 +179,3 @@ public class ImagesService {
     }
 
 }
-*/
