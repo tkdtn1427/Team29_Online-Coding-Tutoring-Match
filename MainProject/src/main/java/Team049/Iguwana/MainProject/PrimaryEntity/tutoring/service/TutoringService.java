@@ -65,7 +65,7 @@ public class TutoringService {
 
     public Tutoring findVerfiedTutoring(long tutoringId){
         Optional<Tutoring> optionalTutoring = tutoringRepository.findById(tutoringId);
-        Tutoring tutoring = optionalTutoring.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
+        Tutoring tutoring = optionalTutoring.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TUTORING_NOT_FOUND));
         return tutoring;
     }
 

@@ -40,7 +40,7 @@ public class ReviewService {
         Teacher teacher = teacherService.findVerfiedTeacher(review.getTeacher().getTeacherId());
         tutoringService.findVerfiedTutoring(review.getTutoringId());
         if(isStudentRegisterReview(review.getTutoringId(), review.getStudentId())){
-            throw new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND);
+            throw new BusinessLogicException(ExceptionCode.STUDENT_ALREADY_EXISTS);
         }
         review.setTeacher(teacher);
         teacherService.updateReputation(teacher.getTeacherId(), review.getReputation(), 0,"create");
@@ -59,7 +59,7 @@ public class ReviewService {
 
     public Review findverifiedReview(long reviewId){
         Optional<Review> optionalReview = reviewRepository.findById(reviewId);
-        Review review = optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
+        Review review = optionalReview.orElseThrow(() -> new BusinessLogicException(ExceptionCode.REVIEW_NOT_FOUND));
         return review;
     }
 

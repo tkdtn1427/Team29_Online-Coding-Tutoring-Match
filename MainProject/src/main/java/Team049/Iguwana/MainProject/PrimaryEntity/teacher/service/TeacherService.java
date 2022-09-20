@@ -39,11 +39,10 @@ public class TeacherService {
     private final SkillRepository skillRepository;
     private final SkillTableRepository skillTableRepository;
 
-
-
     private final ApplicationEventPublisher publisher;
     private Random random = new Random();
     private final EmailRepository emailRepository;
+
 
     //Sangsoo 추가분 
     private final JwtTokenService jwtTokenService;
@@ -79,7 +78,9 @@ public class TeacherService {
         email.setCode(code);
         email.setUsers("teacher");
         emailRepository.save(email);
-        /*teacher.setPassword(transPassword(teacher.getPassword()));
+
+      */
+        teacher.setPassword(transPassword(teacher.getPassword()));
         teacher.setRoles("ROLE_TEACHER");
         teacherRepository.save(teacher);*/
     }
@@ -117,6 +118,7 @@ public class TeacherService {
     }
 
     public Page<Teacher> findTeachers(int page, int size, String arrange){
+        System.out.println("서비스확인");
         return teacherRepository.findAll(PageRequest.of(page, size,
                 Sort.by(arrange).descending()));
     }
@@ -146,7 +148,7 @@ public class TeacherService {
     public void verifyExistsEMail(String email){
         Optional<Teacher> optionalTeacher = teacherRepository.findByEmail(email);
         if(optionalTeacher.isPresent()){
-            throw new BusinessLogicException(ExceptionCode.TEACHER_EXISTS);
+            throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
     }
 
