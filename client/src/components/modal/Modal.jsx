@@ -43,7 +43,7 @@ const Overlay = styled.div`
   z-index: 9999;
 `;
 const ModalWrap = styled.div`
-  width: 600px;
+  width: fit-content;
   height: fit-content;
   border-radius: 15px;
   background-color: #ffffff;
