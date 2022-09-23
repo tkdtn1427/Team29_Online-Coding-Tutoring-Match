@@ -1,7 +1,12 @@
-// 수정일 때 등록일 때 버튼 다르게
+import Modal from './Modal.jsx';
+import LessonInput from '../input/LessonInput.jsx';
 
-function LessonModal() {
-  return <div>LessonModal</div>;
+function LessonModal({ onClose }) {
+  return (
+    <Modal onClose={onClose}>
+      <LessonInput />
+    </Modal>
+  );
 }
 
 export default LessonModal;
