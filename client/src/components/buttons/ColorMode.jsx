@@ -18,6 +18,7 @@ const COLOR = {
   WHITE: {
     bgcolor: '#FFFFFF',
     ftcolor: '#FF805C',
+    shadow: '0px 2px 10px #bfbfbf',
   },
 };
 
@@ -32,7 +33,17 @@ function IconMode({ mode, ...props }) {
 }
 
 function TextMode({ mode, ...props }) {
-  const { bgcolor, ftcolor } = COLOR[mode];
-  return <TextButton ftcolor={ftcolor} bgcolor={bgcolor} text={props.text} />;
+  const { bgcolor, ftcolor, shadow } = COLOR[mode];
+  return (
+    <TextButton
+      ftcolor={ftcolor}
+      bgcolor={bgcolor}
+      text={props.text}
+      shadow={shadow}
+      ftsize={props.ftsize}
+      padding={props.padding}
+      onClick={props.onClick}
+    />
+  );
 }
 export { FilterMode, IconMode, TextMode };
