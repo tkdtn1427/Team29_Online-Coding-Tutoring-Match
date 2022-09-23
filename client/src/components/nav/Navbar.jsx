@@ -5,11 +5,17 @@ import { TextMode, IconMode } from '../buttons/ColorMode.jsx';
 import LowercaseLogo from '../logos/LowercaseLogo.jsx';
 import Profile from '../../assets/svg/Profile.jsx';
 import Alert from '../../assets/svg/Alert.jsx';
+import LoginModal from '../modal/LoginModal.jsx';
 
 function Navbar() {
   const [isLogin, setIsLogin] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   // 리덕스상태로 변경 예정
 
+  const openLoginModal = () => {
+    setIsOpen(!isOpen);
+  };
+  console.log(isOpen);
   return (
     <Container>
       <LowercaseLogo />
@@ -21,8 +27,21 @@ function Navbar() {
         </ButtonWrapper>
       ) : (
         <ButtonWrapper>
-          <TextMode mode="ORANGE" text="login" />
+          <TextMode
+            mode="ORANGE"
+            text="login"
+            onClick={() => {
+              openLoginModal();
+            }}
+          />
           <TextMode mode="GREEN" text="signup" />
+          {isOpen && (
+            <LoginModal
+              onClose={() => {
+                openLoginModal();
+              }}
+            />
+          )}
         </ButtonWrapper>
       )}
     </Container>
