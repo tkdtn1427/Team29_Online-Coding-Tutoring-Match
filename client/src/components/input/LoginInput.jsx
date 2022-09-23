@@ -67,9 +67,13 @@ const Container = styled.fieldset`
   .fil {
     width: 500px;
     height: 40px;
-    margin: 0 10px 0 0;
     border-radius: 50px;
     border: 1px solid var(--liblk);
+
+    :focus {
+      outline: 2px solid var(--grn);
+      transition: outline 150ms ease-in-out;
+    }
   }
   .wrp {
     display: flex;
