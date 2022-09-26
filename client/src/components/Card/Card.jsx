@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import TagListBox from '../tagbox/TagListBox.jsx';
-import Star from '../star/Star.jsx';
+import Stars from '../star/Stars.jsx';
 
 //  TagListBox width height 내려주기...
 // img 데이터 list에서 내려줘서 map 안에서 담기
@@ -15,7 +15,7 @@ function Card() {
       <Introduce>
         <Name></Name>
         <Wrapper>
-          <Star />
+          <Stars />
           <Score></Score>
         </Wrapper>
       </Introduce>
