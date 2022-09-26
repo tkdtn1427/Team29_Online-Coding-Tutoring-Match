@@ -66,5 +66,8 @@ public class SkillService {
         }
     }
 
-
+    public List<Skill> findSkillAll() {
+        List<Skill> skills = repository.findAll();
+        return skills;
+    }
 }
