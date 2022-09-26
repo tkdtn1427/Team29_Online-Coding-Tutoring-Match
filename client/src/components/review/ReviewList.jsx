@@ -1,7 +1,7 @@
 import ReviewBox from './ReviewBox.jsx';
 
 function ReviewList() {
-  return <div>ReviewList</div>;
+  return <ReviewBox />;
 }
 
 export default ReviewList;
