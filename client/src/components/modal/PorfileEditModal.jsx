@@ -1,7 +1,11 @@
-// 선생님용 학생용 다르게 만들기
+import Modal from './Modal.jsx';
+import ProfileEditinput from '../input/ProfileEditInput.jsx';
 
-function PorfileEditModal() {
-  return <div>PorfileEditModal</div>;
+function PorfileEditModal({ onClose }) {
+  return (
+    <Modal onClose={onClose}>
+      <ProfileEditinput onClose={onClose} />
+    </Modal>
+  );
 }
-
 export default PorfileEditModal;
