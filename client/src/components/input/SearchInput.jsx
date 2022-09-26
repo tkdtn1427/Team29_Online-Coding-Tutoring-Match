@@ -19,9 +19,9 @@ function SearchInput({ width, height, placeholder, props }) {
       }}>
       {() => (
         <Container>
-          <Form className="form">
+          <Form className="for">
             <Search props={props} />
-            <Field name="search" type="text" className="fil" width={width} height={height} placeholder={placeholder} />
+            <Field name="search" type="text" className="fill" width={width} height={height} placeholder={placeholder} />
           </Form>
         </Container>
       )}
@@ -30,8 +30,7 @@ function SearchInput({ width, height, placeholder, props }) {
 }
 
 const Container = styled.fieldset`
-  margin: 100px;
-  .form {
+  .for {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,7 +43,7 @@ const Container = styled.fieldset`
 
     box-shadow: 0px 0px 5px 0px var(--grn);
   }
-  .fil {
+  .fill {
     width: ${props => props.width};
     height: ${props => props.height};
     padding: 0 10px;
@@ -55,10 +54,6 @@ const Container = styled.fieldset`
     :focus {
       outline: none;
     }
-  }
-  .btn {
-    border: none;
-    background-color: #fff;
   }
 `;
 
