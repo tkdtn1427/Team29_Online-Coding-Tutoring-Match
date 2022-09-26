@@ -7,8 +7,10 @@ import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepos
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.mapper.TutoringMapper;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
+import Team049.Iguwana.MainProject.oauth.PrincipalDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,8 +50,6 @@ public class StudentController {
     @GetMapping("/myPage/{student-id}")
     public ResponseEntity showStudent(@PathVariable("student-id") long studentId){
         Student student = studentService.findVerfiedStudent(studentId);
-
-
         StudentDto.Response response = studentMapper.studentToStudentResponse(student, tutoringMapper);
         studentService.setCode(response);
         if (!response.getImageUrl().equals("x")) {

@@ -74,10 +74,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         System.out.println("successfulAuthentication");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+        //TODO - fix : 리팩토링필요
         if(request.getHeader("role").equals("student")){
             String accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (20 * 1000)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000)))
                     .withClaim("email", principalDetails.getStudent().getEmail())
                     .withClaim("name", principalDetails.getStudent().getName())
                     .withClaim("role", principalDetails.getRole())

@@ -46,10 +46,10 @@ public class SecurityConfig {
                 .apply(new CustomDsl())
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login")
-//                .permitAll()
-//                .antMatchers("/v1/students/password/**")
-//                .access("hasRole('ROLE_USER')")
+                .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login")
+                .permitAll()
+                .antMatchers("/v1/students/password/**")
+                .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll();
         return http.build();
     }

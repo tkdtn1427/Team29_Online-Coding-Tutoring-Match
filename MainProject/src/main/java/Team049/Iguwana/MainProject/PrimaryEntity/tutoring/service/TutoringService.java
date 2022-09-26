@@ -107,7 +107,7 @@ public class TutoringService {
                     }).collect(Collectors.toList());
             return responses;
         }else{
-            LocalDate callDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+            LocalDate callDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
             List<TutoringDto.Response> responses = tutoringList.stream().filter(tutoring ->{
                         Tutoring responseTutoring = new Tutoring();
                         if(tutoring.getStart_pd().isBefore(callDate.plusDays(1)) && tutoring.getEnd_pd().plusDays(1).isAfter(callDate)){
