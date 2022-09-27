@@ -6,7 +6,7 @@ function Carousel2() {
 
 const Container = styled.div`
   width: 100%;
-  height: 430px;
+  height: 350px;
   float: left;
   background-color: var(--org);
 `;
