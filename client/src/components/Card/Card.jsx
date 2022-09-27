@@ -15,7 +15,7 @@ function Card() {
       <Introduce>
         <Name></Name>
         <Wrapper>
-          <Stars />
+          <Stars width="10" height="10" />
           <Score></Score>
         </Wrapper>
       </Introduce>

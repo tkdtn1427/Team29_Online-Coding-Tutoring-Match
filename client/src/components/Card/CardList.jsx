@@ -15,8 +15,7 @@ const Container = styled.div`
   justify-items: center;
   grid-template-columns: repeat(4, 1fr);
   row-gap: 50px;
-  border: 1px solid red;
-  width: 1200px;
+  width: 1100px;
 `;
 
 export default CardList;
