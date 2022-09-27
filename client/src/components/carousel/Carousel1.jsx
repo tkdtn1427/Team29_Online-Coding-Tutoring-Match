@@ -21,10 +21,10 @@ const Container = styled.div`
   align-items: center;
   float: left;
   width: 100%;
-  height: 430px;
+  height: 350px;
   background-color: var(--grn);
   .img {
-    margin: 130px 30px 0px 0px;
+    margin: 110px 30px 0px 0px;
     width: 180px;
     height: 230px;
   }
@@ -36,17 +36,15 @@ const Intro = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 180px;
-  div:first-child {
-    font-family: var(--main);
+  font-family: var(--main);
+  div:first-of-type {
     font-size: var(--s);
     margin: 0px 0px 10px 0px;
   }
-  div:nth-child(2) {
-    font-family: var(--main);
+  div:nth-of-type(2) {
     font-size: 40px;
   }
-  div:nth-child(3) {
-    font-family: var(--main);
+  div:nth-of-type(3) {
     font-size: var(--reg);
     margin: 10px 0px 0px 0px;
   }

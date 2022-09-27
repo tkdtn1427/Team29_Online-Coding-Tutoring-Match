@@ -50,7 +50,7 @@ function Carousel() {
 const Container = styled.div`
   margin: 0 auto;
   overflow: hidden;
-  max-width: 1200px;
+  max-width: 1100px;
 
   .inner {
     white-space: nowrap;
