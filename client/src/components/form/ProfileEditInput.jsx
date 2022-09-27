@@ -2,7 +2,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
 
-import SearchInput from './SearchInput.jsx';
+import SearchInput from '../input/SearchInput.jsx';
 import { TextMode } from '../buttons/ColorMode.jsx';
 
 function ProfileEditInput({ onClose }) {

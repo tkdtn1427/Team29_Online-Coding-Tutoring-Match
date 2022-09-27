@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Radio from '../checkbox/CheckBox.jsx';
-import SignupInput from '../input/SignupInput.jsx';
+import SignupInput from '../form/SignupInput.jsx';
 
 function Signup() {
   return (
