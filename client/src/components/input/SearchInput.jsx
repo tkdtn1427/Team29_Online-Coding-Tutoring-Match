@@ -1,56 +1,30 @@
-import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
 import styled from '@emotion/styled';
-
 import Search from '../../assets/svg/Search.jsx';
 
-function SearchInput({ width, height, placeholder, props }) {
+function SearchInput({ width, height, placeholder, ftsize }) {
   return (
-    <Formik
-      initialValues={{ search: '' }}
-      validationSchema={Yup.object({
-        search: Yup.string(),
-      })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          // console.log(values);
-          setSubmitting(false);
-        }, 400);
-      }}>
-      {() => (
-        <Container>
-          <Form className="for">
-            <Search props={props} />
-            <Field name="search" type="text" className="fill" width={width} height={height} placeholder={placeholder} />
-          </Form>
-        </Container>
-      )}
-    </Formik>
+    <Container width={width} height={height} ftsize={ftsize}>
+      <Search width={20} height={20} />
+      <input name="search" type="text" className="fill" placeholder={placeholder} />
+    </Container>
   );
 }
 
-const Container = styled.fieldset`
-  .for {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: fit-content;
-    height: fit-content;
-    border-radius: 50px;
-    border: 2px solid var(--grn);
-    padding: 0 10px;
-
-    box-shadow: 0px 0px 5px 0px var(--grn);
-  }
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  border: 1px solid var(--grn);
+  padding: 0px 10px;
+  box-shadow: 0px 0px 5px var(--grn);
   .fill {
-    width: ${props => props.width};
-    height: ${props => props.height};
-    padding: 0 10px;
-
     border: none;
     background-color: transparent;
-
+    margin: 0px 0px 0px 8px;
+    width: ${props => props.width};
+    height: ${props => props.height};
+    font-size: ${props => props.ftsize};
+    color: var(--blk);
     :focus {
       outline: none;
     }
