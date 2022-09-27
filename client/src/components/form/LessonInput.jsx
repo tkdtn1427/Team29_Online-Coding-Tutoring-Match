@@ -15,11 +15,11 @@ function LessonInput({ onClose }) {
         startdate: Yup.date(),
         enddate: Yup.date(),
         day: Yup.string().matches(/(월요일|화요일|수요일|목요일|금요일|토요일|일요일)/),
-        time: Yup.number(),
+        time: Yup.string(),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          // console.log(values);
+          console.log(values);
           setSubmitting(false);
         }, 400);
       }}>

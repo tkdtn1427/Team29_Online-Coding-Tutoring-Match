@@ -1,5 +1,5 @@
 import Modal from './Modal.jsx';
-import ProfileEditinput from '../input/ProfileEditInput.jsx';
+import ProfileEditinput from '../form/ProfileEditInput.jsx';
 
 function PorfileEditModal({ onClose }) {
   return (

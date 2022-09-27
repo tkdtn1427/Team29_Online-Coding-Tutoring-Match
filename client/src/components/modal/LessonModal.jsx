@@ -1,5 +1,5 @@
 import Modal from './Modal.jsx';
-import LessonInput from '../input/LessonInput.jsx';
+import LessonInput from '../form/LessonInput.jsx';
 
 function LessonModal({ onClose }) {
   return (

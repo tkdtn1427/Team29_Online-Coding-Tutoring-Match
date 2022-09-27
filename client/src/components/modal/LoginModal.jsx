@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import LoginInput from '../input/LoginInput.jsx';
+import LoginInput from '../form/LoginInput.jsx';
 import Modal from './Modal.jsx';
 
 function LoginModal({ onClose }) {
