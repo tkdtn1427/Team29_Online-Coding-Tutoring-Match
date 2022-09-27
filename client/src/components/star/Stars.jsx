@@ -10,10 +10,10 @@ function Stars({ scores, width, height }) {
   return (
     <Container>
       {orgarr.map((_, i) => (
-        <Star key={i} width="50" height="50" color="var(--org)" /> // width, height props로 바꿔야함
+        <Star key={i} width={width} height={height} color="var(--org)" /> // width, height props로 바꿔야함
       ))}
       {gryarr.map((_, i) => (
-        <Star key={i} width="50" height="50" color="var(--liblk)" /> // width, height props로 바꿔야함
+        <Star key={i} width={width} height={height} color="var(--liblk)" /> // width, height props로 바꿔야함
       ))}
     </Container>
   );
