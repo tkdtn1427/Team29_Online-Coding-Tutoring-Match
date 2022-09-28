@@ -9,6 +9,7 @@ name: Java CI with Gradle
 
 on:
   push:
+
     branches: [ "dev-be-all" ]
 
 permissions:
