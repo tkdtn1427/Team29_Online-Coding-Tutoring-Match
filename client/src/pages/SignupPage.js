@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import SignupInput from '../components/form/SignupInput.jsx';
+import Signupform from '../components/form/Signupform.jsx';
 
 function SignupPage() {
   return (
     <Container>
-      <SignupInput />
+      <Signupform />
     </Container>
   );
 }
