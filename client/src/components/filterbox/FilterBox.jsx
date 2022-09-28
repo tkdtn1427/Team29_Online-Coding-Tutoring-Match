@@ -4,15 +4,12 @@ import TagListBox from '../tagbox/TagListBox.jsx';
 import { TextMode } from '../buttons/ColorMode.jsx';
 import SearchInput from '../input/SearchInput.jsx';
 import Dropbox from '../dropbox/Dropbox.jsx';
+import TabHandler from '../../utils/TabHandler';
 
 function FilterBox() {
   const [currentTab, setCurrentTab] = useState(0);
 
   const Tab = [{ text: '인기순' }, { text: '관심분야별' }];
-
-  const selectTabHandler = i => {
-    setCurrentTab(i);
-  };
 
   return (
     <Container>
@@ -25,7 +22,7 @@ function FilterBox() {
             ftsize="var(--s)"
             padding="10px 15px"
             onClick={() => {
-              selectTabHandler(i);
+              TabHandler(i, setCurrentTab);
             }}
           />
         ))}
