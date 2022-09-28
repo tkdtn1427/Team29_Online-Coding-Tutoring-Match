@@ -55,6 +55,7 @@ const Container = styled.div`
   left: 0;
   display: flex;
   border-bottom: 1px solid var(--blk);
+  background-color: white;
   width: 100%;
   height: 60px;
   z-index: 10px;
