@@ -35,7 +35,6 @@ public class Email {
 
     private String career;
 
-    @Column(nullable = false)
     private String aboutMe;
 
     @Column(nullable = false)
