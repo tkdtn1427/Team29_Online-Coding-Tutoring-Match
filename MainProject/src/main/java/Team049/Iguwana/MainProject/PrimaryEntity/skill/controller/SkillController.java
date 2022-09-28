@@ -49,4 +49,9 @@ public class SkillController {
         return new ResponseEntity(
                 new MultiResponseDto<>(skills,pageSkill), HttpStatus.OK);
     }
+    @GetMapping("/all")
+    public ResponseEntity getSkillAll() {
+        List<Skill> skills = service.findSkillAll();
+        return new ResponseEntity(mapper.skillsToResponse(skills), HttpStatus.OK);
+    }
 }
