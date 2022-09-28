@@ -9,7 +9,6 @@ name: Java CI with Gradle
 
 on:
   push:
-
     branches: [ "dev-be-all" ]
 
 permissions:
@@ -57,7 +56,7 @@ jobs:
     # CodeDeploy에게 배로 명령을 내립니다.
     - name: Code Deploy
       run: >
-        aws deploy create-deployment --application-name pre-029-bucket
+        aws deploy create-deployment --application-name main-029
         --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name pre-029-bucket-group
+        --deployment-group-name main-029-group
         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=practice-deploy.zip
