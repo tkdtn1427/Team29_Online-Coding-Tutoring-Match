@@ -32,6 +32,6 @@ public class PrincipalDetailsService implements UserDetailsService {
             return new PrincipalDetails(optionalTeacher.get());
         }
 
-        throw new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND);
+        throw new BusinessLogicException(ExceptionCode.LOGIN_FAILURE);
     }
 }

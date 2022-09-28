@@ -18,7 +18,10 @@ public enum ExceptionCode {
     EMAIL_EXISTS(409, "Email is exists"),
     STUDENT_NOT_FOUND(404, "Student not found"),
     TEACHER_NOT_FOUND(404, "Teacher not found"),
-    TUTORING_NOT_FOUND(404, "Tutoring not found");
+    TUTORING_NOT_FOUND(404, "Tutoring not found"),
+    REFRESH_NOT_EQUAL(403, "Refresh token not equal"),
+    RERFRSH_EXPIRED(403, "Please login again"),
+    LOGIN_FAILURE(404, "User or Password not wrong");
 
 
 
