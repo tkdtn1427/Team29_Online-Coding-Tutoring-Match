@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/v1/jwt")
@@ -24,7 +25,7 @@ public class JwtTokenController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity getRefreshToken(@Validated @RequestBody JwtTokenDto.Refresh refresh, HttpServletResponse response){
+    public ResponseEntity getRefreshToken(@Validated @RequestBody JwtTokenDto.Refresh refresh, HttpServletResponse response) throws IOException {
         JwtToken jwtToken = jwtTokenMapper.jwtTokenRefreshToJwtToken(refresh);
         JwtToken newJwtToken = jwtTokenService.reAccessToken(jwtToken, response);
         return new ResponseEntity(HttpStatus.OK);

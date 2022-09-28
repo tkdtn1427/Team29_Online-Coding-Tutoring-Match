@@ -11,16 +11,19 @@ import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class JwtTokenService {
     private final JwtTokenRepository jwtTokenRepository;
 
@@ -35,7 +38,7 @@ public class JwtTokenService {
         this.studentService = studentService;
     }
 
-    public JwtToken reAccessToken(JwtToken jwtToken, HttpServletResponse response){
+    public JwtToken reAccessToken(JwtToken jwtToken, HttpServletResponse response) throws IOException {
         Optional<JwtToken> optionalJwtToken = jwtTokenRepository.findByUserId(jwtToken.getUserId(), jwtToken.getRole());
         JwtToken findJwtToken = optionalJwtToken.orElseThrow(()->new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND));
         checkRefreshToken(jwtToken.getRefreshToken(), findJwtToken.getRefreshToken());
@@ -57,7 +60,7 @@ public class JwtTokenService {
         if(student != null){
             accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 24)))
                     .withClaim("email", student.getEmail())
                     .withClaim("name", student.getName())
                     .withClaim("role", "student")
@@ -65,7 +68,7 @@ public class JwtTokenService {
         }else{
             accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 24)))
                     .withClaim("email", teacher.getEmail())
                     .withClaim("name", teacher.getName())
                     .withClaim("role", "teacher")
@@ -74,15 +77,15 @@ public class JwtTokenService {
         return accessToken;
     }
 
-    public void checkRefreshToken(String refreshToken, String storeRefreshToken){
+    public void checkRefreshToken(String refreshToken, String storeRefreshToken) throws IOException {
         String jwtToken = refreshToken.replace("Bearer ", "");
         if(!jwtToken.equals(String.valueOf(storeRefreshToken))){
-            throw new BusinessLogicException(ExceptionCode.SKILL_EXISTS);
+            throw new BusinessLogicException(ExceptionCode.REFRESH_NOT_EQUAL);
         }
         try{
             JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken);
         }catch (TokenExpiredException e){
-            throw new TokenExpiredException("Please login again");
+            throw new BusinessLogicException(ExceptionCode.RERFRSH_EXPIRED);
         }
     }
 

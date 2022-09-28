@@ -6,12 +6,19 @@ import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
+import Team049.Iguwana.MainProject.exception.BusinessLogicException;
+import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import Team049.Iguwana.MainProject.oauth.PrincipalDetails;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,10 +31,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Optional;
 
 //@RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private StudentRepository studentRepository;
@@ -64,7 +73,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             }
 //            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("Dwqdqwdqwdqwd");
         }
         return null;
     }
@@ -77,7 +86,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         if(request.getHeader("role").equals("student")){
             String accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 24)))
                     .withClaim("email", principalDetails.getStudent().getEmail())
                     .withClaim("name", principalDetails.getStudent().getName())
                     .withClaim("role", principalDetails.getRole())
@@ -85,7 +94,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             String refreshToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + Duration.ofDays(30).toMillis()))
                     .withClaim("email", principalDetails.getStudent().getEmail())
                     .withClaim("name", principalDetails.getStudent().getName())
                     .withClaim("role", principalDetails.getRole())
@@ -101,7 +110,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }else{
             String accessToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 3)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 24)))
                     .withClaim("email", principalDetails.getTeacher().getEmail())
                     .withClaim("name", principalDetails.getTeacher().getName())
                     .withClaim("role", principalDetails.getRole())
@@ -109,7 +118,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             String refreshToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 60 * 72)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + Duration.ofDays(30).toMillis()))
                     .withClaim("email", principalDetails.getTeacher().getEmail())
                     .withClaim("name", principalDetails.getTeacher().getName())
                     .withClaim("role", principalDetails.getRole())
@@ -148,5 +157,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             preJwtToken.setRefreshToken(jwtToken.getRefreshToken());
             jwtTokenRepository.save(preJwtToken);
         }
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
+        log.info("Login 실패");
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
+        ResponseError responseError = new ResponseError(HttpStatus.NOT_FOUND.value(), "User or Password not wrong");
+        response.getWriter().write(new ObjectMapper(). writeValueAsString(responseError));
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class ResponseError{
+        private int status;
+        private String message;
     }
 }
