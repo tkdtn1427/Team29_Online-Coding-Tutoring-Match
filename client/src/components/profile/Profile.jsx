@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-
+import { useLocation } from 'react-router-dom';
+import ProfileImg from '../profileImg/ProfileImg.jsx';
 import { TextMode } from '../buttons/ColorMode.jsx';
 import PorfileEditModal from '../modal/PorfileEditModal.jsx';
 
@@ -11,20 +12,30 @@ function Profile() {
     setIsOpen(!isOpen);
   };
 
+  const location = useLocation();
+
   return (
     <Container>
       <div className="picture">
-        <div className="pic">사진</div>
-        <div className="btnWrap">
-          <TextMode mode={'ORANGE'} text={'삭제'} />
-          <TextMode mode={'GREEN'} text={'등록'} />
-        </div>
+        <ProfileImg></ProfileImg>
+        {location.pathname === '/mypage' ? (
+          <div className="btnWrap">
+            <TextMode mode={'ORANGE'} text={'삭제'} />
+            <TextMode mode={'GREEN'} text={'등록'} />
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       <Wrapper>
         <div className="nameWrap">
           <p>코드까마귀</p>
           <span>#0001</span>
-          <TextMode mode={'GREEN'} text={'수정'} onClick={onClickButton} />
+          {location.pathname === '/mypage' ? (
+            <TextMode mode={'GREEN'} text={'수정'} onClick={onClickButton} />
+          ) : (
+            <TextMode mode={'GREEN'} text={'문의하기'} onClick={onClickButton} />
+          )}
           {isOpen && <PorfileEditModal onClose={onClickButton} />}
         </div>
         <div className="st">별점 4.8</div>
@@ -39,11 +50,10 @@ function Profile() {
 }
 
 const Container = styled.div`
-  margin: 120px 0 0 0;
-
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  padding: 60px 50px;
 
   .picture {
     display: flex;
@@ -51,7 +61,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
   }
-  .pic {
+  /* .pic {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,12 +72,11 @@ const Container = styled.div`
     height: 300px;
 
     background-color: var(--grn);
-  }
+  } */
   .btnWrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     width: 200px;
     margin: 30px 0 0 0;
   }
