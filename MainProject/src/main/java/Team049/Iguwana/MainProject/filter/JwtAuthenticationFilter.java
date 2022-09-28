@@ -86,7 +86,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             String refreshToken = JWT.create()
                     .withSubject("cos jwt token")
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 5)))
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000)))
                     .withClaim("email", principalDetails.getStudent().getEmail())
                     .withClaim("name", principalDetails.getStudent().getName())
                     .withClaim("role", principalDetails.getRole())

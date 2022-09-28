@@ -82,7 +82,7 @@ public class JwtTokenService {
         try{
             JWT.require(Algorithm.HMAC512("cos_jwt_token")).build().verify(jwtToken);
         }catch (TokenExpiredException e){
-            throw new TokenExpiredException("Please login again");
+            throw new BusinessLogicException(ExceptionCode.TEMP_NOT_FOUND);
         }
     }
 
