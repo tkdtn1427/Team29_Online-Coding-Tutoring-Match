@@ -32,7 +32,7 @@ public class EmailService {
         this.studentRepository = studentRepository;
     }
 
-    public void emailCheckMember(String code) {
+    public String emailCheckMember(String code) {
         Optional<Email> result = emailRepository.findByCodes(code);
 
         if(result.isPresent()){
@@ -64,6 +64,7 @@ public class EmailService {
                 student.setRoles("ROLE_USER");
                 studentRepository.save(student);
             }
+            return email.getUsers();
         }else{
             throw new BusinessLogicException(ExceptionCode.CODE_NOT_FOUND);
         }

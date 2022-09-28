@@ -23,7 +23,7 @@ public class EmailController {
     @ResponseStatus(HttpStatus.CREATED)
     public String checkMember(String code) {
 
-        emailService.emailCheckMember(code);
-        return "인증 완료";
+        String user =emailService.emailCheckMember(code);
+        return user+" 인증 완료";
     }
 }
