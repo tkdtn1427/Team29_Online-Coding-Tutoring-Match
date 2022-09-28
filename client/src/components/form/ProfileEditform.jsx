@@ -16,7 +16,7 @@ function ProfileEditInput({ onClose }) {
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          // console.log(values);
+          console.log(values);
           setSubmitting(false);
         }, 400);
       }}>
@@ -40,7 +40,7 @@ function ProfileEditInput({ onClose }) {
             </div>
 
             <div className="wrp2">
-              <SearchInput width={'500px'} height={'50px'} placeholder={'기술스택을 검색하세요'} props={'30px'} />
+              <SearchInput width="200px" height="40px" placeholder="기술스택을 검색하세요" />
               <TextMode mode={'GREEN'} text={'추가'} type="button" />
             </div>
 
@@ -121,9 +121,10 @@ const Container = styled.fieldset`
   .wrp2 {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     width: 380px;
     margin: 30px 0 20px 0;
+    gap: 20px;
   }
   .btn {
     width: 200px;
