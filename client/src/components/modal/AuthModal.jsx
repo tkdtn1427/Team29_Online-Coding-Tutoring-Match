@@ -1,10 +1,10 @@
-import AuthInput from '../form/Authform.jsx';
+import Authform from '../form/Authform.jsx';
 import Modal from './Modal.jsx';
 
 function AuthModal({ onClose }) {
   return (
     <Modal onClose={onClose}>
-      <AuthInput onClose={onClose} />
+      <Authform onClose={onClose} />
     </Modal>
   );
 }

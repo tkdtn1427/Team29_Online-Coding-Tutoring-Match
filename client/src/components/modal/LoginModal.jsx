@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
-import LoginInput from '../form/Loginform.jsx';
+import Loginform from '../form/Loginform.jsx';
 import Modal from './Modal.jsx';
 
 function LoginModal({ onClose }) {
   return (
     <Modal onClose={onClose}>
       <Head>login.</Head>
-      <LoginInput onClose={onClose} />
+      <Loginform onClose={onClose} />
     </Modal>
   );
 }
