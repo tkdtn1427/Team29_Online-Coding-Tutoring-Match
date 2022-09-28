@@ -13,5 +13,6 @@ public interface EmailRepository extends JpaRepository<Email,Long> {
     @Query(value = "select * from email where code = :code", nativeQuery = true)
     Optional<Email> findByCodes(String code);
 
-
+    @Query(value = "select * from email where email = :email", nativeQuery = true)
+    Optional<Email> findByEmail(String email);
 }

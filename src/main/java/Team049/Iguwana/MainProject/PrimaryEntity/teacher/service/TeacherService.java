@@ -140,6 +140,11 @@ public class TeacherService {
     }
     public void deleteTeacher(long teacherId) {
         Teacher teacher = findVerfiedTeacher(teacherId);
+        Optional<Email> email =emailRepository.findByEmail(teacher.getEmail());
+        if (email.isPresent()) {
+            emailRepository.delete(email.get());
+        }
+
         jwtTokenService.deleteJwtToken(teacherId,"teacher");
         teacherRepository.delete(teacher);
     }

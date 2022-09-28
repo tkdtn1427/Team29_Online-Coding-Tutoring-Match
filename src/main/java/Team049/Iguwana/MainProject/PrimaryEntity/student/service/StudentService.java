@@ -80,8 +80,13 @@ public class StudentService {
         studentRepository.save(student);*/
     }
 
+    //정도윤 : 이메일 관련 삭제 기능 추가
     public void deleteStudent(long studentId){
         Student student = findVerfiedStudent(studentId);
+        Optional<Email> email =emailRepository.findByEmail(student.getEmail());
+        if (email.isPresent()) {
+            emailRepository.delete(email.get());
+        }
         jwtTokenService.deleteJwtToken(studentId,"student");
         studentRepository.delete(student);
     }

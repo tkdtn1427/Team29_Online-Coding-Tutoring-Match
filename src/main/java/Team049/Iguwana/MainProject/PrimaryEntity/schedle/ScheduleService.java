@@ -27,15 +27,15 @@ public class ScheduleService {
     }
 
     // [2초 후 3초마다 반복 실행 스케줄링]
-@Scheduled(fixedDelay = 3000,  initialDelay = 2000)
-    public void threeRepeatJob(){
-        System.out.println("\n");
-        System.out.println("=======================================");
-        System.out.println("[ScheduleService] : [threeRepeatJob] : [start]");
-        System.out.println("[JopTime] : " + getNowDateTime24());
-        System.out.println("=======================================");
-        System.out.println("\n");
-    }
+//@Scheduled(fixedDelay = 3000,  initialDelay = 2000)
+//    public void threeRepeatJob(){
+//        System.out.println("\n");
+//        System.out.println("=======================================");
+//        System.out.println("[ScheduleService] : [threeRepeatJob] : [start]");
+//        System.out.println("[JopTime] : " + getNowDateTime24());
+//        System.out.println("=======================================");
+//        System.out.println("\n");
+//    }
 
 
 
