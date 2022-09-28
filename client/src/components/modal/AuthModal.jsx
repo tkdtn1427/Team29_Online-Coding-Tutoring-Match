@@ -1,4 +1,4 @@
-import AuthInput from '../form/AuthInput.jsx';
+import AuthInput from '../form/Authform.jsx';
 import Modal from './Modal.jsx';
 
 function AuthModal({ onClose }) {
