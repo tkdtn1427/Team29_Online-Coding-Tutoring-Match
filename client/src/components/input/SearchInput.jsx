@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import Search from '../../assets/svg/Search.jsx';
 
-function SearchInput({ width, height, placeholder, ftsize }) {
+function SearchInput({ width, height, placeholder, ftsize, bdcolor }) {
   return (
-    <Container width={width} height={height} ftsize={ftsize}>
+    <Container width={width} height={height} ftsize={ftsize} bdcolor={bdcolor}>
       <Search width={20} height={20} />
       <input name="search" type="text" className="fill" placeholder={placeholder} />
     </Container>
@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   border-radius: 50px;
-  border: 1px solid var(--grn);
+  border: 1px solid ${props => props.bdcolor || 'var(--grn)'};
   padding: 0px 10px;
   box-shadow: 0px 0px 5px var(--grn);
   .fill {
