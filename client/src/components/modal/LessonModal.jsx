@@ -1,10 +1,10 @@
 import Modal from './Modal.jsx';
-import LessonInput from '../form/Lessonform.jsx';
+import Lessonform from '../form/Lessonform.jsx';
 
 function LessonModal({ onClose }) {
   return (
     <Modal onClose={onClose}>
-      <LessonInput />
+      <Lessonform />
     </Modal>
   );
 }
