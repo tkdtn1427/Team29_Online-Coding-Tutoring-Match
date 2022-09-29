@@ -93,8 +93,9 @@ public class TutoringService {
         return Long.parseLong(str);
     }
 
-    public Page<Tutoring> findTutorings(int page, int size, long teacherId){
-        Page<Tutoring> tutoringPage = tutoringRepository.findByTeacherId(teacherId, PageRequest.of(page,size,Sort.by("start_pd").descending()));
+    //정도윤 수정, 페이지 네이션 제거
+    public List<Tutoring> findTutorings(long teacherId){
+        List<Tutoring> tutoringPage = tutoringRepository.findByTeacherId(teacherId);
         return tutoringPage;
     }
 

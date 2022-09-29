@@ -78,7 +78,7 @@ public class TeacherController {
                                    @RequestParam String arrange,
                                    @RequestParam String skill
     ) {
-        System.out.println("확인");
+
         Page<Teacher> pages = teacherService.findTeachers(page - 1, size,arrange);
         List<Teacher> teachers = pages.getContent();
         if (!skill.equals("x")) {

@@ -50,13 +50,12 @@ public class TutoringController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    //정도윤 수정, 페이지네이션 제거하기
     @GetMapping("/{teacher-id}")
     public ResponseEntity getTutoring(@Positive @PathVariable("teacher-id") long teacherId,
-                                      @Positive @RequestParam int page,
-                                      @Positive @RequestParam int size,
                                       @RequestParam String date){
-        Page<Tutoring> tutoringPage = tutoringService.findTutorings(page-1, size, teacherId);
-        List<TutoringDto.Response> responses = tutoringService.tutoringConvert(tutoringPage.getContent(), date);
-        return new ResponseEntity(new MultiResponseDto<>(responses,tutoringPage), HttpStatus.OK);
+        List<Tutoring> tutoringPage = tutoringService.findTutorings(teacherId);
+        List<TutoringDto.Response> responses = tutoringService.tutoringConvert(tutoringPage, date);
+        return new ResponseEntity(responses, HttpStatus.OK);
     }
 }

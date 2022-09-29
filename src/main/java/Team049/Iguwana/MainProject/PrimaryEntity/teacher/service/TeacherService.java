@@ -124,17 +124,22 @@ public class TeacherService {
 
     public List<Teacher> skillCheck(List<Teacher> teachers, String skills) {
         List<Teacher> result = new ArrayList<>();
-
-        Optional<Skill> skill = skillRepository.findByName(skills);
-        Skill answer = skill.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.SKILL_NOT_FOUND));
+        List<Skill> skillsList = new ArrayList<>();
+        String[] temp = skills.split(",");
+        for (int i = 0; i < temp.length; i++) {
+            Optional<Skill> skill = skillRepository.findByName(temp[i]);
+            Skill answer = skill.orElseThrow(() ->
+                    new BusinessLogicException(ExceptionCode.SKILL_NOT_FOUND));
+            skillsList.add(answer);
+        }
 
         for (int i = 0; i < teachers.size(); i++) {
-            for (int j = 0; j < teachers.get(i).getSkillTableList().size(); j++) {
-                if (teachers.get(i).getSkillTableList().get(j).getSkill() == answer) {
-                    result.add(teachers.get(i));
-                }
+            int size = teachers.get(i).getSkillTableList().size();
+            int count = 0;
+            for (int j = 0; j < size; j++) {
+                if (skillsList.contains(teachers.get(i).getSkillTableList().get(j).getSkill())) count++;
             }
+            if(count<=size) result.add(teachers.get(i));
         }
         return result;
     }
