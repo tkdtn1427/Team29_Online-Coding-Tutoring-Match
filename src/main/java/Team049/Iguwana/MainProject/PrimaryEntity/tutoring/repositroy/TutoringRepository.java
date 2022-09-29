@@ -13,5 +13,5 @@ public interface TutoringRepository extends JpaRepository<Tutoring, Long> {
     List<Tutoring> findByStudentId(long studentId);
 
     @Query(value = "select * from tutoring where teacher_id = :teacherId", nativeQuery = true)
-    Page<Tutoring> findByTeacherId(long teacherId, Pageable pageable);
+    List<Tutoring> findByTeacherId(long teacherId);
 }
