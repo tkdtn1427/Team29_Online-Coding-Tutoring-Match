@@ -103,6 +103,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             response.addHeader("AccessToken", "Bearer " + accessToken);
             response.addHeader("RefreshToken", "Bearer " + refreshToken);
+            response.addHeader("role","student");
             response.addHeader("UserId", String.valueOf(principalDetails.getStudent().getStudentId()));
 
             saveJwtToken(principalDetails, accessToken, refreshToken,"student");
@@ -126,6 +127,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             response.addHeader("AccessToken", "Bearer " + accessToken);
             response.addHeader("RefreshToken", "Bearer " + refreshToken);
+            response.addHeader("role","teacher");
             response.addHeader("UserId", String.valueOf(principalDetails.getTeacher().getTeacherId()));
 
             saveJwtToken(principalDetails, accessToken, refreshToken,"teacher");

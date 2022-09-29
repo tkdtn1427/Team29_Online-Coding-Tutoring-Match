@@ -21,7 +21,8 @@ public enum ExceptionCode {
     TUTORING_NOT_FOUND(404, "Tutoring not found"),
     REFRESH_NOT_EQUAL(403, "Refresh token not equal"),
     RERFRSH_EXPIRED(403, "Please login again"),
-    LOGIN_FAILURE(404, "User or Password not wrong");
+    LOGIN_FAILURE(404, "User or Password not wrong"),
+    PASSWORD_EXCEPTION(400, "Password length wrong(password.length > 4)");
 
 
 
