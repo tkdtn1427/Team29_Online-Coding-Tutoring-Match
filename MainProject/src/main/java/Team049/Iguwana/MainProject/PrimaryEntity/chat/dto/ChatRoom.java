@@ -36,6 +36,9 @@ public class ChatRoom {
             sessions.add(session);
             setUserRoom(chatMessage.getRole(), chatMessage.getUserId(), chatMessage.getRoomId());
 
+            String str = objectMapper.writeValueAsString(session);
+            WebSocketSession test = objectMapper.readValue(str, WebSocketSession.class);
+
             chatMessage.setMessage(chatMessage.getSender() + "님이 입장하셨습니다.");
         }else if(chatMessage.getMessageType() == ChatMessage.MessageType.LEAVE){
             sessions.remove(session);

@@ -18,7 +18,6 @@ public class ChatRepository {
     private Map<String, ChatRoom> chatRooms;
     private Map<Long, String> studentRooms;
     private Map<Long, String> teacherRooms;
-
     private Set<OneToOneRoom> oneToOneRooms;
 
     @PostConstruct
