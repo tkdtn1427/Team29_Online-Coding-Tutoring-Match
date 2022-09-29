@@ -143,6 +143,7 @@ public class TeacherService {
         }
         return result;
     }
+
     public void deleteTeacher(long teacherId) {
         Teacher teacher = findVerfiedTeacher(teacherId);
         Optional<Email> email =emailRepository.findByEmail(teacher.getEmail());
