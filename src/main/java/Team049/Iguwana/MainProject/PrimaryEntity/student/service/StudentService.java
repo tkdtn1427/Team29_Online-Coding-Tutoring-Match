@@ -95,6 +95,10 @@ public class StudentService {
         Student findStudent = findVerfiedStudent(student.getStudentId());
 
         Optional.ofNullable(student.getNickName()).ifPresent(nickName -> findStudent.setNickName(nickName));
+        Optional.ofNullable(student.getPassword()).ifPresent(password -> {
+            if(password.length() < 4) throw new BusinessLogicException(ExceptionCode.PASSWORD_EXCEPTION);
+            findStudent.setPassword(transPassword(password));
+        });
         Optional.ofNullable(student.getAboutMe()).ifPresent(aboutMe -> findStudent.setAboutMe(aboutMe));
         Optional.ofNullable(student.getStudentSkillList()).ifPresent(studentSkillList -> {
             for (int i=0; i< findStudent.getStudentSkillList().size(); i++)
@@ -112,12 +116,12 @@ public class StudentService {
         return studentRepository.save(findStudent);
     }
 
-    public void updatePassword(Student student){
-        Student findStudent = findVerfiedStudent(student.getStudentId());
-
-        findStudent.setPassword(transPassword(student.getPassword()));
-        studentRepository.save(findStudent);
-    }
+//    public void updatePassword(Student student){
+//        Student findStudent = findVerfiedStudent(student.getStudentId());
+//
+//        findStudent.setPassword(transPassword(student.getPassword()));
+//        studentRepository.save(findStudent);
+//    }
 
 
     public void verifyExistsEMail(String email){
