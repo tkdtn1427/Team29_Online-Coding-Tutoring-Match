@@ -139,7 +139,7 @@ public class TeacherService {
             for (int j = 0; j < size; j++) {
                 if (skillsList.contains(teachers.get(i).getSkillTableList().get(j).getSkill())) count++;
             }
-            if(count<=size) result.add(teachers.get(i));
+            if(count==skillsList.size()) result.add(teachers.get(i));
         }
         return result;
     }
