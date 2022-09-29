@@ -45,7 +45,7 @@ public class TeacherController {
     @ResponseStatus(HttpStatus.OK)
     public String joinTeacher(@Validated @RequestBody TeacherDto.Join join, HttpServletResponse response) throws IOException {
         teacherService.createTeacher(teacherMapper.teacherJoinToTeacher(join));
-        return "메시지 전송 완료";
+        return "메시지 전송완료";
     }
 
     @PatchMapping("/update/{teacher-id}")
