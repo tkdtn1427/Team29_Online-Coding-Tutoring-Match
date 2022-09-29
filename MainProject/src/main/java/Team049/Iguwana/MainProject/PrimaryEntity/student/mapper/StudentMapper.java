@@ -28,6 +28,7 @@ public interface StudentMapper {
         student.setStudentId(requestBody.getStudentId());
         student.setAboutMe(requestBody.getAboutMe());
         student.setNickName(requestBody.getNickName());
+        student.setPassword(requestBody.getPassword());
         if(requestBody.getSkillTableList() != null){
             List<StudentSkill> list = requestBody.getSkillTableList().stream()
                     .map(skillList -> {
@@ -50,7 +51,7 @@ public interface StudentMapper {
         return student;
     }
 
-    Student studentPasswordToStudent(StudentDto.Password requestBody);
+//    Student studentPasswordToStudent(StudentDto.Password requestBody);
 
     default StudentDto.Response studentToStudentResponse(Student requestBody, TutoringMapper tutoringMapper){
         StudentDto.Response response = new StudentDto.Response();

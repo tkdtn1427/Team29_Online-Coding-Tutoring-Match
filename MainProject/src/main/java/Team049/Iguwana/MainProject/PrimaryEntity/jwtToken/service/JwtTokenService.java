@@ -92,6 +92,7 @@ public class JwtTokenService {
     public void setReponse(JwtToken newJwtToken, HttpServletResponse response){
         response.addHeader("AccessToken", "Bearer " + newJwtToken.getAccessToken());
         response.addHeader("RefreshToken", "Bearer " + newJwtToken.getRefreshToken());
+        response.addHeader("role",newJwtToken.getRole());
         response.addHeader("UserId", String.valueOf(newJwtToken.getUserId()));
     }
 
