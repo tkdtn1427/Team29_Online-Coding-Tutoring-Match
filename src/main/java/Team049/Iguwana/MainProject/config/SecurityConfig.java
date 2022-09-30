@@ -49,9 +49,9 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login", "/v1/jwt/refresh/**","/v1/emails/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/v1/teachers/**")
+                .antMatchers(HttpMethod.GET, "/v1/teachers/{teacher-id}","/v1/teachers")
                 .permitAll()
-                .antMatchers("/v1/**","/v1/teachers/myPage/*")
+                .antMatchers("/v1/**","/v1/teachers/myPage/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_TEACHER')")
                 .anyRequest().permitAll();
         return http.build();
