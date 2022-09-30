@@ -47,11 +47,12 @@ public class SecurityConfig {
                 .apply(new CustomDsl())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login", "/v1/jwt/refresh/**","/v1/emails/**","/v1/teachers/{teacher-id}")
+                .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login", "/v1/jwt/refresh/**","/v1/emails/**")
                 .permitAll()
+                .antMatchers("/v1/**",)
                 .antMatchers(HttpMethod.GET, "/v1/teachers/**")
                 .permitAll()
-                .antMatchers("/v1/**")
+                .antMatchers("/v1/**","/v1/teachers/myPage/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_TEACHER')")
                 .anyRequest().permitAll();
         return http.build();
