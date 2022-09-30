@@ -70,12 +70,12 @@ public class StudentController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/password/{student-id}")
-    public ResponseEntity updatePassword(@PathVariable("student-id") long studentId,
-                                         @RequestBody StudentDto.Password password){
-        password.setStudentId(studentId);
-        Student student = studentMapper.studentPasswordToStudent(password);
-        studentService.updatePassword(student);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+//    @PatchMapping("/password/{student-id}")
+//    public ResponseEntity updatePassword(@PathVariable("student-id") long studentId,
+//                                         @RequestBody StudentDto.Password password){
+//        password.setStudentId(studentId);
+//        Student student = studentMapper.studentPasswordToStudent(password);
+//        studentService.updatePassword(student);
+//        return new ResponseEntity(HttpStatus.OK);
+//    }
 }
