@@ -49,7 +49,6 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login", "/v1/jwt/refresh/**","/v1/emails/**")
                 .permitAll()
-                .antMatchers("/v1/**",)
                 .antMatchers(HttpMethod.GET, "/v1/teachers/**")
                 .permitAll()
                 .antMatchers("/v1/**","/v1/teachers/myPage/**")
