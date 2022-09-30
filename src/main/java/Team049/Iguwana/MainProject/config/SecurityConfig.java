@@ -8,6 +8,7 @@ import Team049.Iguwana.MainProject.filter.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -47,6 +48,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login", "/v1/jwt/refresh/**","/v1/emails/**")
+                .permitAll()
+                .antMatchers("/v1/**",)
+                .antMatchers(HttpMethod.GET, "/v1/teachers/**")
                 .permitAll()
                 .antMatchers("/v1/**","/v1/teachers/myPage/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_TEACHER')")

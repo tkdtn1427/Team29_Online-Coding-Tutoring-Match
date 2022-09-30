@@ -22,6 +22,7 @@ public class CorsConfig {
 
         config.addExposedHeader("AccessToken");
         config.addExposedHeader("RefreshToken");
+        config.addExposedHeader("role");
         config.addExposedHeader("UserId");
         source.registerCorsConfiguration("/**",config);
 

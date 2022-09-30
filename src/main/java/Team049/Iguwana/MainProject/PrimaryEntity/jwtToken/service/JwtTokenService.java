@@ -93,6 +93,7 @@ public class JwtTokenService {
         response.addHeader("AccessToken", "Bearer " + newJwtToken.getAccessToken());
         response.addHeader("RefreshToken", "Bearer " + newJwtToken.getRefreshToken());
         response.addHeader("UserId", String.valueOf(newJwtToken.getUserId()));
+        response.addHeader("role",newJwtToken.getRole());
     }
 
     public void deleteJwtToken(long userId, String role){
