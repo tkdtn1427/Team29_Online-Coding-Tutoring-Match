@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/teachers/**")
                 .permitAll()
-                .antMatchers("/v1/**","/v1/teachers/myPage/**")
+                .antMatchers("/v1/**","/v1/teachers/myPage/*")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_TEACHER')")
                 .anyRequest().permitAll();
         return http.build();
