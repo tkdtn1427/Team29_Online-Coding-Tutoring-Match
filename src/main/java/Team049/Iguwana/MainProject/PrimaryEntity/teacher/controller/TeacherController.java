@@ -72,6 +72,18 @@ public class TeacherController {
         response.setReviewList(list);*/
         return new ResponseEntity(response,HttpStatus.OK);
     }
+    @GetMapping("/myPage/{teacher-id}")
+    public ResponseEntity getTeacherMyPage(
+            @PathVariable("teacher-id") long teacherId
+    ){
+        Teacher teacher = teacherService.findVerfiedTeacher(teacherId);
+        TeacherDto.Response response = teacherMapper.teacherToResponse(teacher);
+/*        teacherService.setTutoring(response);
+        List<ReviewDto.Response> list =reviewService.findByTeacherId(page-1, size, teacherId);
+        response.setReviewList(list);*/
+        return new ResponseEntity(response,HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity getTeachers(@Positive @RequestParam int page,
                                    @Positive @RequestParam int size,
