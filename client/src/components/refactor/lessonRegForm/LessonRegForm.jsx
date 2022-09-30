@@ -3,10 +3,8 @@ import * as Yup from 'yup';
 import styled from '@emotion/styled';
 import FormController from '../formControl/FormController';
 
-import ChatBtn from '../chatForm/ChatBtn';
-
 function LessonRegForm() {
-  const monday = [
+  const dayOption = [
     { key: '월요일', value: '1' },
     { key: '화요일', value: '2' },
     { key: '수요일', value: '3' },
@@ -55,7 +53,7 @@ function LessonRegForm() {
             <FormController control="input" type="text" label="학생 ID" name="studentId" />
             <FormController control="date" label="시작 일자" name="start_pd" />
             <FormController control="date" label="종료 일자" name="end_pd" />
-            <FormController control="checkbox" name="day" options={monday} />
+            <FormController control="checkbox" label="강의 요일" name="day" options={dayOption} />
             <FormController control="time" label="시작 시간" name="start_time" />
             <FormController control="time" label="종료 시간" name="end_time" />
             <button type="submit" disabled={!formik.isValid}>
@@ -64,11 +62,59 @@ function LessonRegForm() {
           </Form>
         )}
       </Formik>
-      <ChatBtn />
     </Container>
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  padding: 50px 0;
+
+  font-family: var(--main);
+  font-size: var(--reg);
+  color: var(--blk);
+
+  display: flex;
+  justify-content: center;
+
+  .form-control {
+    margin: 0 0 20px 0;
+  }
+
+  .error {
+    font-size: var(--s);
+    color: var(--org);
+    margin: 10px 0 0 10px;
+  }
+
+  label {
+    font-weight: bold;
+    display: flex;
+    margin: 0 0 10px 0;
+  }
+
+  input + label {
+    display: inline-flex;
+    margin: 0 10px 0 5px;
+  }
+
+  input[type='text'],
+  input[type='date'],
+  input[type='time'],
+  textarea,
+  select {
+    display: block;
+    width: 300px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    resize: none;
+
+    border: 1px solid var(--liblk);
+    border-radius: 5px;
+
+    font-family: var(--main);
+    font-size: var(--reg);
+    color: var(--blk);
+  }
+`;
 
 export default LessonRegForm;

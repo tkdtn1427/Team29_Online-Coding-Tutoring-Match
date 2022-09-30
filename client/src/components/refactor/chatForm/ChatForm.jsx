@@ -9,7 +9,7 @@ function ChatForm() {
   };
 
   const validationSchema = Yup.object({
-    content: Yup.string().required('내용을 입력하세요'),
+    content: Yup.string(),
   });
 
   const onSubmit = values => {
