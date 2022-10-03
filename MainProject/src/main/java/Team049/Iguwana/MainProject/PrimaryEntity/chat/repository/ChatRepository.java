@@ -1,23 +1,23 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.chat.repository;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.chat.dto.ChatDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.dto.ChatRoom;
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.dto.ChatRoomForm;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Repository
+@Slf4j
 public class ChatRepository {
     private Map<String, ChatRoom> chatRooms;
-    private Map<Long, String> studentRooms;
-    private Map<Long, String> teacherRooms;
+    private Map<Long, Set<String>> studentRooms;
+    private Map<Long, Set<String>> teacherRooms;
     private Set<OneToOneRoom> oneToOneRooms;
 
     @PostConstruct
@@ -33,13 +33,24 @@ public class ChatRepository {
     }
 
     public ChatRoom createChatRoom(ChatRoomForm.Create create){
-        String chatRoomId = verifiedRooms(create.getStudentId(), create.getStudentId());
+        String chatRoomId = verifiedRooms(create.getStudentId(), create.getTeacherId());
         ChatRoom chatRoom;
         if(chatRoomId == null){
-            chatRoom = ChatRoom.create(create.getRoomName());
+            chatRoom = ChatRoom.create(create);
             chatRooms.put(chatRoom.getRoomId(), chatRoom);
-            studentRooms.put(create.getStudentId(), chatRoom.getRoomId());
-            teacherRooms.put(create.getTeacherId(), chatRoom.getRoomId());
+            if(studentRooms.get(create.getStudentId()) == null){
+                studentRooms.put(create.getStudentId(), new HashSet<>());
+                studentRooms.get(create.getStudentId()).add(chatRoom.getRoomId());
+            }else{
+                studentRooms.get(create.getStudentId()).add(chatRoom.getRoomId());
+            }
+
+            if(teacherRooms.get(create.getTeacherId()) == null){
+                teacherRooms.put(create.getTeacherId(), new HashSet<>());
+                teacherRooms.get(create.getTeacherId()).add(chatRoom.getRoomId());
+            }else{
+                teacherRooms.get(create.getTeacherId()).add(chatRoom.getRoomId());
+            }
             oneToOneRooms.add(new OneToOneRoom(create.getStudentId(), create.getTeacherId(), chatRoom.getRoomId()));
         }else{
             chatRoom = findById(chatRoomId);
@@ -48,19 +59,68 @@ public class ChatRepository {
         return chatRoom;
     }
 
-    public Map<Long, String> getUserRooms(String role){
+    public Set<String> getUserRooms(String role, long userId){
         if(role.equals("student")){
-            return studentRooms;
+            return studentRooms.get(userId);
         }else{
-            return teacherRooms;
+            return teacherRooms.get(userId);
         }
     }
 
     public String verifiedRooms(long studentId, long teacherId){
         for(OneToOneRoom oneToOneRoom : oneToOneRooms){
-            if(oneToOneRoom.getStudentId() == studentId && oneToOneRoom.getTeacherId() == teacherId) return oneToOneRoom.getRoomId();
+            if(oneToOneRoom.getStudentId() == studentId && oneToOneRoom.getTeacherId() == teacherId){
+                System.out.println("룸아이디 찾음");
+                System.out.println(oneToOneRoom.getTeacherId());
+                System.out.println(teacherId);
+                return oneToOneRoom.getRoomId();
+            }
         }
         return null;
+    }
+
+    public void findOneToOneRoom(String roomId){
+        for(OneToOneRoom oneToOneRoom : oneToOneRooms){
+            if(oneToOneRoom.getRoomId().equals(roomId)) oneToOneRooms.remove(oneToOneRoom);
+        }
+    }
+
+    public ChatDto.ResponseDto findByUser(String role, long userId){
+        ChatDto.ResponseDto responseDto = new ChatDto.ResponseDto();
+        if(role.equals("student")){
+            Set<String> sets = studentRooms.get(userId);
+            List<ChatDto.SRoomDto> dtos = new ArrayList<>();
+            for(String str : sets){
+                ChatRoom chatRoom = chatRooms.get(str);
+                ChatDto.SRoomDto dto = new ChatDto.SRoomDto();
+                dto.setRoomName(chatRoom.getRoomName());
+                dto.setTeahcerId(chatRoom.getTeacherId());
+                dto.setRoomId(chatRoom.getRoomId());
+                dtos.add(dto);
+            }
+            responseDto.setRoomDtoList(dtos);
+        }else{
+            Set<String> sets = teacherRooms.get(userId);
+            List<ChatDto.TRoomDto> dtos = new ArrayList<>();
+            for(String str : sets){
+                ChatRoom chatRoom = chatRooms.get(str);
+                ChatDto.TRoomDto dto = new ChatDto.TRoomDto();
+                dto.setRoomName(chatRoom.getRoomName());
+                dto.setStudentId(chatRoom.getStudentId());
+                dto.setRoomId(chatRoom.getRoomId());
+                dtos.add(dto);
+            }
+            responseDto.setRoomDtoList(dtos);
+        }
+        return responseDto;
+    }
+
+    public void deleteRoom(String roomId){
+        chatRooms.remove(roomId);
+    }
+
+    public int test(){
+        return chatRooms.size();
     }
 
     @Getter

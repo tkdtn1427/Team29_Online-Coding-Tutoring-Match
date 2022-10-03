@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login")
                 .permitAll()
-                .antMatchers("/v1/students/password/**")
+                .antMatchers("/v1/students/update/*")
                 .access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll();
         return http.build();
