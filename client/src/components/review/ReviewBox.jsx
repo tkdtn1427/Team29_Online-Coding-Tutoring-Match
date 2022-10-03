@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import ProfileImg from '../profileImg/ProfileImg.jsx';
 
 function ReviewBox() {
   return (
@@ -6,7 +7,7 @@ function ReviewBox() {
       <span className="st">5.0</span>
       <div className="text">역시 믿고 보는 솔라쌤</div>
       <Inform>
-        <div className="pic" />
+        <ProfileImg width="30px" height="30px" />
         <span className="name">씌미</span>
         <span className="time">2022-09-26</span>
       </Inform>
