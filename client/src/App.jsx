@@ -21,7 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/mypage" element={<ProfilePage />} />
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/main/:filter" element={<MainPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/info" element={<DetailPage />} />
           </Routes>

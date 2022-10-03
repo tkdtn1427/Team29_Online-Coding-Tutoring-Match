@@ -7,7 +7,7 @@ import { getUser, removeUser } from '../../Localstorage';
 async function GetUserInfo() {
   const { role, userId } = getUser();
   try {
-    const result = await authRequest.get(`/v1/students/myPage/${userId}`);
+    const result = await authRequest.get(`/v1/teachers/6`);
     return result.data;
   } catch (err) {
     console.log(err);
@@ -46,8 +46,4 @@ async function DeleteUserInfo() {
   }
 }
 
-// // 선생님 모두 조회
-// async function GetTeachers({ page }) {
-//   const result = await authRequest.get(`/v1/teachers?page=${page}`);
-// }
 export { GetUserInfo, PatchUserInfo, DeleteUserInfo, PatchPassword };
