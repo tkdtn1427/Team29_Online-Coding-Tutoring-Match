@@ -8,8 +8,30 @@ const TeacherList = createAsyncThunk('GET_TEACHERS', async arrange => {
 
 const TeachersReducer = createSlice({
   name: 'teacherslist', // state 이름
-  initialState: { teachers: [], loading: 'true' }, // 값
-  reducers: {},
+  initialState: { teachers: [], filteredTeachers: [], loading: 'true' }, // 값
+  reducers: {
+    searchByNickName: (state, action) => {
+      const filteredTeachers = state.teachers.filter(teacher =>
+        teacher.nickName.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      return {
+        ...state,
+        filteredTeachers: [...filteredTeachers],
+      };
+    },
+
+    searchByStack: (state, action) => {
+      const filteredTeachers = state.teachers.filter(teacher => {
+        const skills = teacher.skillTableList.map(skill => skill.name);
+        return skills.some(skill => action.payload.includes(skill)); // tags["javascript","react"]
+      });
+
+      return {
+        ...state,
+        filteredTeachers: [...filteredTeachers],
+      };
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(TeacherList.pending, state => {
@@ -17,6 +39,7 @@ const TeachersReducer = createSlice({
       })
       .addCase(TeacherList.fulfilled, (state, { payload }) => {
         state.teachers = [...payload.data];
+        state.filteredTeachers = [...payload.data];
         state.loading = false;
       })
       .addCase(TeacherList.rejected, (state, { payload }) => {
