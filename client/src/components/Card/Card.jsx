@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import TagListBox from '../tagbox/TagListBox.jsx';
 import Stars from '../star/Stars.jsx';
 import picturelogo from '../../assets/img/picturelogo.png';
+import ColorStackList from '../techstack/ColorStackList.jsx';
 
 //  TagListBox width height 내려주기...
 // img 데이터 list에서 내려줘서 map 안에서 담기
@@ -20,7 +21,7 @@ function Card({ data }) {
           <Score>{data.reputation}</Score>
         </Wrapper>
       </Introduce>
-      <TagListBox width="232" height="25"></TagListBox>
+      <ColorStackList width="240px" height="25" stacks={data.skillTableList}></ColorStackList>
     </Container>
   );
 }

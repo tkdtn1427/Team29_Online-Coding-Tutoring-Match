@@ -6,7 +6,7 @@ import { TeacherList } from '../../redux/teacherlist/TeachersReducer';
 
 function CardList() {
   const dispatch = useDispatch();
-  const { teachers } = useSelector(state => state.teachers);
+  const { filteredTeachers } = useSelector(state => state.teachers);
 
   useEffect(() => {
     dispatch(TeacherList('nickName'));
@@ -14,7 +14,7 @@ function CardList() {
 
   return (
     <Container>
-      {[...teachers].reverse().map((e, i) => (
+      {[...filteredTeachers].map((e, i) => (
         <Card key={i} data={e} />
       ))}
     </Container>
