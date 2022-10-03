@@ -7,7 +7,7 @@ function Carousel3() {
 const Container = styled.div`
   width: 100%;
   height: 350px;
-  float: left;
+
   background-color: var(--blk);
 `;
 
