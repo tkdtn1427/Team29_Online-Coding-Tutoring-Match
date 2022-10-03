@@ -2,12 +2,16 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
 import { TextMode } from '../buttons/ColorMode.jsx';
-import SearchInput from '../input/SearchInput.jsx';
 import TabHandler from '../../utils/TabHandler';
 import { TeacherList } from '../../redux/teacherlist/TeachersReducer';
+import Dropbox from '../dropbox/Dropbox.jsx';
+import FilterStackInput from '../input/FilterStackInput.jsx';
+import TagListBox from '../tagbox/TagListBox.jsx';
 
 function FilterBox() {
+  const [filteredTags, setFilteredTags] = useState([]);
   const [currentTab, setCurrentTab] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
 
   const Tab = [
@@ -33,7 +37,26 @@ function FilterBox() {
           />
         ))}
       </ButtonWrapper>
-      <SearchInput height="30px" ftsize="var(--s)" placeholder="기술스택 검색" />
+      <SearchWrapper>
+        <FilterStackInput
+          height="30px"
+          ftsize="var(--s)"
+          placeholder="기술스택 검색"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        />
+        {isOpen ? (
+          <Dropbox width="150px" height="100px" filteredTags={filteredTags} setFilteredTags={setFilteredTags} />
+        ) : (
+          ''
+        )}
+      </SearchWrapper>
+      <TagListBox
+        filteredTags={filteredTags}
+        setFilteredTags={setFilteredTags}
+        height="20px"
+        width="650px"></TagListBox>
     </Container>
   );
 }
@@ -54,6 +77,10 @@ const ButtonWrapper = styled.div`
   padding: 0px 10px 0px 0px;
   margin: 0px 10px 0px 0px;
   border-right: 1px solid var(--blk);
+`;
+const SearchWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export default FilterBox;
