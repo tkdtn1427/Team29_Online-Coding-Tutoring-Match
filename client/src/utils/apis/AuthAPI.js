@@ -14,11 +14,8 @@ async function Login({ loginForm, role }) {
     addTokenLocalStorage({ refreshToken, accessToken });
     addUserLovalStorage(userid);
     addRoleLocalStorage(Role);
-    console.log(Role);
-    console.log(result.headers);
-    return result.data;
+    return true;
   } catch (err) {
-    console.log(err);
     if (err.response.data.status === 404) {
       console.log('없는 페이지입니다.');
     } // 실험해놓은것 다시 고치기
