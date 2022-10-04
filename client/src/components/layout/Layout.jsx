@@ -1,13 +1,16 @@
+import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Navbar from '../nav/Navbar.jsx';
 import Footer from '../footer/Footer.jsx';
 
 function Layout({ children }) {
+  const location = useLocation();
+
   return (
     <>
-      <Navbar></Navbar>
+      {location.pathname === '/chat' ? null : <Navbar />}
       <Container>{children}</Container>
-      <Footer></Footer>
+      {location.pathname === '/chat' ? null : <Footer />}
     </>
   );
 }

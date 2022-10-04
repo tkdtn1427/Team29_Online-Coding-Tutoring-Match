@@ -6,6 +6,9 @@ import './styles/root.css';
 import Loading from './pages/LoadingPage';
 import RequireAuth from './utils/RequireAuth';
 
+import Test from './components/refactor/lessonRegForm/LessonRegForm.jsx';
+import ChatPopup from './components/refactor/chatForm/ChatPopup.jsx';
+
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const MainPage = lazy(() => import('./pages/MainPage'));
@@ -34,6 +37,8 @@ function App() {
             <Route path="/main/:filter" element={<MainPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/info" element={<DetailPage />} />
+            <Route path="/test" element={<Test />} />
+            <Route path="/chat" element={<ChatPopup />} />
           </Routes>
         </Layout>
       </Suspense>
