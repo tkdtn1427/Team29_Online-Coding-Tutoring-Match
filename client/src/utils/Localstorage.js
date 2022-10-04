@@ -13,7 +13,7 @@ function addRoleLocalStorage(Role) {
   localStorage.setItem('Role', Role);
 }
 
-function addUserLovalStorage(userId) {
+function addUserLocalStorage(userId) {
   localStorage.setItem('userId', userId);
 }
 
@@ -30,4 +30,4 @@ function removeUser() {
   localStorage.removeItem('refreshToken');
 }
 
-export { addTokenLocalStorage, getToken, addRoleLocalStorage, addUserLovalStorage, getUser, removeUser };
+export { addTokenLocalStorage, getToken, addRoleLocalStorage, addUserLocalStorage, getUser, removeUser };

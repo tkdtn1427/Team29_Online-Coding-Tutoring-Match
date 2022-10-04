@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addTokenLocalStorage, addRoleLocalStorage, addUserLovalStorage, getUser, getToken } from '../Localstorage';
+import { addTokenLocalStorage, addRoleLocalStorage, addUserLocalStorage, getUser, getToken } from '../Localstorage';
 
 const authAPI = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL, timeout: 1000 });
 
@@ -12,7 +12,7 @@ async function Login({ loginForm, role }) {
     const { userid } = result.headers;
     const Role = result.headers.role;
     addTokenLocalStorage({ refreshToken, accessToken });
-    addUserLovalStorage(userid);
+    addUserLocalStorage(userid);
     addRoleLocalStorage(Role);
     return true;
   } catch (err) {
@@ -69,4 +69,13 @@ async function GetTeachers(arrange) {
   }
 }
 
-export { Login, SignUp, EmailAuth, GetAccessToken, GetTeachers };
+async function GetOneTeacher(teacherId) {
+  try {
+    const result = await authAPI.get(`/v1/teachers/${teacherId}`);
+    return result.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export { Login, SignUp, EmailAuth, GetAccessToken, GetTeachers, GetOneTeacher };
