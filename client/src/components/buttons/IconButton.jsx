@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-function IconButton({ ftcolor, bgcolor, text }) {
+function IconButton({ ftcolor, bgcolor, text, onClick }) {
   return (
-    <Container ftcolor={ftcolor} bgcolor={bgcolor}>
+    <Container ftcolor={ftcolor} bgcolor={bgcolor} onClick={onClick}>
       {text}
     </Container>
   );

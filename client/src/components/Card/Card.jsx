@@ -10,12 +10,12 @@ import ColorStackList from '../techstack/ColorStackList.jsx';
 //  star에 점수 내려주기
 // 틀만 잡아놓음 불필요한 width height 제거 예정
 
-function Card({ data }) {
+function Card({ data, onClick }) {
   return (
     <Container>
       <ProfileImg src={data.imageUrl === 'x' ? picturelogo : data.imageUrl}></ProfileImg>
       <Introduce>
-        <Name>{data.nickName}</Name>
+        <Name onClick={onClick}>{data.nickName}</Name>
         <Wrapper>
           <Stars width="10" height="10" scores={data.reputation} />
           <Score>{data.reputation}</Score>
@@ -60,6 +60,7 @@ const Name = styled.span`
   font-size: var(--l);
   color: var(--blk);
   font-family: var(--main);
+  cursor: pointer;
 `;
 
 const Wrapper = styled.span`

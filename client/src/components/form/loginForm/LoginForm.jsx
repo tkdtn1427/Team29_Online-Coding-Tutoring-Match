@@ -1,11 +1,15 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
+import { useDispatch } from 'react-redux';
 import FormController from '../formControl/FormController';
+import { Login } from '../../../utils/apis/AuthAPI';
+import LoginReducer from '../../../redux/login/LoginReducer';
 
 import { TextMode } from '../../buttons/ColorMode.jsx';
 
 function LoginForm({ onClose }) {
+  const dispatch = useDispatch();
   const roleOptions = [
     { key: '회원 종류를 선택하세요', value: '' },
     { key: '선생님', value: 'teacher' },
@@ -24,8 +28,16 @@ function LoginForm({ onClose }) {
     role: Yup.string().required('회원 종류를 선택하세요'),
   });
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     console.log('Form data', values);
+    const result = await Login({
+      loginForm: { email: values.email, password: values.password },
+      role: values.role,
+    });
+    if (result) {
+      dispatch(LoginReducer.actions.logIn());
+      onClose();
+    }
   };
 
   return (
@@ -37,7 +49,7 @@ function LoginForm({ onClose }) {
             <FormController control="input" type="email" label="이메일" name="email" />
             <FormController control="input" type="password" label="비밀번호" name="password" />
             <div className="btn">
-              <TextMode mode={'ORANGE'} text={'login.'} type="submit" disabled={!formik.isValid} onClick={onClose} />
+              <TextMode mode={'ORANGE'} text={'login.'} type="submit" disabled={!formik.isValid} />
               <TextMode mode={'GREEN'} text={'signup.'} type="button" />
             </div>
           </Form>

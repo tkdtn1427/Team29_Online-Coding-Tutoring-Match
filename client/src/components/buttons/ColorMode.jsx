@@ -29,7 +29,7 @@ function FilterMode({ mode, ...props }) {
 
 function IconMode({ mode, ...props }) {
   const { bgcolor, ftcolor } = COLOR[mode];
-  return <IconButton ftcolor={ftcolor} bgcolor={bgcolor} text={props.text} />;
+  return <IconButton ftcolor={ftcolor} bgcolor={bgcolor} text={props.text} onClick={props.onClick} />;
 }
 
 function TextMode({ mode, ...props }) {
