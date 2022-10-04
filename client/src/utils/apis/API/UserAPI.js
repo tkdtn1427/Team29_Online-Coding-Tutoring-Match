@@ -7,7 +7,7 @@ import { getUser, removeUser } from '../../Localstorage';
 async function GetUserInfo() {
   const { role, userId } = getUser();
   try {
-    const result = await authRequest.get(`/v1/${role}s/${userId}`);
+    const result = await authRequest.get(`/v1/${role}s/myPage/${userId}`);
     return result.data;
   } catch (err) {
     console.log(err);
