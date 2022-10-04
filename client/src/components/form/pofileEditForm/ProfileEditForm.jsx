@@ -1,9 +1,18 @@
+import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
 import FormController from '../formControl/FormController';
 
+import { TextMode } from '../../buttons/ColorMode.jsx';
+import FilterStackInput from '../../input/FilterStackInput.jsx';
+import TagListBox from '../../tagbox/TagListBox.jsx';
+import Dropbox from '../../dropbox/Dropbox.jsx';
+
 function ProfileEditForm() {
+  const [filteredTags, setFilteredTags] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
   const initialValues = {
     nickName: '기존 닉네임',
     aboutMe: '기존 소개',
@@ -25,12 +34,38 @@ function ProfileEditForm() {
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {formik => (
           <Form>
-            <FormController control="input" type="text" name="nickName" />
+            <div className="nickname">
+              <FormController control="input" type="text" name="nickName" />
+              <div className="codenum">회원 번호</div>
+            </div>
+
             <FormController control="textarea" label="about me." name="aboutMe" />
+
+            <div className="tagwrp">
+              <FilterStackInput
+                height="30px"
+                ftsize="var(--s)"
+                placeholder="기술스택 검색"
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+              />
+              {isOpen ? (
+                <Dropbox width="150px" height="100px" filteredTags={filteredTags} setFilteredTags={setFilteredTags} />
+              ) : (
+                ''
+              )}
+              <TagListBox
+                filteredTags={filteredTags}
+                setFilteredTags={setFilteredTags}
+                height="20px"
+                width="400px"></TagListBox>
+            </div>
+
             <FormController control="textarea" label="career." name="career" />
-            <button type="submit" disabled={!formik.isValid}>
-              완료
-            </button>
+            <div className="btn">
+              <TextMode mode={'ORANGE'} text={'완료'} type="submit" disabled={!formik.isValid} />
+            </div>
           </Form>
         )}
       </Formik>
@@ -38,6 +73,93 @@ function ProfileEditForm() {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  .form-wrp {
+    display: flex;
+    gap: 50px;
+  }
+  .form-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    font-family: var(--main);
+    font-size: var(--reg);
+    color: var(--blk);
+    margin: 10px 0 0 0;
+  }
+
+  .error {
+    font-size: var(--s);
+    color: var(--org);
+    margin: 10px 0 0 10px;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+  }
+
+  .nickname {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 10px;
+  }
+
+  .codenum {
+    font-family: var(--main);
+    font-size: var(--reg);
+    font-weight: bold;
+    color: var(--blk);
+
+    margin-top: 20px;
+  }
+
+  .tagwrp {
+    margin-top: 15px;
+  }
+
+  label {
+    font-weight: bold;
+    display: flex;
+    color: var(--grn);
+    margin: 5px 0 5px 10px;
+  }
+
+  textarea {
+    width: 400px;
+    height: 40px;
+    border-radius: 50px;
+    border: 1px solid var(--liblk);
+    resize: none;
+
+    padding: 10px 20px;
+
+    :focus {
+      outline: 2px solid var(--grn);
+      transition: outline 150ms ease-in-out;
+    }
+  }
+
+  input[type='text'] {
+    width: 300px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid var(--liblk);
+    resize: none;
+
+    padding: 10px 20px;
+
+    :focus {
+      outline: 2px solid var(--grn);
+      transition: outline 150ms ease-in-out;
+    }
+  }
+`;
 
 export default ProfileEditForm;
