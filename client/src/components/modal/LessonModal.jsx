@@ -1,5 +1,5 @@
 import Modal from './Modal.jsx';
-import Lessonform from '../form/Lessonform.jsx';
+import Lessonform from '../form/lessonRegForm/LessonRegForm.jsx';
 
 function LessonModal({ onClose }) {
   return (

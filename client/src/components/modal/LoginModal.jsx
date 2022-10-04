@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Loginform from '../form/Loginform.jsx';
+import Loginform from '../form/loginForm/LoginForm.jsx';
 import Modal from './Modal.jsx';
 
 function LoginModal({ onClose }) {

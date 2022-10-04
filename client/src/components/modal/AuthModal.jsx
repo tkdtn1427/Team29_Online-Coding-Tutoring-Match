@@ -1,4 +1,4 @@
-import Authform from '../form/Authform.jsx';
+import Authform from '../form/emailAuthForm/EmailAuthForm.jsx';
 import Modal from './Modal.jsx';
 
 function AuthModal({ onClose }) {
