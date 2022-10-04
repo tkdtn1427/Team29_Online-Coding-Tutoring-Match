@@ -17,7 +17,7 @@ public class ChatDto {
     @Setter
     public static class SRoomDto{
         private String roomId;
-        private long teahcerId;
+        private long teacherId;
         private String roomName;
     }
 

@@ -2,7 +2,11 @@ package Team049.Iguwana.MainProject.PrimaryEntity.chat.service;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.dto.ChatMessage;
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.dto.ChatRoom;
+import Team049.Iguwana.MainProject.PrimaryEntity.chat.entity.Room;
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.repository.ChatRepository;
+import Team049.Iguwana.MainProject.PrimaryEntity.chat.repository.RoomRepository;
+import Team049.Iguwana.MainProject.exception.BusinessLogicException;
+import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -21,7 +27,11 @@ public class ChatService {
     @Autowired
     private ChatRepository chatRepository;
 
+    @Autowired
+    private RoomService roomService;
+
     public void handleMessage(WebSocketSession session, ChatMessage chatMessage, ObjectMapper objectMapper, ChatRoom chatRoom) throws IOException {
+        boolean loadFile = false;
         if(chatMessage.getMessageType() == ChatMessage.MessageType.LEAVE){
             chatRoom.getSessions().remove(session);
 
@@ -30,6 +40,7 @@ public class ChatService {
                 chatRepository.findOneToOneRoom(chatMessage.getRoomId());
                 chatRepository.deleteRoom(chatRoom.getRoomId());
                 deleteFile(chatRoom.getRoomId());
+                roomService.deleteRoomRepo(chatRoom.getRoomId());
             }
 
             chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장하셨습니다.");
@@ -37,8 +48,10 @@ public class ChatService {
             if(!chatRoom.getSessions().contains(session)){
                 chatRoom.getSessions().add(session);
                 String prevMessage = readFile(chatMessage.getRoomId());
-                if(prevMessage != null)
+                if(prevMessage != null){
                     chatMessage.setMessage(readFile(chatMessage.getRoomId()));
+                    loadFile = true;
+                }
                 else
                     chatMessage.setMessage(chatMessage.getSender() + "님이 입장하셨습니다.");
 
@@ -49,20 +62,31 @@ public class ChatService {
             }
             
         }
-        send(chatMessage, objectMapper, chatRoom);
+        send(chatMessage, objectMapper, chatRoom, loadFile, session);
     }
 
-    public void send(ChatMessage chatMessage, ObjectMapper objectMapper, ChatRoom chatRoom) throws IOException {
+    public void send(ChatMessage chatMessage, ObjectMapper objectMapper, ChatRoom chatRoom,
+                     boolean loadfile, WebSocketSession prevSession) throws IOException {
         TextMessage textMessage = new TextMessage(objectMapper.writeValueAsString(chatMessage.getMessage()));
-        List<WebSocketSession> removeList = new ArrayList<>();
-        for(WebSocketSession session : chatRoom.getSessions()){
-            if(!session.isOpen()){
-                removeList.add(session);
-            }else{
-                session.sendMessage(textMessage);
+        TextMessage sessionInform ;
+        if(loadfile == false){
+            List<WebSocketSession> removeList = new ArrayList<>();
+            for(WebSocketSession session : chatRoom.getSessions()){
+                if(!session.isOpen()){
+                    removeList.add(session);
+                }else{
+                    session.sendMessage(textMessage);
+                    sessionInform = new TextMessage("session Id : " + objectMapper.writeValueAsString(session.getId()));
+                    session.sendMessage(sessionInform);
+                }
+            }
+            cleanSession(chatRoom.getSessions(), removeList);
+        }else{
+            for(WebSocketSession session : chatRoom.getSessions()){
+                if(session == prevSession) session.sendMessage(textMessage);
             }
         }
-        cleanSession(chatRoom.getSessions(), removeList);
+
     }
 
     public void releaseUserRoom(String role, long userId, String room){
@@ -105,4 +129,6 @@ public class ChatService {
         else
             System.out.println("파일 존재하지않음");
     }
+
+
 }

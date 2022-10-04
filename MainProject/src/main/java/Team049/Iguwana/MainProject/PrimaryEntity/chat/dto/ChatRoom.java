@@ -1,5 +1,6 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.chat.dto;
 
+import Team049.Iguwana.MainProject.PrimaryEntity.chat.entity.Room;
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.repository.ChatRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +35,17 @@ public class ChatRoom {
         newChatRoom.setRoomName(create.getRoomName());
         newChatRoom.setStudentId(create.getStudentId());
         newChatRoom.setTeacherId(create.getTeacherId());
+        return newChatRoom;
+    }
+
+    public static ChatRoom load(Room room){
+        System.out.println("studentId : " + room.getStudentId());
+        System.out.println(room.getTeacherId());
+        ChatRoom newChatRoom = new ChatRoom();
+        newChatRoom.setRoomId(room.getRoomId());
+        newChatRoom.setRoomName(room.getRoomName());
+        newChatRoom.setStudentId(room.getStudentId());
+        newChatRoom.setTeacherId(room.getTeacherId());
         return newChatRoom;
     }
 }
