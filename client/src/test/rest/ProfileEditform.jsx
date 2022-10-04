@@ -2,8 +2,8 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
 
-import SearchInput from '../input/SearchInput.jsx';
-import { TextMode } from '../buttons/ColorMode.jsx';
+import SearchInput from '../../components/input/SearchInput.jsx';
+import { TextMode } from '../../components/buttons/ColorMode.jsx';
 
 function ProfileEditInput({ onClose }) {
   return (
