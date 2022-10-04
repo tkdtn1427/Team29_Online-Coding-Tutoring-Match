@@ -25,7 +25,8 @@ public class ChatController {
     @PostMapping("/room")
     public ResponseEntity createRoom(@RequestBody ChatRoomForm.Create create){
         ChatRoom chatRoom = chatRepository.createChatRoom(create);
-        return new ResponseEntity(chatRoom, HttpStatus.CREATED);
+        ChatDto.roomResponse response = new ChatDto.roomResponse(chatRoom.getStudentId(), chatRoom.getTeacherId(), chatRoom.getRoomId());
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @GetMapping
