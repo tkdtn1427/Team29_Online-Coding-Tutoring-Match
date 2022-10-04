@@ -2,10 +2,19 @@
 import styled from '@emotion/styled';
 import Cancel from '../../assets/svg/Cancel.jsx';
 
-function TagTechStack({ text }) {
+function TagTechStack({ text, setFilteredTags, filteredTags }) {
+  const RemoveTag = target => {
+    setFilteredTags([...filteredTags.filter(e => e !== target)]);
+  };
+
   return (
     <Container>
-      {text} <Cancel />
+      {text}{' '}
+      <Cancel
+        onClick={e => {
+          RemoveTag(e.target);
+        }}
+      />
     </Container>
   );
 }

@@ -1,12 +1,13 @@
 import authRequest from '../Interceptors';
 import { getUser } from '../../Localstorage';
 
-async function UploadImage({ file }) {
+async function UploadImage(file) {
   const { role, userId } = getUser();
   const formData = new FormData();
 
   formData.append('file', file);
-  formData.append('users', role);
+  formData.append('role', role);
+
   try {
     const result = await authRequest.post(`/v1/image/${userId}`, formData, { 'Content-Type': 'multipart/form-data' });
     return result.data;
@@ -15,12 +16,12 @@ async function UploadImage({ file }) {
   }
 }
 
-async function UpdateImage({ file }) {
+async function UpdateImage(file) {
   const { role, userId } = getUser();
   const formData = new FormData();
 
   formData.append('file', file);
-  formData.append('users', role);
+  formData.append('role', role);
   try {
     const result = await authRequest.patch(`/v1/image/${userId}`, formData, { 'Content-Type': 'multipart/form-data' });
     return result.data;
@@ -31,10 +32,8 @@ async function UpdateImage({ file }) {
 
 async function RemoveImage() {
   const { role, userId } = getUser();
-  const formData = new FormData();
-  formData.append('users', role);
   try {
-    const result = await authRequest.delete(`/v1/image/${userId}`, formData, { 'Content-Type': 'multipart/form-data' });
+    const result = await authRequest.delete(`/v1/image/${userId}?role=${role}`);
     return result.data;
   } catch (err) {
     console.log(err);

@@ -1,16 +1,13 @@
 import styled from '@emotion/styled';
-
 import ReviewList from './ReviewList.jsx';
 import TextArea from '../textarea/TextArea.jsx';
+import Stars from '../star/Stars.jsx';
 
 function ReviewContainer() {
   return (
     <Container>
-      <div className="rvn">
-        <span>캘린더</span>
-        <span className="slt">강의 후기</span>
-      </div>
       <div className="wrap">
+        <Stars width="20" height="20" scores="4.8" />
         <TextArea />
         <ReviewList />
       </div>

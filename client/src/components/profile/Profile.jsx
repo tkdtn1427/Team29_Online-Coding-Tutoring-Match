@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import ProfileImg from '../profileImg/ProfileImg.jsx';
 import { TextMode } from '../buttons/ColorMode.jsx';
 import PorfileEditModal from '../modal/PorfileEditModal.jsx';
+import { GetUserInfo } from '../../utils/apis/API/UserAPI';
+import picturelogo from '../../assets/img/picturelogo.png';
+import { UploadImage, UpdateImage, RemoveImage } from '../../utils/apis/API/ImageAPI';
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState({});
+  const [preview, setPreview] = useState(null);
+  const [file, setFile] = useState(null);
+  const hiddenFileInput = useRef(null);
 
   const onClickButton = () => {
     setIsOpen(!isOpen);
@@ -14,14 +21,62 @@ function Profile() {
 
   const location = useLocation();
 
+  useEffect(() => {
+    GetUserInfo().then(data => setUser(data));
+  }, []);
+
+  const imageSelectHandler = event => {
+    const imageFile = event.target.files[0];
+    setFile(imageFile);
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(imageFile);
+    fileReader.onload = event => {
+      setPreview({
+        imgSrc: event.target.result,
+        fileName: imageFile.name,
+      });
+    };
+
+    if (setImgSrc() !== picturelogo) UpdateImage(imageFile);
+    else UploadImage(imageFile);
+  };
+
+  // 1.버튼을 누르면 handleClick 동작
+  // 2. ref한게 클릭을 시킴
+  //    여기서 ref한게 input임
+  // 3. input을 클릭하게됨
+  const handleClick = event => {
+    hiddenFileInput.current.click();
+  };
+
+  const setImgSrc = () => {
+    if (preview && preview.imgSrc) return preview.imgSrc;
+    if (user && user.imageUrl !== 'x') return user.imageUrl;
+    return picturelogo;
+  };
+
+  const removeHandler = () => {
+    setUser({ ...user, imageUrl: 'x' });
+    setPreview(null);
+    RemoveImage();
+  };
+
   return (
     <Container>
       <div className="picture">
-        <ProfileImg></ProfileImg>
+        <ProfileImg width="300px" height="300px" src={setImgSrc()} />
         {location.pathname === '/mypage' ? (
           <div className="btnWrap">
-            <TextMode mode={'ORANGE'} text={'삭제'} />
-            <TextMode mode={'GREEN'} text={'등록'} />
+            <TextMode mode={'ORANGE'} text={'삭제'} onClick={removeHandler} />
+            <TextMode mode={'GREEN'} text={'등록'} onClick={handleClick} />
+            <input
+              id="image"
+              type="file"
+              ref={hiddenFileInput}
+              style={{ display: 'none' }}
+              onChange={imageSelectHandler}
+            />
           </div>
         ) : (
           ''
@@ -29,8 +84,8 @@ function Profile() {
       </div>
       <Wrapper>
         <div className="nameWrap">
-          <p>코드까마귀</p>
-          <span>#0001</span>
+          <p>ttt</p>
+          <span>ttt</span>
           {location.pathname === '/mypage' ? (
             <TextMode mode={'GREEN'} text={'수정'} onClick={onClickButton} />
           ) : (

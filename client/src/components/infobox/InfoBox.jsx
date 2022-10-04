@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import MonthlyCalendar from '../calendar/MonthlyCalendar.jsx';
-import ReviewBox from '../review/ReviewBox.jsx';
+import ReviewContainer from '../review/ReviewContainer.jsx';
 import TabHandler from '../../utils/TabHandler';
 
 function InfoBox() {
   const [currentTab, setCurrentTab] = useState(0);
 
-  const Tab = ['캘린더', '수업 후기'];
+  const Tab = ['캘린더', '강의 후기'];
 
   return (
     <Container>
@@ -23,7 +23,7 @@ function InfoBox() {
           </div>
         ))}
       </Tabs>
-      {currentTab ? <ReviewBox></ReviewBox> : <MonthlyCalendar></MonthlyCalendar>}
+      {currentTab ? <ReviewContainer></ReviewContainer> : <MonthlyCalendar></MonthlyCalendar>}
     </Container>
   );
 }

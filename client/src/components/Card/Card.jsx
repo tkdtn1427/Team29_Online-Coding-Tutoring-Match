@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import TagListBox from '../tagbox/TagListBox.jsx';
 import Stars from '../star/Stars.jsx';
+import picturelogo from '../../assets/img/picturelogo.png';
+import ColorStackList from '../techstack/ColorStackList.jsx';
 
 //  TagListBox width height 내려주기...
 // img 데이터 list에서 내려줘서 map 안에서 담기
@@ -8,18 +10,18 @@ import Stars from '../star/Stars.jsx';
 //  star에 점수 내려주기
 // 틀만 잡아놓음 불필요한 width height 제거 예정
 
-function Card() {
+function Card({ data }) {
   return (
     <Container>
-      <ProfileImg></ProfileImg>
+      <ProfileImg src={data.imageUrl === 'x' ? picturelogo : data.imageUrl}></ProfileImg>
       <Introduce>
-        <Name></Name>
+        <Name>{data.nickName}</Name>
         <Wrapper>
-          <Stars width="10" height="10" />
-          <Score></Score>
+          <Stars width="10" height="10" scores={data.reputation} />
+          <Score>{data.reputation}</Score>
         </Wrapper>
       </Introduce>
-      <TagListBox width="232" height="25"></TagListBox>
+      <ColorStackList width="240px" height="25" stacks={data.skillTableList}></ColorStackList>
     </Container>
   );
 }
@@ -52,16 +54,28 @@ const Introduce = styled.div`
 `;
 
 const Name = styled.span`
-  height: 15px;
+  height: 20px;
   border: 1px solid green;
+  overflow: hidden;
+  font-size: var(--l);
+  color: var(--blk);
+  font-family: var(--main);
 `;
 
 const Wrapper = styled.span`
+  display: flex;
+  justify-content: right;
+  align-items: center;
   width: 98px;
   height: 15px;
   border: 1px solid purple;
 `;
 
-const Score = styled.span``;
+const Score = styled.span`
+  font-size: var(--reg);
+  margin-left: 5px;
+  color: var(--blk);
+  font-weight: bold;
+`;
 
 export default Card;

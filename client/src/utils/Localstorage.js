@@ -26,6 +26,8 @@ function getUser() {
 function removeUser() {
   localStorage.removeItem('userId');
   localStorage.removeItem('Role');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
 }
 
 export { addTokenLocalStorage, getToken, addRoleLocalStorage, addUserLovalStorage, getUser, removeUser };

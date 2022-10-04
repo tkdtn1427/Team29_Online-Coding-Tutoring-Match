@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+
 import ColorTechstack from './ColorTechstack.jsx';
 
-function ColorStackList({ width }) {
-  const [stacks, useStacks] = useState([]);
-
+function ColorStackList({ width, stacks }) {
   return (
     <Container width={width}>
       {stacks.map((e, i) => (
@@ -15,8 +13,14 @@ function ColorStackList({ width }) {
 }
 
 const Container = styled.div`
+  border: 1px solid yellow;
   display: flex;
+  gap: 2px;
   width: ${props => props.width};
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default ColorStackList;

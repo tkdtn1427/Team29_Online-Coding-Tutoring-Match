@@ -10,11 +10,12 @@ async function Login({ loginForm, role }) {
     const accessToken = result.headers.accesstoken.split(' ')[1];
     const refreshToken = result.headers.refreshtoken.split(' ')[1];
     const { userid } = result.headers;
+    const Role = result.headers.role;
     addTokenLocalStorage({ refreshToken, accessToken });
     addUserLovalStorage(userid);
-    return result.data;
+    addRoleLocalStorage(Role);
+    return true;
   } catch (err) {
-    console.log(err);
     if (err.response.data.status === 404) {
       console.log('없는 페이지입니다.');
     } // 실험해놓은것 다시 고치기
@@ -35,8 +36,6 @@ async function SignUp({ signupForm, role }) {
 async function EmailAuth({ code }) {
   try {
     const result = await authAPI.post(`/v1/emails/check?code=${code}`);
-    const Role = result.data.split(' ')[0];
-    addRoleLocalStorage(Role);
     console.log(result.data);
     return result;
   } catch (err) {
@@ -60,4 +59,14 @@ async function GetAccessToken() {
   }
 }
 
-export { Login, SignUp, EmailAuth, GetAccessToken };
+async function GetTeachers(arrange) {
+  try {
+    const result = await authAPI.get(`/v1/teachers?page=1&size=8&arrange=${arrange}&skill=x`);
+    console.log(result.data);
+    return result.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export { Login, SignUp, EmailAuth, GetAccessToken, GetTeachers };

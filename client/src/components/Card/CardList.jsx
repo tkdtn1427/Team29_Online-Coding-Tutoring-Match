@@ -1,11 +1,21 @@
 import styled from '@emotion/styled';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import Card from './Card.jsx';
+import { TeacherList } from '../../redux/teacherlist/TeachersReducer';
 
 function CardList() {
+  const dispatch = useDispatch();
+  const { filteredTeachers } = useSelector(state => state.teachers);
+
+  useEffect(() => {
+    dispatch(TeacherList('nickName'));
+  }, []);
+
   return (
     <Container>
-      {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
-        <Card key={i} />
+      {[...filteredTeachers].map((e, i) => (
+        <Card key={i} data={e} />
       ))}
     </Container>
   );

@@ -19,12 +19,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  float: left;
   width: 100%;
   height: 350px;
   background-color: var(--grn);
-  .img {
-    margin: 110px 30px 0px 0px;
+  img {
+    margin: 120px 30px 0px 0px;
     width: 180px;
     height: 230px;
   }

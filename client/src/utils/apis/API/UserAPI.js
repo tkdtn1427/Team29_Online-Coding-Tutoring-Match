@@ -7,7 +7,7 @@ import { getUser, removeUser } from '../../Localstorage';
 async function GetUserInfo() {
   const { role, userId } = getUser();
   try {
-    const result = await authRequest.get(`/v1/students/myPage/${userId}`);
+    const result = await authRequest.get(`/v1/${role}/${userId}`);
     return result.data;
   } catch (err) {
     console.log(err);
@@ -18,7 +18,7 @@ async function GetUserInfo() {
 async function PatchUserInfo(editForm) {
   const { role, userId } = getUser();
   try {
-    const result = await authRequest.patch(`/v1/students/update/${userId}`, editForm);
+    const result = await authRequest.patch(`/v1/${role}/update/${userId}`, editForm);
     return result.data;
   } catch (err) {
     console.log(err);
@@ -29,7 +29,8 @@ async function PatchUserInfo(editForm) {
 async function PatchPassword(editPasswordForm) {
   const { role, userId } = getUser();
   try {
-    const result = await authRequest.patch(`/v1/students/password/${userId}`, editPasswordForm);
+    const result = await authRequest.patch(`/v1/${role}/password/${userId}`, editPasswordForm);
+    return result.data;
   } catch (err) {
     console.log(err);
   }
@@ -39,15 +40,12 @@ async function PatchPassword(editPasswordForm) {
 async function DeleteUserInfo() {
   const { role, userId } = getUser();
   try {
-    const result = await authRequest.delete(`/v1/students/delete/${userId}`);
+    const result = await authRequest.delete(`/v1/${role}/delete/${userId}`);
     removeUser();
+    return result.data;
   } catch (err) {
     console.log(err);
   }
 }
 
-// // 선생님 모두 조회
-// async function GetTeachers({ page }) {
-//   const result = await authRequest.get(`/v1/teachers?page=${page}`);
-// }
 export { GetUserInfo, PatchUserInfo, DeleteUserInfo, PatchPassword };

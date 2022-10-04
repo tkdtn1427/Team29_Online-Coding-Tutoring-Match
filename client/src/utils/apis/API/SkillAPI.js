@@ -1,10 +1,9 @@
-import axios from 'axios';
 import authRequest from '../Interceptors';
 
 // 모든 스킬 조회
 async function GetSkills() {
   try {
-    const result = await authRequest.get(`/v1/skill`);
+    const result = await authRequest.get(`/v1/skill/all`);
     return result.data;
   } catch (err) {
     console.log(err);

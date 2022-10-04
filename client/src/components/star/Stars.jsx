@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Star from '../../assets/svg/Star.jsx';
 
 function Stars({ scores, width, height }) {
-  const score = Math.floor(4.3); // 4.3 대신 scores
+  const score = Math.floor(Number(scores)); // 4.3 대신 scores
   const orgarr = new Array(score).fill(1);
   const gryarr = new Array(5 - score).fill(1);
 
@@ -19,5 +19,8 @@ function Stars({ scores, width, height }) {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  gap: 5px;
+`;
 export default Stars;

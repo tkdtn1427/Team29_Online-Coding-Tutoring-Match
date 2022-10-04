@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
 import Search from '../../assets/svg/Search.jsx';
-import { TeachersReducer } from '../../redux/teacherlist/TeachersReducer';
+import { TagReducer } from '../../redux/taglist/TagsReducer';
 
-function SearchInput({ width, height, placeholder, ftsize, bdcolor, onClick }) {
+function FilterStackInput({ width, height, placeholder, ftsize, bdcolor, onClick }) {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -13,7 +13,8 @@ function SearchInput({ width, height, placeholder, ftsize, bdcolor, onClick }) {
   };
 
   useEffect(() => {
-    dispatch(TeachersReducer.actions.searchByNickName(searchTerm));
+    dispatch(TagReducer.actions.searchByAlpha(searchTerm));
+    console.log(searchTerm);
   }, [searchTerm]);
 
   return (
@@ -53,4 +54,4 @@ const Container = styled.div`
   }
 `;
 
-export default SearchInput;
+export default FilterStackInput;
