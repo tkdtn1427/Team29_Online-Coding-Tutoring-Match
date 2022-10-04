@@ -1,4 +1,3 @@
-import axios from 'axios';
 import authRequest from '../Interceptors';
 
 // 모든 스킬 조회
