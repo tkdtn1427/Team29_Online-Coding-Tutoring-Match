@@ -1,21 +1,34 @@
 import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from './Card.jsx';
 import { TeacherList } from '../../redux/teacherlist/TeachersReducer';
+import { GetOneTeacher } from '../../utils/apis/AuthAPI';
 
 function CardList() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { filteredTeachers } = useSelector(state => state.teachers);
 
   useEffect(() => {
     dispatch(TeacherList('nickName'));
   }, []);
 
+  const navigateInfo = e => {
+    navigate(`/info/${e.teacherId}`);
+  };
+
   return (
     <Container>
       {[...filteredTeachers].map((e, i) => (
-        <Card key={i} data={e} />
+        <Card
+          key={i}
+          data={e}
+          onClick={() => {
+            navigateInfo(e);
+          }}
+        />
       ))}
     </Container>
   );

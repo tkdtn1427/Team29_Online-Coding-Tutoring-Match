@@ -27,16 +27,16 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route
-              path="/mypage"
+              path="/mypage/:id"
               element={
                 <RequireAuth option={true} setModal={setOpenModal}>
                   <ProfilePage />
                 </RequireAuth>
               }
             />
-            <Route path="/main/:filter" element={<MainPage />} />
+            <Route path="/main" element={<MainPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route path="/info" element={<DetailPage />} />
+            <Route path="/info/:id" element={<DetailPage />} />
             <Route path="/test" element={<Test />} />
             <Route path="/chat" element={<ChatPopup />} />
           </Routes>

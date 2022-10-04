@@ -2,6 +2,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { TextMode, IconMode } from '../buttons/ColorMode.jsx';
 import LowercaseLogo from '../logos/LowercaseLogo.jsx';
 import Profile from '../../assets/svg/Profile.jsx';
@@ -9,17 +10,23 @@ import Alert from '../../assets/svg/Alert.jsx';
 import LoginModal from '../modal/LoginModal.jsx';
 import { SignUp, Login } from '../../utils/apis/AuthAPI';
 import LoginReducer from '../../redux/login/LoginReducer';
-import { removeUser } from '../../utils/Localstorage';
+import { removeUser, getUser } from '../../utils/Localstorage';
 
 function Navbar() {
   const { loginState } = useSelector(state => state.loginState);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userId } = getUser();
 
   // 리덕스상태로 변경 예정
 
   const openLoginModal = () => {
     setIsOpen(!isOpen);
+  };
+
+  const navigateMyPage = () => {
+    navigate(`/mypage/${userId}`);
   };
 
   return (
@@ -28,7 +35,13 @@ function Navbar() {
       {loginState ? (
         <ButtonWrapper>
           <IconMode mode="ORANGE" text={<Alert />} />
-          <IconMode mode="GREEN" text={<Profile />} />
+          <IconMode
+            mode="GREEN"
+            text={<Profile />}
+            onClick={() => {
+              navigateMyPage();
+            }}
+          />
           <TextMode
             mode="GREEN"
             text="logout"
@@ -43,15 +56,16 @@ function Navbar() {
           <TextMode
             mode="ORANGE"
             text="login"
-            onClick={async () => {
-              const result = await Login({
-                loginForm: { email: 'euisuk95@gmail.com', password: '12345678' },
-                role: 'teacher',
-              });
-              if (result) {
-                dispatch(LoginReducer.actions.logIn());
-              }
-            }}
+            // onClick={async () => {
+            //   const result = await Login({
+            //     loginForm: { email: 'euisuk95@gmail.com', password: '12345678' },
+            //     role: 'teacher',
+            //   });
+            //   if (result) {
+            //     dispatch(LoginReducer.actions.logIn());
+            //   }
+            // }}
+            onClick={openLoginModal}
           />
           <TextMode
             mode="GREEN"
@@ -60,13 +74,7 @@ function Navbar() {
               SignUp();
             }}
           />
-          {isOpen && (
-            <LoginModal
-              onClose={() => {
-                openLoginModal();
-              }}
-            />
-          )}
+          {isOpen && <LoginModal onClose={openLoginModal} />}
         </ButtonWrapper>
       )}
     </Container>
