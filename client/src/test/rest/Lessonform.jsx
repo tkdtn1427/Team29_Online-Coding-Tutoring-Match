@@ -2,7 +2,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
 
-import { TextMode } from '../buttons/ColorMode.jsx';
+import { TextMode } from '../../components/buttons/ColorMode.jsx';
 
 function LessonInput({ onClose }) {
   return (

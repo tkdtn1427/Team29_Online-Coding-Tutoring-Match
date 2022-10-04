@@ -1,7 +1,7 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
-import FormController from '../formControl/FormController';
+import FormController from '../../components/form/formControl/FormController';
 
 function DaySelector() {
   const initialValues = {
@@ -20,6 +20,7 @@ function DaySelector() {
 
   const validationSchema = Yup.object({
     day: Yup.array().required('요일을 선택하세요'),
+    time: Yup.array().required('시간을 선택하세요'),
   });
 
   const mon = [{ key: '월요일', value: '1' }];
@@ -31,17 +32,26 @@ function DaySelector() {
   const sun = [{ key: '일요일', value: '7' }];
 
   const onSubmit = values => {
-    console.log('Form data', values);
     const days = [];
     const daylist = values.day.sort();
     const times = values.time;
 
+    // 키, 밸류값 변환
     for (let i = 0; i < daylist.length; i++) {
       const key = daylist[i];
       days[key] = times[key];
-    }
 
-    console.log('강의 요일', days);
+      const value = Object.values(days[key]);
+
+      days[key] = value;
+
+      const final = `${days[key][0]} - ${days[key][days[key].length - 1]}`;
+
+      days[key] = final;
+    }
+    values.time = { ...days };
+
+    console.log('강의 요일', values);
   };
 
   return (

@@ -3,10 +3,17 @@ import * as Yup from 'yup';
 import styled from '@emotion/styled';
 import FormController from '../formControl/FormController';
 
-import DaySelector from './DaySelector.jsx';
 import { TextMode } from '../../buttons/ColorMode.jsx';
 
 function LessonRegForm() {
+  const mon = [{ key: '월', value: '1' }];
+  const tue = [{ key: '화', value: '2' }];
+  const wed = [{ key: '수', value: '3' }];
+  const thu = [{ key: '목', value: '4' }];
+  const fri = [{ key: '금', value: '5' }];
+  const sat = [{ key: '토', value: '6' }];
+  const sun = [{ key: '일', value: '7' }];
+
   const initialValues = {
     subject: '',
     content: '',
@@ -14,6 +21,17 @@ function LessonRegForm() {
     studentId: '',
     start_pd: '',
     end_pd: '',
+    day: [],
+    time: [
+      { dummy: '' },
+      { start_time_mon: '', end_time_mon: '' },
+      { start_time_tue: '', end_time_tue: '' },
+      { start_time_wed: '', end_time_wed: '' },
+      { start_time_thu: '', end_time_thu: '' },
+      { start_time_fri: '', end_time_fri: '' },
+      { start_time_sat: '', end_time_sat: '' },
+      { start_time_sun: '', end_time_sun: '' },
+    ],
   };
 
   const validationSchema = Yup.object({
@@ -23,10 +41,31 @@ function LessonRegForm() {
     studentId: Yup.string().required('아이디를 입력하세요'),
     start_pd: Yup.date().required('날짜를 선택하세요').nullable(),
     end_pd: Yup.date().required('날짜를 선택하세요').nullable(),
+    day: Yup.array().required('요일을 선택하세요'),
+    time: Yup.array().required('시간을 선택하세요'),
   });
 
   const onSubmit = values => {
     console.log('Form data', values);
+
+    const days = [];
+    const daylist = values.day.sort();
+    const times = values.time;
+
+    // 키, 밸류값 변환
+    for (let i = 0; i < daylist.length; i++) {
+      const key = daylist[i];
+      days[key] = times[key];
+
+      const value = Object.values(days[key]);
+
+      days[key] = value;
+
+      const final = `${days[key][0]} - ${days[key][days[key].length - 1]}`;
+
+      days[key] = final;
+    }
+    values.time = { ...days };
   };
 
   return (
@@ -43,9 +82,69 @@ function LessonRegForm() {
                 <FormController control="date" label="시작 일자" name="start_pd" />
                 <FormController control="date" label="종료 일자" name="end_pd" />
               </div>
-              <DaySelector />
+              <div className="daytimewrp">
+                <div className="days">
+                  <div className="chkbox">
+                    <FormController control="checkbox" name="day" options={mon} />
+                  </div>
+                  <div className="times">
+                    <FormController control="time" label="시작" name="time[1].start_time_mon" />
+                    <FormController control="time" label="종료" name="time[1].end_time_mon" />
+                  </div>
+                </div>
+
+                <div className="days">
+                  <FormController control="checkbox" name="day" options={tue} />
+                  <div className="times">
+                    <FormController control="time" label="시작" name="time[2].start_time_tue" />
+                    <FormController control="time" label="종료" name="time[2].end_time_tue" />
+                  </div>
+                </div>
+
+                <div className="days">
+                  <FormController control="checkbox" name="day" options={wed} />
+                  <div className="times">
+                    <FormController control="time" label="시작" name="time[3].start_time_wed" />
+                    <FormController control="time" label="종료" name="time[3].end_time_wed" />
+                  </div>
+                </div>
+
+                <div className="days">
+                  <FormController control="checkbox" name="day" options={thu} />
+                  <div className="times">
+                    <FormController control="time" label="시작" name="time[4].start_time_thu" />
+                    <FormController control="time" label="종료" name="time[4].end_time_thu" />
+                  </div>
+                </div>
+
+                <div className="days">
+                  <FormController control="checkbox" name="day" options={fri} />
+                  <div className="times">
+                    <FormController control="time" label="시작" name="time[5].start_time_fri" />
+                    <FormController control="time" label="종료" name="time[5].end_time_fri" />
+                  </div>
+                </div>
+
+                <div className="days">
+                  <FormController control="checkbox" name="day" options={sat} />
+                  <div className="times">
+                    <FormController control="time" label="시작" name="time[6].start_time_sat" />
+                    <FormController control="time" label="종료" name="time[6].end_time_sat" />
+                  </div>
+                </div>
+
+                <div className="days">
+                  <FormController control="checkbox" name="day" options={sun} />
+                  <div className="times">
+                    <FormController control="time" label="시작" name="time[7].start_time_sun" />
+                    <FormController control="time" label="종료" name="time[7].end_time_sun" />
+                  </div>
+                </div>
+              </div>
             </div>
-            <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등록 '} />
+            <div className="btn">
+              <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등록 '} />
+            </div>
           </Form>
         )}
       </Formik>
@@ -58,6 +157,19 @@ const Container = styled.div`
     display: flex;
     gap: 50px;
   }
+
+  .input-wrp {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-weight: bold;
+      display: flex;
+      margin: 5px 0 5px 10px;
+    }
+  }
+
   .form-control {
     display: flex;
     flex-direction: column;
@@ -79,12 +191,30 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin-top: 20px;
   }
 
-  label {
-    font-weight: bold;
+  .daytimewrp {
+    label {
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 5px 0 5px 6px;
+    }
+  }
+
+  .days {
     display: flex;
-    margin: 5px 0 5px 10px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .times {
+    display: flex;
+    gap: 10px;
   }
 
   input[type='text'],
