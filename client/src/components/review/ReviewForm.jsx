@@ -1,7 +1,7 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
-import FormController from '../formControl/FormController';
+import FormController from '../form/formControl/FormController';
 
 function ReviewForm() {
   const reputationOption = [

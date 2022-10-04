@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import ReviewList from './ReviewList.jsx';
-import TextArea from '../textarea/TextArea.jsx';
 import Stars from '../star/Stars.jsx';
 
 function ReviewContainer() {
@@ -8,7 +7,6 @@ function ReviewContainer() {
     <Container>
       <div className="wrap">
         <Stars width="20" height="20" scores="4.8" />
-        <TextArea />
         <ReviewList />
       </div>
     </Container>

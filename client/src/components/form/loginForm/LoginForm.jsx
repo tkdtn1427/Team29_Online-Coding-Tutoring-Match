@@ -3,7 +3,9 @@ import * as Yup from 'yup';
 import styled from '@emotion/styled';
 import FormController from '../formControl/FormController';
 
-function SignupForm() {
+import { TextMode } from '../../buttons/ColorMode.jsx';
+
+function LoginForm({ onClose }) {
   const roleOptions = [
     { key: '회원 종류를 선택하세요', value: '' },
     { key: '선생님', value: 'teacher' },
@@ -13,20 +15,12 @@ function SignupForm() {
   const initialValues = {
     email: '',
     password: '',
-    confirmPassword: '',
-    name: '',
-    nickName: '',
     role: '',
   };
 
   const validationSchema = Yup.object({
     email: Yup.string().email('올바른 이메일을 입력하세요').required('이메일을 입력하세요'),
     password: Yup.string().required('비밀번호를 입력하세요'),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), ''], '비밀번호가 일치하지 않습니다')
-      .required('비밀번호를 입력하세요'),
-    name: Yup.string().required('이름을 입력하세요'),
-    nickName: Yup.string().required('닉네임을 입력하세요'),
     role: Yup.string().required('회원 종류를 선택하세요'),
   });
 
@@ -39,16 +33,13 @@ function SignupForm() {
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {formik => (
           <Form>
+            <FormController control="select" label="회원 구분" name="role" options={roleOptions} />
             <FormController control="input" type="email" label="이메일" name="email" />
             <FormController control="input" type="password" label="비밀번호" name="password" />
-            <FormController control="input" type="password" label="비밀번호 확인" name="confirmPassword" />
-            <FormController control="input" type="text" label="이름" name="name" />
-            <FormController control="input" type="text" label="닉네임" name="nickName" />
-            <FormController control="select" label="회원 구분" name="role" options={roleOptions} />
-            <button type="submit" disabled={!formik.isValid}>
-              login.
-            </button>
-            <button type="button">signup.</button>
+            <div className="btn">
+              <TextMode mode={'ORANGE'} text={'login.'} type="submit" disabled={!formik.isValid} onClick={onClose} />
+              <TextMode mode={'GREEN'} text={'signup.'} type="button" />
+            </div>
           </Form>
         )}
       </Formik>
@@ -56,6 +47,50 @@ function SignupForm() {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  .form-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-export default SignupForm;
+    font-family: var(--main);
+    font-size: var(--reg);
+    color: var(--blk);
+    margin: 20px 0 10px 0;
+  }
+
+  .error {
+    font-size: var(--s);
+    color: var(--org);
+    margin: 10px 0 0 10px;
+  }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 30px;
+  }
+
+  label {
+    font-weight: bold;
+    display: flex;
+    margin: 0 0 10px 10px;
+  }
+
+  input,
+  select {
+    width: 500px;
+    height: 40px;
+    border-radius: 50px;
+    border: 1px solid var(--liblk);
+
+    :focus {
+      outline: 2px solid var(--grn);
+      transition: outline 150ms ease-in-out;
+    }
+  }
+`;
+
+export default LoginForm;

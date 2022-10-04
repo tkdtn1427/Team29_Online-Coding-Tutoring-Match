@@ -2,19 +2,15 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
 
-import Check from '../../assets/svg/Check.jsx';
-import Err from '../../assets/svg/Err.jsx';
-import { TextMode } from '../buttons/ColorMode.jsx';
+import { TextMode } from '../../components/buttons/ColorMode.jsx';
 
-function AuthInput({ onClose }) {
+function LoginInput({ onClose }) {
   return (
     <Formik
-      initialValues={{ auth: '', authCheck: '' }}
+      initialValues={{ email: '', password: '' }}
       validationSchema={Yup.object({
-        auth: Yup.string()
-          .min(6, <Err />)
-          .required(<Err />),
-        authCheck: Yup.string().oneOf([Yup.ref('auth'), null], <Err />),
+        email: Yup.string().email(),
+        password: Yup.string().min(6).required(),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -22,20 +18,30 @@ function AuthInput({ onClose }) {
           setSubmitting(false);
         }, 400);
       }}>
-      {({ errors, touched }) => (
+      {() => (
         <Container>
           <Form className="form">
-            <label htmlFor="auth" className="lab">
-              인증번호를 입력하세요
+            <label htmlFor="email" className="lab">
+              이메일
             </label>
 
             <div className="wrp">
-              <Field name="auth" type="text" className="fil" />
-              {errors.auth && touched.auth ? <ErrorMessage name="auth" /> : <Check />}
+              <Field name="email" type="email" className="fil" />
+              <ErrorMessage name="email" />
+            </div>
+
+            <label htmlFor="password" className="lab">
+              비밀번호
+            </label>
+
+            <div className="wrp">
+              <Field name="password" type="password" className="fil" />
+              <ErrorMessage name="password" />
             </div>
 
             <div className="btn" onClick={onClose}>
-              <TextMode mode={'GREEN'} text={'인증'} type="submit" />
+              <TextMode mode={'ORANGE'} text={'login.'} type="submit" />
+              <TextMode mode={'GREEN'} text={'signup.'} type="submit" />
             </div>
           </Form>
         </Container>
@@ -49,17 +55,18 @@ const Container = styled.fieldset`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   .lab {
     font-family: var(--main);
     font-size: var(--reg);
     color: var(--blk);
-    margin: 0 0 20px 15px;
+    align-self: flex-start;
+    margin: 30px 0 10px 30px;
   }
   .fil {
     width: 500px;
     height: 40px;
-    margin: 0 10px 0 0;
     border-radius: 50px;
     border: 1px solid var(--liblk);
 
@@ -73,9 +80,13 @@ const Container = styled.fieldset`
     align-items: center;
   }
   .btn {
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     align-self: center;
-    margin: 20px 0 0 0;
+    margin: 40px 0 0 0;
   }
 `;
 
-export default AuthInput;
+export default LoginInput;

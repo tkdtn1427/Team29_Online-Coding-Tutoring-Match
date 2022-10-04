@@ -51,38 +51,52 @@ function DaySelector() {
           <Form>
             <div className="days">
               <FormController control="checkbox" name="day" options={mon} />
-              <FormController control="time" label="시작" name="time[1].start_time_mon" />
-              <FormController control="time" label="종료" name="time[1].end_time_mon" />
+              <div className="times">
+                <FormController control="time" label="시작" name="time[1].start_time_mon" />
+                <FormController control="time" label="종료" name="time[1].end_time_mon" />
+              </div>
             </div>
             <div className="days">
               <FormController control="checkbox" name="day" options={tue} />
-              <FormController control="time" label="시작" name="time[2].start_time_tue" />
-              <FormController control="time" label="종료" name="time[2].end_time_tue" />
+              <div className="times">
+                <FormController control="time" label="시작" name="time[2].start_time_tue" />
+                <FormController control="time" label="종료" name="time[2].end_time_tue" />
+              </div>
             </div>
             <div className="days">
               <FormController control="checkbox" name="day" options={wed} />
-              <FormController control="time" label="시작" name="time[3].start_time_wed" />
-              <FormController control="time" label="종료" name="time[3].end_time_wed" />
+              <div className="times">
+                <FormController control="time" label="시작" name="time[3].start_time_wed" />
+                <FormController control="time" label="종료" name="time[3].end_time_wed" />
+              </div>
             </div>
             <div className="days">
               <FormController control="checkbox" name="day" options={thu} />
-              <FormController control="time" label="시작" name="time[4].start_time_thu" />
-              <FormController control="time" label="종료" name="time[4].end_time_thu" />
+              <div className="times">
+                <FormController control="time" label="시작" name="time[4].start_time_thu" />
+                <FormController control="time" label="종료" name="time[4].end_time_thu" />
+              </div>
             </div>
             <div className="days">
               <FormController control="checkbox" name="day" options={fri} />
-              <FormController control="time" label="시작" name="time[5].start_time_fri" />
-              <FormController control="time" label="종료" name="time[5].end_time_fri" />
+              <div className="times">
+                <FormController control="time" label="시작" name="time[5].start_time_fri" />
+                <FormController control="time" label="종료" name="time[5].end_time_fri" />
+              </div>
             </div>
             <div className="days">
               <FormController control="checkbox" name="day" options={sat} />
-              <FormController control="time" label="시작" name="time[6].start_time_sat" />
-              <FormController control="time" label="종료" name="time[6].end_time_sat" />
+              <div className="times">
+                <FormController control="time" label="시작" name="time[6].start_time_sat" />
+                <FormController control="time" label="종료" name="time[6].end_time_sat" />
+              </div>
             </div>
             <div className="days">
               <FormController control="checkbox" name="day" options={sun} />
-              <FormController control="time" label="시작" name="time[7].start_time_sun" />
-              <FormController control="time" label="종료" name="time[7].end_time_sun" />
+              <div className="times">
+                <FormController control="time" label="시작" name="time[7].start_time_sun" />
+                <FormController control="time" label="종료" name="time[7].end_time_sun" />
+              </div>
             </div>
             <button type="submit" disabled={!formik.isValid}>
               등록
@@ -94,11 +108,15 @@ function DaySelector() {
   );
 }
 const Container = styled.div`
-  padding: 60px;
   .days {
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
 
+  .times {
+    display: flex;
     gap: 10px;
   }
 `;
