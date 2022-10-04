@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Signupform from '../components/form/Signupform.jsx';
+import Signupform from '../components/form/signupForm/SignupForm.jsx';
 
 function SignupPage() {
   return (
