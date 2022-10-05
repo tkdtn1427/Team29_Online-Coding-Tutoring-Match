@@ -3,12 +3,13 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
 import FormController from '../formControl/FormController';
-
+import { SignUp, EmailAuth } from '../../../utils/apis/AuthAPI';
 import { TextMode } from '../../buttons/ColorMode.jsx';
 import AuthModal from '../../modal/AuthModal.jsx';
 
 function SignupForm() {
   const [isOpen, setIsOpen] = useState(false);
+  const [response, setResponse] = useState('');
 
   const onClickButton = () => {
     setIsOpen(!isOpen);
@@ -40,8 +41,20 @@ function SignupForm() {
     role: Yup.string().required('회원 종류를 선택하세요'),
   });
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     console.log('Form data', values);
+    const signupForm = {
+      email: values.email,
+      password: values.confirmPassword,
+      name: values.name,
+      nickName: values.nickName,
+    };
+
+    if (response === '메세지 전송 완료') {
+      await EmailAuth(values.auth);
+    } else {
+      await SignUp(signupForm, values.role).then(data => setResponse(data));
+    }
   };
 
   return (
@@ -52,18 +65,24 @@ function SignupForm() {
             <FormController control="select" label="회원 구분" name="role" options={roleOptions} />
             <div className="auth">
               <FormController control="input" type="email" label="이메일" name="email" />
-              <div className="btn">
-                <TextMode type="button" mode={'ORANGE'} text={'인증'} onClick={onClickButton} />
-              </div>
-              {isOpen && <AuthModal onClose={onClickButton} />}
             </div>
             <FormController control="input" type="password" label="비밀번호" name="password" />
             <FormController control="input" type="password" label="비밀번호 확인" name="confirmPassword" />
             <FormController control="input" type="text" label="이름" name="name" />
             <FormController control="input" type="text" label="닉네임" name="nickName" />
             <div className="btn_2">
-              <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'signup.'} />
+              <TextMode
+                type="submit"
+                disabled={!formik.isValid}
+                mode={'GREEN'}
+                text={'signup.'}
+                onClick={onClickButton}
+              />
             </div>
+            {/* <div className="btn">
+              <TextMode type="button" mode={'ORANGE'} text={'인증'} onClick={onClickButton} />
+            </div> */}
+            {isOpen && <AuthModal onClose={onClickButton} />}
           </Form>
         )}
       </Formik>

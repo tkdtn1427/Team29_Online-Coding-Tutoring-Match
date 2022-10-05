@@ -1,35 +1,42 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
-import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import ProfileImg from '../profileImg/ProfileImg.jsx';
 import { TextMode } from '../buttons/ColorMode.jsx';
-import PorfileEditModal from '../modal/PorfileEditModal.jsx';
-import { getUser } from '../../utils/Localstorage';
+import { GetOneTeacher } from '../../utils/apis/AuthAPI';
 import picturelogo from '../../assets/img/picturelogo.png';
 import { UploadImage, UpdateImage, RemoveImage } from '../../utils/apis/API/ImageAPI';
-import { GetUser } from '../../redux/user/UserReducer';
+import RenderInWindow from '../chat/ChatBtn';
+import CreateRoom from '../../utils/apis/API/ChatApi';
+import Stars from '../star/Stars.jsx';
 import ColorStackList from '../techstack/ColorStackList.jsx';
 
-function Profile() {
+function InfoProfile() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState({});
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
+  const [roomId, setRoomId] = useState(null);
   const hiddenFileInput = useRef(null);
-  const dispatch = useDispatch();
-  const { user, loading } = useSelector(state => state.user);
-  const { role } = getUser();
-  console.log(loading);
-  console.log(role);
-
-  const onClickButton = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  console.log(user);
+  const toggleChatRoom = () => {
     setIsOpen(!isOpen);
   };
 
   const location = useLocation();
+  const params = useParams();
+  console.log(params.id);
+
+  // useEffect(() => {
+  //   GetUserInfo().then(data => setUser(data));
+  // }, []);
 
   useEffect(() => {
-    dispatch(GetUser());
+    GetOneTeacher(params.id).then(data => {
+      setUser(data);
+      setIsLoading(false);
+    });
   }, []);
 
   const imageSelectHandler = event => {
@@ -64,53 +71,60 @@ function Profile() {
   };
 
   const removeHandler = () => {
-    dispatch({ ...user, imageUrl: 'x' });
+    setUser({ ...user, imageUrl: 'x' });
     setPreview(null);
     RemoveImage();
   };
 
   return (
     <>
-      {loading ? (
-        ''
-      ) : (
+      {isLoading ? null : (
         <Container>
           <div className="picture">
             <ProfileImg width="300px" height="300px" src={setImgSrc()} />
-
-            <div className="btnWrap">
-              <TextMode mode={'ORANGE'} text={'삭제'} onClick={removeHandler} />
-              <TextMode mode={'GREEN'} text={'등록'} onClick={handleClick} />
-              <input
-                id="image"
-                type="file"
-                ref={hiddenFileInput}
-                style={{ display: 'none' }}
-                onChange={imageSelectHandler}
-              />
-            </div>
+            {location.pathname === '/mypage' ? (
+              <div className="btnWrap">
+                <TextMode mode={'ORANGE'} text={'삭제'} onClick={removeHandler} />
+                <TextMode mode={'GREEN'} text={'등록'} onClick={handleClick} />
+                <input
+                  id="image"
+                  type="file"
+                  ref={hiddenFileInput}
+                  style={{ display: 'none' }}
+                  onChange={imageSelectHandler}
+                />
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           <Wrapper>
             <div className="nameWrap">
               <p>{user.nickName}</p>
               <span>{user.code}</span>
 
-              <TextMode mode={'GREEN'} text={'수정'} onClick={onClickButton} />
+              <TextMode
+                mode={'GREEN'}
+                text={'문의하기'}
+                onClick={() => {
+                  toggleChatRoom();
+                  CreateRoom(params.id).then(data => {
+                    setRoomId(data.roomId);
+                  });
+                }}
+              />
 
-              {isOpen && <PorfileEditModal onClick={onClickButton} />}
+              {roomId && <RenderInWindow onClose={toggleChatRoom} roomId={roomId} />}
             </div>
-            <div className="st"></div>
+            <div className="st">
+              <Stars scores={user.reputation} width="10px" height="10px"></Stars>
+              <span>{user.reputation}</span>
+            </div>
             <div className="ab1">about me.</div>
             <div className="ab2">{user.aboutMe}</div>
-            <ColorStackList width="300px" stacks={user.skillResponseList}></ColorStackList>
-            {role === 'student' ? (
-              ''
-            ) : (
-              <>
-                <div className="cr1">career.</div>
-                <div className="cr2">약력 좌르르</div>
-              </>
-            )}
+            <ColorStackList stacks={user.skillTableList} width="400px"></ColorStackList>
+            <div className="cr1">career.</div>
+            <div className="cr2">{user.career} </div>
           </Wrapper>
         </Container>
       )}
@@ -168,6 +182,8 @@ const Wrapper = styled.div`
   }
 
   .st {
+    display: flex;
+    gap: 5px;
     margin: 20px 0;
   }
   .ab1 {
@@ -192,4 +208,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default Profile;
+export default InfoProfile;

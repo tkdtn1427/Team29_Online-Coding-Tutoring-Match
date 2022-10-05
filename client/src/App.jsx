@@ -6,7 +6,6 @@ import './styles/root.css';
 import Loading from './pages/LoadingPage';
 import RequireAuth from './utils/RequireAuth';
 
-import Test from './components/form/lessonRegForm/LessonRegForm.jsx';
 import ChatPopup from './components/chat/ChatPopup.jsx';
 
 const LandingPage = lazy(() => import('./pages/LandingPage'));
@@ -37,8 +36,7 @@ function App() {
             <Route path="/main" element={<MainPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/info/:id" element={<DetailPage />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/chat" element={<ChatPopup />} />
+            <Route path="/chat/:id" element={<ChatPopup />} />
           </Routes>
         </Layout>
       </Suspense>

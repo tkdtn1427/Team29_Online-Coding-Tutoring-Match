@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
-import Profile from '../components/profile/Profile.jsx';
+import InfoProfile from '../components/profile/InfoProfile.jsx';
 import InfoBox from '../components/infobox/InfoBox.jsx';
 import Lessonform from '../components/form/Lessonform.jsx';
 
 function DetailPage() {
   return (
     <Container>
-      <Profile />
+      <InfoProfile />
       <InfoBox />
       <Lessonform></Lessonform>
     </Container>
