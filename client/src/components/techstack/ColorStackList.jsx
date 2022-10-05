@@ -13,7 +13,6 @@ function ColorStackList({ width, stacks }) {
 }
 
 const Container = styled.div`
-  border: 1px solid yellow;
   display: flex;
   gap: 2px;
   width: ${props => props.width};

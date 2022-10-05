@@ -33,14 +33,14 @@ const Container = styled.div`
   justify-content: space-around;
   width: 250px;
   height: 330px;
-  border: 1px solid black;
   border-radius: 20px;
+  box-shadow: 0 0 8px var(--liblk);
 `;
 
 const ProfileImg = styled.img`
   width: 232px;
   height: 231px;
-  border: 1px solid red;
+  box-shadow: 0 0 3px var(--liblk);
   border-radius: 20px;
 `;
 
@@ -50,12 +50,11 @@ const Introduce = styled.div`
   justify-content: space-between;
   width: 232px;
   height: 25px;
-  border: 1px solid blue;
 `;
 
 const Name = styled.span`
   height: 20px;
-  border: 1px solid green;
+
   overflow: hidden;
   font-size: var(--l);
   color: var(--blk);
@@ -69,7 +68,6 @@ const Wrapper = styled.span`
   align-items: center;
   width: 98px;
   height: 15px;
-  border: 1px solid purple;
 `;
 
 const Score = styled.span`
