@@ -32,6 +32,7 @@ public class ChatService {
 
     public void handleMessage(WebSocketSession session, ChatMessage chatMessage, ObjectMapper objectMapper, ChatRoom chatRoom) throws IOException {
         boolean loadFile = false;
+        String lot = chatMessage.getRole().equals("student") ? "s)" : "t)";
         if(chatMessage.getMessageType() == ChatMessage.MessageType.LEAVE){
             chatRoom.getSessions().remove(session);
 
@@ -43,21 +44,21 @@ public class ChatService {
                 roomService.deleteRoomRepo(chatRoom.getRoomId());
             }
 
-            chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장하셨습니다.");
+            chatMessage.setMessage(lot + chatMessage.getSender() + "님이 퇴장하셨습니다.");
         }else{
             if(!chatRoom.getSessions().contains(session)){
                 chatRoom.getSessions().add(session);
                 String prevMessage = readFile(chatMessage.getRoomId());
                 if(prevMessage != null){
-                    chatMessage.setMessage(readFile(chatMessage.getRoomId()));
+                    chatMessage.setMessage("Past Data = " + readFile(chatMessage.getRoomId()));
                     loadFile = true;
                 }
                 else
-                    chatMessage.setMessage(chatMessage.getSender() + "님이 입장하셨습니다.");
+                    chatMessage.setMessage(lot + chatMessage.getSender() + "님이 입장하셨습니다.");
 
             }else{
                 String msg = chatMessage.getSender() + " : " + chatMessage.getMessage() + "\n";
-                chatMessage.setMessage(chatMessage.getSender() + " : " + chatMessage.getMessage());
+                chatMessage.setMessage(lot + chatMessage.getSender() + " : " + chatMessage.getMessage());
                 saveFile(msg, chatMessage.getRoomId());
             }
             
@@ -76,7 +77,7 @@ public class ChatService {
                     removeList.add(session);
                 }else{
                     session.sendMessage(textMessage);
-                    sessionInform = new TextMessage("session Id : " + objectMapper.writeValueAsString(session.getId()));
+                    sessionInform = new TextMessage("session Id : " + objectMapper.writeValueAsString(prevSession.getId()));
                     session.sendMessage(sessionInform);
                 }
             }
