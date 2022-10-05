@@ -30,7 +30,7 @@ public class TutoringController {
     @PostMapping("/register")
     public ResponseEntity registerTutoring(@Validated @RequestBody TutoringDto.Register register){
         Tutoring tutoring = tutoringMapper.tutoringRegisterToTutoring(register);
-        Tutoring response = tutoringService.createdTutoring(tutoring, tutoringService.codeToStudent(register.getTeacherId()), tutoringService.codeToTeacher(register.getStudentId()));
+        Tutoring response = tutoringService.createdTutoring(tutoring, tutoringService.codeToStudent(register.getStudentId()), tutoringService.codeToTeacher(register.getTeacherId()));
         return new ResponseEntity(tutoringMapper.tutoringToTutoringResponse(response),HttpStatus.CREATED);
     }
 
