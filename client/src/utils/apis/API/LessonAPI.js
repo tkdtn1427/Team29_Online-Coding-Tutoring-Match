@@ -1,5 +1,5 @@
 import authRequest from '../Interceptors';
-import getUser from '../../Localstorage';
+import { getUser } from '../../Localstorage';
 
 // 과외 등록
 async function UploadLesson({ postLessonForm }) {
