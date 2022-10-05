@@ -15,7 +15,7 @@ async function GetUserInfo() {
 }
 
 // 회원정보수정
-async function PatchUserInfo(editForm) {
+async function PatchUserInfo({ editForm }) {
   const { role, userId } = getUser();
   try {
     const result = await authRequest.patch(`/v1/${role}s/update/${userId}`, editForm);

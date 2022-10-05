@@ -19,8 +19,6 @@ function Profile() {
   const dispatch = useDispatch();
   const { user, loading } = useSelector(state => state.user);
   const { role } = getUser();
-  console.log(loading);
-  console.log(role);
 
   const onClickButton = () => {
     setIsOpen(!isOpen);
@@ -97,18 +95,22 @@ function Profile() {
 
               <TextMode mode={'GREEN'} text={'수정'} onClick={onClickButton} />
 
-              {isOpen && <PorfileEditModal onClick={onClickButton} />}
+              {isOpen && <PorfileEditModal onClose={onClickButton} user={user} />}
             </div>
             <div className="st"></div>
             <div className="ab1">about me.</div>
             <div className="ab2">{user.aboutMe}</div>
-            <ColorStackList width="300px" stacks={user.skillResponseList}></ColorStackList>
+            {role === 'student' ? (
+              <ColorStackList width="300px" stacks={user.skillResponseList || []}></ColorStackList>
+            ) : (
+              <ColorStackList width="300px" stacks={user.skillTableList || []}></ColorStackList>
+            )}
             {role === 'student' ? (
               ''
             ) : (
               <>
                 <div className="cr1">career.</div>
-                <div className="cr2">약력 좌르르</div>
+                <div className="cr2">{user.career} </div>
               </>
             )}
           </Wrapper>

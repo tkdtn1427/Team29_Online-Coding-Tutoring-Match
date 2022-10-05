@@ -1,11 +1,13 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 import FormController from '../formControl/FormController';
-
+import { EmailAuth } from '../../../utils/apis/AuthAPI';
 import { TextMode } from '../../buttons/ColorMode.jsx';
 
 function EmailAuthForm() {
+  const navigate = useNavigate();
   const initialValues = {
     auth: '',
   };
@@ -14,8 +16,11 @@ function EmailAuthForm() {
     auth: Yup.string().required('인증번호를 입력하세요'),
   });
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     console.log('Form data', values);
+    await EmailAuth({ code: values.auth }).then(() => {
+      navigate('/');
+    });
   };
 
   return (

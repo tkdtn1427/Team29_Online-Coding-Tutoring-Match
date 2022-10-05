@@ -9,14 +9,14 @@ function Layout({ children }) {
   return (
     <>
       {location.pathname.includes('/chat') ? null : <Navbar />}
-      <Container>{children}</Container>
+      <Container margin={location.pathname.includes('/chat') ? '0px' : '60px'}>{children}</Container>
       {location.pathname.includes('/chat') ? null : <Footer />}
     </>
   );
 }
 
 const Container = styled.div`
-  margin-top: 60px;
+  margin-top: ${props => props.margin};
   width: 100%;
 `;
 

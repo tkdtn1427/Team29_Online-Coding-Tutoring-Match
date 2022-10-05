@@ -6,6 +6,7 @@ import TagTechstack from './TagTechstack.jsx';
 
 function TagListBox({ width, height, filteredTags, setFilteredTags }) {
   const dispatch = useDispatch();
+  console.log(filteredTags);
 
   useEffect(() => {
     dispatch(TeachersReducer.actions.searchByStack(filteredTags));
@@ -22,7 +23,6 @@ function TagListBox({ width, height, filteredTags, setFilteredTags }) {
 
 const Container = styled.div`
   display: flex;
-  border: 1px solid red;
   margin-left: 10px;
   width: ${props => props.width};
   height: ${props => props.height};

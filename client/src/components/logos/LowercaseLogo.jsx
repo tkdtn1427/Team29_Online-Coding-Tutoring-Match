@@ -1,9 +1,9 @@
 // 크기 조절 가능하도록 props 받기
 import styled from '@emotion/styled';
 
-function LowercaseLogo() {
+function LowercaseLogo({ onClick }) {
   return (
-    <Logo>
+    <Logo onClick={onClick}>
       <span>&lt;</span> <span>iguwana</span> <span className="slash">/</span>
       <span>&gt;</span>
     </Logo>
@@ -18,6 +18,7 @@ const Logo = styled.div`
   .slash {
     color: var(--org);
   }
+  cursor: pointer;
 `;
 
 export default LowercaseLogo;

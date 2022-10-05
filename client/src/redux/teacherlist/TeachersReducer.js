@@ -21,10 +21,14 @@ const TeachersReducer = createSlice({
     },
 
     searchByStack: (state, action) => {
-      const filteredTeachers = state.teachers.filter(teacher => {
+      let filteredTeachers = state.teachers.filter(teacher => {
         const skills = teacher.skillTableList.map(skill => skill.name);
         return skills.some(skill => action.payload.includes(skill)); // tags["javascript","react"]
       });
+
+      if (action.payload.length === 0 && filteredTeachers.length === 0) {
+        filteredTeachers = state.teachers;
+      }
 
       return {
         ...state,

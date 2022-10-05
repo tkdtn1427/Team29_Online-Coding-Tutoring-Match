@@ -8,13 +8,14 @@ import LowercaseLogo from '../logos/LowercaseLogo.jsx';
 import Profile from '../../assets/svg/Profile.jsx';
 import Alert from '../../assets/svg/Alert.jsx';
 import LoginModal from '../modal/LoginModal.jsx';
-import { SignUp, Login } from '../../utils/apis/AuthAPI';
 import LoginReducer from '../../redux/login/LoginReducer';
 import { removeUser, getUser } from '../../utils/Localstorage';
+import Sidebar from '../sidebar/SideBar.jsx';
 
 function Navbar() {
   const { loginState } = useSelector(state => state.loginState);
-  const [isOpen, setIsOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [chatModalOpen, setChatModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = getUser();
@@ -22,7 +23,11 @@ function Navbar() {
   // 리덕스상태로 변경 예정
 
   const openLoginModal = () => {
-    setIsOpen(!isOpen);
+    setLoginModalOpen(!loginModalOpen);
+  };
+
+  const openChatModal = () => {
+    setChatModalOpen(!chatModalOpen);
   };
 
   const navigateMyPage = () => {
@@ -31,10 +36,14 @@ function Navbar() {
 
   return (
     <Container>
-      <LowercaseLogo />
+      <LowercaseLogo
+        onClick={() => {
+          navigate('/');
+        }}
+      />
       {loginState ? (
         <ButtonWrapper>
-          <IconMode mode="ORANGE" text={<Alert />} />
+          <IconMode mode="ORANGE" text={<Alert />} onClick={openChatModal} />
           <IconMode
             mode="GREEN"
             text={<Profile />}
@@ -48,8 +57,10 @@ function Navbar() {
             onClick={() => {
               removeUser();
               dispatch(LoginReducer.actions.logOut());
+              navigate('/main');
             }}
           />
+          {chatModalOpen && <Sidebar onClose={openChatModal} />}
         </ButtonWrapper>
       ) : (
         <ButtonWrapper>
@@ -71,10 +82,10 @@ function Navbar() {
             mode="GREEN"
             text="signup"
             onClick={() => {
-              SignUp();
+              navigate('/signup');
             }}
           />
-          {isOpen && <LoginModal onClose={openLoginModal} />}
+          {loginModalOpen && <LoginModal onClose={openLoginModal} />}
         </ButtonWrapper>
       )}
     </Container>
@@ -91,7 +102,7 @@ const Container = styled.div`
   background-color: white;
   width: 100%;
   height: 60px;
-  z-index: 10px;
+  z-index: 10;
   align-items: center;
   justify-content: space-between;
 `;

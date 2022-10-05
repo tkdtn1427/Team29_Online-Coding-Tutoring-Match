@@ -11,10 +11,12 @@ function UppercaseLogo() {
 }
 
 const Logo = styled.div`
+  color: var(--blk);
   font-family: var(--main);
   font-size: var(--xxxl);
   font-weight: bold;
   color: var(--font);
+  margin-bottom: 30px;
   .slash {
     color: var(--org);
   }

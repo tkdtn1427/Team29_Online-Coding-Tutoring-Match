@@ -49,12 +49,10 @@ function SignupForm() {
       name: values.name,
       nickName: values.nickName,
     };
-
-    if (response === '메세지 전송 완료') {
-      await EmailAuth(values.auth);
-    } else {
-      await SignUp(signupForm, values.role).then(data => setResponse(data));
-    }
+    await SignUp({ signupForm, role: values.role }).then(data => {
+      setResponse(data);
+    });
+    if (response) onClickButton();
   };
 
   return (
@@ -71,13 +69,7 @@ function SignupForm() {
             <FormController control="input" type="text" label="이름" name="name" />
             <FormController control="input" type="text" label="닉네임" name="nickName" />
             <div className="btn_2">
-              <TextMode
-                type="submit"
-                disabled={!formik.isValid}
-                mode={'GREEN'}
-                text={'signup.'}
-                onClick={onClickButton}
-              />
+              <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'signup.'} />
             </div>
             {/* <div className="btn">
               <TextMode type="button" mode={'ORANGE'} text={'인증'} onClick={onClickButton} />

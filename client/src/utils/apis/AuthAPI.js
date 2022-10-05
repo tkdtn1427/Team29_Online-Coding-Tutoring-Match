@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { addTokenLocalStorage, addRoleLocalStorage, addUserLocalStorage, getUser, getToken } from '../Localstorage';
 
-const authAPI = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL, timeout: 1000 });
+const authAPI = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL, timeout: 10000 });
 
 // 로그인 회원가입 폼이랑 role 내려주기
 async function Login({ loginForm, role }) {
@@ -24,7 +24,7 @@ async function Login({ loginForm, role }) {
 
 async function SignUp({ signupForm, role }) {
   try {
-    const result = await authAPI.post(`/v1/${role}/join`, signupForm);
+    const result = await authAPI.post(`/v1/${role}s/join`, signupForm);
     console.log(result.data);
     return result.data;
   } catch (err) {
@@ -39,6 +39,9 @@ async function EmailAuth({ code }) {
     console.log(result.data);
     return result;
   } catch (err) {
+    if (err.response.data.status === 409) {
+      console.log(err.response.data.message);
+    }
     console.log(err);
   }
 }
