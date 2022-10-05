@@ -1,9 +1,29 @@
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
+
+import { GetUser } from '../../redux/user/UserReducer';
+import { UploadReview } from '../../utils/apis/API/ReviewAPI';
+
 import FormController from '../form/formControl/FormController';
+import { TextMode } from '../buttons/ColorMode.jsx';
 
 function ReviewForm() {
+  const params = useParams();
+  const { user } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetUser());
+  }, []);
+
+  const [teacherIds, setTeacherIds] = useState();
+  const [studentIds, setStudentIds] = useState();
+  const [tutoringIds, setTutoringIds] = useState();
+
   const reputationOption = [
     { key: '1점', value: '1' },
     { key: '2점', value: '2' },
@@ -22,8 +42,20 @@ function ReviewForm() {
     content: Yup.string().required('내용을 입력하세요'),
   });
 
-  const onSubmit = values => {
-    console.log('Form data', values);
+  const onSubmit = async values => {
+    setTeacherIds(params.id);
+    setStudentIds(user.studentId);
+    setTutoringIds(user.tutoringList[0].tutoringId);
+
+    await UploadReview({
+      postReviewForm: {
+        teacherId: teacherIds,
+        studentId: studentIds,
+        tutoringId: tutoringIds,
+        content: values.content,
+        reputation: values.reputation,
+      },
+    }).then(res => console.log(res.data));
   };
 
   return (
@@ -31,11 +63,11 @@ function ReviewForm() {
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {formik => (
           <Form>
-            <FormController control="radio" name="reputation" options={reputationOption} />
+            <div className="starWrp">
+              <FormController control="radio" name="reputation" options={reputationOption} />
+              <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등룩'} />
+            </div>
             <FormController control="textarea" name="content" />
-            <button type="submit" disabled={!formik.isValid}>
-              등록
-            </button>
           </Form>
         )}
       </Formik>
@@ -43,6 +75,55 @@ function ReviewForm() {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin: 0 0 20px 0;
+
+  .form-control {
+    font-family: var(--main);
+    font-size: var(--reg);
+    color: var(--blk);
+  }
+
+  .error {
+    font-size: var(--r);
+    color: var(--org);
+    margin: 10px 0 0 20px;
+  }
+
+  .starWrp {
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  input[type='radio'] {
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid var(--blk);
+    border-radius: 50%;
+    width: 1.25em;
+    height: 1.25em;
+    transition: border 0.2s ease-in-out;
+    margin: 0 5px 0 15px;
+  }
+
+  input[type='radio']:checked {
+    border: 0.4em solid var(--org);
+  }
+
+  textarea {
+    resize: none;
+    width: 800px;
+    height: 150px;
+    padding: 10px 20px;
+    border: 1px solid var(--liblk);
+
+    :focus {
+      outline: 2px solid var(--grn);
+      transition: outline 150ms ease-in-out;
+    }
+  }
+`;
 
 export default ReviewForm;
