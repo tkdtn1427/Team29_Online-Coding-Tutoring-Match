@@ -25,8 +25,8 @@ dependencies {
 
 	// aws mysql 사용시에 적용
 	runtimeOnly 'mysql:mysql-connector-java'
-	// 인메모리 h2 사용시에 적용
-	runtimeOnly 'com.h2database:h2'
+//	 인메모리 h2 사용시에 적용
+//	runtimeOnly 'com.h2database:h2'
 
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -58,6 +58,9 @@ dependencies {
 
 	//aws 클라우드 관련 작업할 때 필요
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	// WebSocket 관련
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
   //파라미터 스토어 관련 정보 추가
