@@ -16,7 +16,6 @@ const RequireAuth = ({ children, option, setModal }) => {
   // 로그인이 필요한 경우
   if (option === true) {
     if (loginState) {
-      console.log('herere');
       return children;
     }
     setTimeout(() => {
