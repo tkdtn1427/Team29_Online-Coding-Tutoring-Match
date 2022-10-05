@@ -7,41 +7,39 @@ async function UploadLesson({ postLessonForm }) {
     const result = await authRequest.post(`/v1/tutorings/register`, postLessonForm);
     return result.data;
   } catch (err) {
-    console.log(err);
+    console.log('에러', err);
   }
 }
 
 // 과외 수정
-async function UpdateLesson({ editLessonForm }) {
-  const { userId } = getUser();
+async function UpdateLesson({ editLessonForm, tutoringId }) {
   try {
-    const result = await authRequest.patch(`/v1/tutorings/update/${userId}`, editLessonForm);
+    const result = await authRequest.patch(`/v1/tutorings/update/${tutoringId}`, editLessonForm);
     return result.data;
   } catch (err) {
-    console.log(err);
+    console.log('에러', err);
   }
 }
 
 // 과외 삭제
-async function RemoveLesson() {
-  const { userId } = getUser();
+async function RemoveLesson({ tutoringId }) {
   try {
-    const result = await authRequest.delete(`/v1/tutorings/delete/${userId}`);
+    const result = await authRequest.delete(`/v1/tutorings/delete/${tutoringId}`);
     return result;
   } catch (err) {
-    console.log(err);
+    console.log('에러', err);
   }
 }
 
 // 특정 선생님 과외 검색
 // date가 안들어오면 전체 조회(?)
-async function SearchLesson({ page, size, date }) {
+async function SearchLesson({ date }) {
   const { userId } = getUser();
   try {
-    const result = await authRequest.get(`/v1/tutorings/${userId}/page=${page}&size=${size}&date=${date}`);
+    const result = await authRequest.get(`/v1/tutorings/${userId}?date=${date}`);
     return result.data;
   } catch (err) {
-    console.log(err);
+    console.log('에러', err);
   }
 }
 

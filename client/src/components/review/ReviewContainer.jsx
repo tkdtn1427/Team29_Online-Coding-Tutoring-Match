@@ -1,43 +1,26 @@
 import styled from '@emotion/styled';
-import ReviewList from './ReviewList.jsx';
-import Stars from '../star/Stars.jsx';
+import ReviewForm from './ReviewForm.jsx';
+import ReviewBox from './ReviewBox.jsx';
 
 function ReviewContainer() {
   return (
     <Container>
-      <div className="wrap">
-        <Stars width="20" height="20" scores="4.8" />
-        <ReviewList />
-      </div>
+      <ReviewForm />
+      <ReviewBox />
     </Container>
   );
 }
 
 const Container = styled.div`
-  margin: 100px 0;
+  align-self: center;
+
+  border: 1px solid red;
+  width: 1000px;
 
   display: flex;
   flex-direction: column;
-  .rvn {
-    align-self: center;
-    width: 90%;
-    border-bottom: 1px solid var(--liblk);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 20px;
-    margin: 0 0 20px 0;
-  }
-  .slt {
-    color: var(--grn);
-  }
-  .wrap {
-    align-self: center;
-
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-  }
+  justify-content: center;
+  align-items: center;
 `;
 
 export default ReviewContainer;

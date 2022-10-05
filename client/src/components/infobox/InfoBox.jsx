@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import MonthlyCalendar from '../calendar/MonthlyCalendar.jsx';
+import MonthlyCalendar from '../calendar/MonthlyCalendar--nomal.jsx';
 import ReviewContainer from '../review/ReviewContainer.jsx';
 import TabHandler from '../../utils/TabHandler';
 
@@ -23,27 +23,30 @@ function InfoBox() {
           </div>
         ))}
       </Tabs>
-      {currentTab ? <ReviewContainer></ReviewContainer> : <MonthlyCalendar></MonthlyCalendar>}
+      {currentTab ? <ReviewContainer /> : <MonthlyCalendar />}
     </Container>
   );
 }
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 1200px;
 `;
 
 const Tabs = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 100%;
   border-bottom: 1px solid var(--blk);
   padding-bottom: 20px;
   margin-bottom: 60px;
   font-size: var(--reg);
+
   .selectedtab {
     color: var(--grn);
     cursor: pointer;
   }
+
   .unselectedtab {
     color: var(--blk);
     cursor: pointer;
