@@ -2,21 +2,28 @@ import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
+import { useSelector, useDispatch } from 'react-redux';
 import FormController from '../formControl/FormController';
-
+import { PatchUserInfo } from '../../../utils/apis/API/UserAPI';
 import { TextMode } from '../../buttons/ColorMode.jsx';
 import FilterStackInput from '../../input/FilterStackInput.jsx';
 import TagListBox from '../../tagbox/TagListBox.jsx';
 import Dropbox from '../../dropbox/Dropbox.jsx';
+import { getUser } from '../../../utils/Localstorage';
+import { GetUser } from '../../../redux/user/UserReducer';
 
-function ProfileEditForm() {
+function ProfileEditForm({ onClose }) {
   const [filteredTags, setFilteredTags] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const EditTags = filteredTags.map(name => ({ name }));
+  const { role } = getUser();
+  const { user } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const initialValues = {
-    nickName: '기존 닉네임',
-    aboutMe: '기존 소개',
-    career: '기존 경력',
+    nickName: user.nickName,
+    aboutMe: user.aboutMe,
+    career: user.career,
   };
 
   const validationSchema = Yup.object({
@@ -26,7 +33,16 @@ function ProfileEditForm() {
   });
 
   const onSubmit = values => {
-    console.log('Form data', values);
+    const editForm = {
+      aboutMe: values.aboutMe,
+      nickName: values.nickName,
+      skillTableList: EditTags,
+    };
+
+    PatchUserInfo({ editForm }).then(() => {
+      dispatch(GetUser());
+      onClose();
+    });
   };
 
   return (
@@ -36,11 +52,9 @@ function ProfileEditForm() {
           <Form>
             <div className="nickname">
               <FormController control="input" type="text" name="nickName" />
-              <div className="codenum">회원 번호</div>
+              <div className="codenum">{user.code}</div>
             </div>
-
             <FormController control="textarea" label="about me." name="aboutMe" />
-
             <div className="tagwrp">
               <FilterStackInput
                 height="30px"
@@ -61,8 +75,7 @@ function ProfileEditForm() {
                 height="20px"
                 width="400px"></TagListBox>
             </div>
-
-            <FormController control="textarea" label="career." name="career" />
+            {role === 'student' ? null : <FormController control="textarea" label="career." name="career" />}
             <div className="btn">
               <TextMode mode={'ORANGE'} text={'완료'} type="submit" disabled={!formik.isValid} />
             </div>
@@ -109,6 +122,20 @@ const Container = styled.div`
     justify-content: flex-start;
 
     gap: 10px;
+    input[type='text'] {
+      width: 300px;
+      height: 30px;
+      border-radius: 50px;
+      border: 1px solid var(--liblk);
+      resize: none;
+
+      padding: 10px 20px;
+
+      :focus {
+        outline: 2px solid var(--grn);
+        transition: outline 150ms ease-in-out;
+      }
+    }
   }
 
   .codenum {
@@ -134,21 +161,6 @@ const Container = styled.div`
   textarea {
     width: 400px;
     height: 40px;
-    border-radius: 50px;
-    border: 1px solid var(--liblk);
-    resize: none;
-
-    padding: 10px 20px;
-
-    :focus {
-      outline: 2px solid var(--grn);
-      transition: outline 150ms ease-in-out;
-    }
-  }
-
-  input[type='text'] {
-    width: 300px;
-    height: 30px;
     border-radius: 50px;
     border: 1px solid var(--liblk);
     resize: none;
