@@ -7,7 +7,7 @@ import { GetOneTeacher } from '../../utils/apis/AuthAPI';
 import picturelogo from '../../assets/img/picturelogo.png';
 import { UploadImage, UpdateImage, RemoveImage } from '../../utils/apis/API/ImageAPI';
 import RenderInWindow from '../chat/ChatBtn';
-import CreateRoom from '../../utils/apis/API/ChatApi';
+import { CreateRoom } from '../../utils/apis/API/ChatApi';
 import Stars from '../star/Stars.jsx';
 import ColorStackList from '../techstack/ColorStackList.jsx';
 
@@ -19,7 +19,7 @@ function InfoProfile() {
   const [roomId, setRoomId] = useState(null);
   const hiddenFileInput = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(user);
+  console.log(roomId);
   const toggleChatRoom = () => {
     setIsOpen(!isOpen);
   };
