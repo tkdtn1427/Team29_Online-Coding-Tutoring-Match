@@ -1,30 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 
 import CalendarNav from './CalendarNav.jsx';
 import CalendarBody from './CalendarBody.jsx';
-import Schedule from '../form/Schedule.jsx';
+import Schedule from '../form/Schedule--nomal.jsx';
 
 import { SearchLesson } from '../../utils/apis/API/LessonAPI';
-import { TextMode } from '../buttons/ColorMode.jsx';
-import LessonModal from '../modal/LessonModal.jsx';
-
-import { getUser } from '../../utils/Localstorage';
-import { GetUser } from '../../redux/user/UserReducer';
 
 function MonthlyCalendar() {
-  const { user } = useSelector(state => state.user);
-  console.log('user:', user);
-
-  const dispatch = useDispatch();
-
-  const { role } = getUser();
-  useEffect(() => {
-    dispatch(GetUser());
-  }, []);
-  console.log('role:', role);
-
   const [isOpen, setIsOpen] = useState(false);
   const openLessonModal = () => {
     setIsOpen(!isOpen);
@@ -75,9 +58,7 @@ function MonthlyCalendar() {
         </Week>
         <CalendarBody year={year} month={month} day={day} selectedDate={selectedDate} onDateClick={onDateClick} />
       </CalendarWrp>
-      <Schedule lesson={lesson} role={role} />
-      {role === 'student' ? null : <TextMode mode={'ORANGE'} text={'강의 등록'} onClick={openLessonModal} />}
-      {isOpen && <LessonModal onClose={openLessonModal} />}
+      <Schedule lesson={lesson} />
     </Container>
   );
 }
