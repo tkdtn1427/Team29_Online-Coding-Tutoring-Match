@@ -57,7 +57,7 @@ public class ChatService {
                     chatMessage.setMessage(lot + chatMessage.getSender() + "님이 입장하셨습니다.");
 
             }else{
-                String msg = chatMessage.getSender() + " : " + chatMessage.getMessage() + "\n";
+                String msg = lot + chatMessage.getSender() + " : " + chatMessage.getMessage() + "\n";
                 chatMessage.setMessage(lot + chatMessage.getSender() + " : " + chatMessage.getMessage());
                 saveFile(msg, chatMessage.getRoomId());
             }
