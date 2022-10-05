@@ -29,10 +29,10 @@ public class ChatRoom {
     private long teacherId;
     private Set<WebSocketSession> sessions = new HashSet<>();
 
-    public static ChatRoom create(ChatRoomForm.Create create){
+    public static ChatRoom create(ChatRoomForm.Create create, String roomName){
         ChatRoom newChatRoom = new ChatRoom();
         newChatRoom.roomId = UUID.randomUUID().toString();
-        newChatRoom.setRoomName(create.getRoomName());
+        newChatRoom.setRoomName(roomName);
         newChatRoom.setStudentId(create.getStudentId());
         newChatRoom.setTeacherId(create.getTeacherId());
         return newChatRoom;

@@ -50,7 +50,8 @@ public class ChatService {
                 chatRoom.getSessions().add(session);
                 String prevMessage = readFile(chatMessage.getRoomId());
                 if(prevMessage != null){
-                    chatMessage.setMessage("Past Data = " + readFile(chatMessage.getRoomId()));
+                    String saveChatMessage = "Past Data = " + readFile(chatMessage.getRoomId());
+                    chatMessage.setMessage(saveChatMessage);
                     loadFile = true;
                 }
                 else
