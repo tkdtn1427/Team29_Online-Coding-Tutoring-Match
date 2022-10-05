@@ -8,9 +8,9 @@ function Layout({ children }) {
 
   return (
     <>
-      {location.pathname === '/chat' ? null : <Navbar />}
+      {location.pathname.includes('/chat') ? null : <Navbar />}
       <Container>{children}</Container>
-      {location.pathname === '/chat' ? null : <Footer />}
+      {location.pathname.includes('/chat') ? null : <Footer />}
     </>
   );
 }
