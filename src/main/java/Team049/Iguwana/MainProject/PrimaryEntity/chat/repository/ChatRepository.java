@@ -40,11 +40,11 @@ public class ChatRepository {
         return chatRooms.get(roomId);
     }
 
-    public ChatRoom createChatRoom(ChatRoomForm.Create create){
+    public ChatRoom createChatRoom(ChatRoomForm.Create create, String roomName){
         String chatRoomId = verifiedRooms(create.getStudentId(), create.getTeacherId());
         ChatRoom chatRoom;
         if(chatRoomId == null){
-            chatRoom = ChatRoom.create(create);
+            chatRoom = ChatRoom.create(create, roomName);
             chatRooms.put(chatRoom.getRoomId(), chatRoom);
             if(studentRooms.get(create.getStudentId()) == null){
                 studentRooms.put(create.getStudentId(), new HashSet<>());
@@ -102,9 +102,6 @@ public class ChatRepository {
     public String verifiedRooms(long studentId, long teacherId){
         for(OneToOneRoom oneToOneRoom : oneToOneRooms){
             if(oneToOneRoom.getStudentId() == studentId && oneToOneRoom.getTeacherId() == teacherId){
-                System.out.println("룸아이디 찾음");
-                System.out.println(oneToOneRoom.getTeacherId());
-                System.out.println(teacherId);
                 return oneToOneRoom.getRoomId();
             }
         }
@@ -119,13 +116,17 @@ public class ChatRepository {
 
     public ChatDto.ResponseDto findByUser(String role, long userId){
         ChatDto.ResponseDto responseDto = new ChatDto.ResponseDto();
+        StringTokenizer st ;
         if(role.equals("student")){
             Set<String> sets = studentRooms.get(userId);
             List<ChatDto.SRoomDto> dtos = new ArrayList<>();
             for(String str : sets){
                 ChatRoom chatRoom = chatRooms.get(str);
+                String roomName = chatRoom.getRoomName();
+                st = new StringTokenizer(roomName, "-");
+                st.nextToken();
                 ChatDto.SRoomDto dto = new ChatDto.SRoomDto();
-                dto.setRoomName(chatRoom.getRoomName());
+                dto.setRoomName(st.nextToken());
                 dto.setTeacherId(chatRoom.getTeacherId());
                 dto.setRoomId(chatRoom.getRoomId());
                 dtos.add(dto);
@@ -136,8 +137,10 @@ public class ChatRepository {
             List<ChatDto.TRoomDto> dtos = new ArrayList<>();
             for(String str : sets){
                 ChatRoom chatRoom = chatRooms.get(str);
+                String roomName = chatRoom.getRoomName();
+                st = new StringTokenizer(roomName, "-");
                 ChatDto.TRoomDto dto = new ChatDto.TRoomDto();
-                dto.setRoomName(chatRoom.getRoomName());
+                dto.setRoomName(st.nextToken());
                 dto.setStudentId(chatRoom.getStudentId());
                 dto.setRoomId(chatRoom.getRoomId());
                 dtos.add(dto);

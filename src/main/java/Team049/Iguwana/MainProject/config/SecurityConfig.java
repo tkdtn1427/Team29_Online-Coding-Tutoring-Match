@@ -47,7 +47,7 @@ public class SecurityConfig {
                 .apply(new CustomDsl())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login", "/v1/jwt/refresh/**","/v1/emails/**", "/v1/skill/**")
+                .antMatchers("/v1/students/join", "/v1/teachers/join","/v1/user/login", "/v1/jwt/refresh/**","/v1/emails/**", "/v1/skill/**", "/v1/chat/**")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/teachers/{teacher-id}","/v1/teachers")
                 .permitAll()
