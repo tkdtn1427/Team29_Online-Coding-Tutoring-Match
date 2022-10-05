@@ -120,6 +120,7 @@ public class ChatRepository {
         if(role.equals("student")){
             Set<String> sets = studentRooms.get(userId);
             List<ChatDto.SRoomDto> dtos = new ArrayList<>();
+            if(sets == null) return responseDto;
             for(String str : sets){
                 ChatRoom chatRoom = chatRooms.get(str);
                 String roomName = chatRoom.getRoomName();
@@ -135,6 +136,7 @@ public class ChatRepository {
         }else{
             Set<String> sets = teacherRooms.get(userId);
             List<ChatDto.TRoomDto> dtos = new ArrayList<>();
+            if(sets == null) return responseDto;
             for(String str : sets){
                 ChatRoom chatRoom = chatRooms.get(str);
                 String roomName = chatRoom.getRoomName();
