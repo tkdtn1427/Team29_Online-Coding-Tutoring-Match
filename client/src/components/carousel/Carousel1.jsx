@@ -7,9 +7,9 @@ function Carousel1() {
       <img src={carouselImg1} className="img" alt="carouselimg" />
       <Intro>
         {' '}
-        <div>코딩 과외를 받고 싶다면</div>
-        <div>IGUWANA</div>
-        <div>나와 맞는 선생님과 함께 공부해보세요!</div>
+        <div className="firstcontent">코딩 과외를 받고 싶다면</div>
+        <div className="secondcontent">IGUWANA</div>
+        <div className="thirdcontent">나와 맞는 선생님과 함께 공부해보세요!</div>
       </Intro>
     </Container>
   );
@@ -36,14 +36,14 @@ const Intro = styled.div`
   align-items: center;
   margin-right: 180px;
   font-family: var(--main);
-  div:first-of-type {
+  .firstcontent {
     font-size: var(--s);
     margin: 0px 0px 10px 0px;
   }
-  div:nth-of-type(2) {
+  .secondcontent {
     font-size: 40px;
   }
-  div:nth-of-type(3) {
+  .thirdcontent {
     font-size: var(--reg);
     margin: 10px 0px 0px 0px;
   }
