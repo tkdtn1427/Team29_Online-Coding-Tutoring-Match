@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import FormController from '../formControl/FormController';
 
 import { TextMode } from '../../buttons/ColorMode.jsx';
+import { UploadLesson } from '../../../utils/apis/API/LessonAPI';
 
 function LessonRegForm() {
   const mon = [{ key: '월', value: '1' }];
@@ -45,27 +46,43 @@ function LessonRegForm() {
     time: Yup.array().required('시간을 선택하세요'),
   });
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     console.log('Form data', values);
 
+    // 키, 밸류값 요구사항 대로 변환
     const days = [];
     const daylist = values.day.sort();
     const times = values.time;
+    const result = {};
 
-    // 키, 밸류값 변환
     for (let i = 0; i < daylist.length; i++) {
       const key = daylist[i];
       days[key] = times[key];
 
       const value = Object.values(days[key]);
-
       days[key] = value;
 
       const final = `${days[key][0]} - ${days[key][days[key].length - 1]}`;
-
       days[key] = final;
+
+      result[key] = days[key];
+      values.time = [result];
     }
-    values.time = { ...days };
+
+    console.log('timetable', values.time);
+
+    // 강의 등록
+    await UploadLesson({
+      postLessonForm: {
+        teacherId: values.teacherId,
+        studentId: values.studentId,
+        subject: values.subject,
+        start_pd: values.start_pd,
+        end_pd: values.end_pd,
+        content: values.content,
+        time: values.time,
+      },
+    });
   };
 
   return (
