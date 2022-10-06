@@ -16,10 +16,12 @@ public interface TutoringMapper {
         tutoring.setSubject(requestBody.getSubject());
         List<Map<String, Object>> map = requestBody.getTime();
         StringBuilder sb = new StringBuilder("");
-        for(String str : map.get(0).keySet()){
-            sb.append(str+":"+map.get(0).get(str)+"\n");
+        if(!map.get(0).keySet().isEmpty()){
+            for(String str : map.get(0).keySet()){
+                sb.append(str+":"+map.get(0).get(str)+"\n");
+            }
+            sb.replace(sb.length()-1,sb.length(),"");
         }
-        sb.replace(sb.length()-1,sb.length(),"");
         tutoring.setTime(sb.toString());
         return tutoring;
     }
@@ -32,10 +34,12 @@ public interface TutoringMapper {
         tutoring.setSubject(requestBody.getSubject());
         List<Map<String, Object>> map = requestBody.getTime();
         StringBuilder sb = new StringBuilder("");
-        for(String str : map.get(0).keySet()){
-            sb.append(str+":"+map.get(0).get(str)+"\n");
+        if(!map.get(0).keySet().isEmpty()){
+            for(String str : map.get(0).keySet()){
+                sb.append(str+":"+map.get(0).get(str)+"\n");
+            }
+            sb.replace(sb.length()-1,sb.length(),"");
         }
-        sb.replace(sb.length()-1,sb.length(),"");
         tutoring.setTime(sb.toString());
         return tutoring;
     }
