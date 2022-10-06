@@ -34,10 +34,11 @@ const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;
 
   div {
     margin: 0 0 0 10px;
+    font-weight: bold;
   }
 
   .st {

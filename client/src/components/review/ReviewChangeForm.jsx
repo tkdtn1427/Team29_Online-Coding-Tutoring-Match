@@ -5,7 +5,7 @@ import FormController from '../form/formControl/FormController';
 
 import { UpdateReview, DeleteReview } from '../../utils/apis/API/ReviewAPI';
 
-function ReviewChangeForm({ contentId }) {
+function ReviewChangeForm({ contentId, onClose, onChangeStatus }) {
   const reputationOption = [
     { key: '1점', value: '1' },
     { key: '2점', value: '2' },
@@ -31,10 +31,14 @@ function ReviewChangeForm({ contentId }) {
         reputation: values.reputation,
       },
       Id: contentId,
-    });
+    })
+      .then(onChangeStatus)
+      .then(() => onClose());
   };
   const handleDelete = async values => {
-    await DeleteReview({ Id: contentId });
+    await DeleteReview({ Id: contentId })
+      .then(onChangeStatus)
+      .then(() => onClose());
   };
 
   return (

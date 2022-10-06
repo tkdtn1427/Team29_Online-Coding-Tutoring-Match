@@ -19,14 +19,12 @@ function InfoProfile() {
   const [roomId, setRoomId] = useState(null);
   const hiddenFileInput = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(roomId);
   const toggleChatRoom = () => {
     setIsOpen(!isOpen);
   };
 
   const location = useLocation();
   const params = useParams();
-  console.log(params.id);
 
   // useEffect(() => {
   //   GetUserInfo().then(data => setUser(data));

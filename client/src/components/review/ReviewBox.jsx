@@ -6,13 +6,13 @@ import { GetReviews } from '../../utils/apis/API/ReviewAPI';
 import Stars from '../star/Stars.jsx';
 import ReviewChangeModal from '../modal/ReviewChangeModal.jsx';
 
-function ReviewBox({ user }) {
+function ReviewBox({ user, onChangeStatus, status }) {
   const params = useParams();
   const [data, setData] = useState(null);
 
   useEffect(() => {
     GetReviews({ teacherId: params.id, page: 1, size: 5 }).then(res => setData(res.data));
-  }, []);
+  }, [status]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,7 +41,9 @@ function ReviewBox({ user }) {
                   수정
                 </button>
               </div>
-              {isOpen && <ReviewChangeModal onClose={openChangeModal} contentId={el.reviewId} />}
+              {isOpen && (
+                <ReviewChangeModal onClose={openChangeModal} contentId={el.reviewId} onChangeStatus={onChangeStatus} />
+              )}
             </Wrp>
           ))}
     </Container>

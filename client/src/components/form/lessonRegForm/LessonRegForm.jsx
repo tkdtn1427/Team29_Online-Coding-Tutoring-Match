@@ -6,7 +6,7 @@ import FormController from '../formControl/FormController';
 import { TextMode } from '../../buttons/ColorMode.jsx';
 import { UploadLesson } from '../../../utils/apis/API/LessonAPI';
 
-function LessonRegForm() {
+function LessonRegForm({ onClose }) {
   const mon = [{ key: '월', value: '1' }];
   const tue = [{ key: '화', value: '2' }];
   const wed = [{ key: '수', value: '3' }];
@@ -81,7 +81,7 @@ function LessonRegForm() {
         content: values.content,
         time: values.time,
       },
-    });
+    }).then(() => onClose());
   };
 
   return (
