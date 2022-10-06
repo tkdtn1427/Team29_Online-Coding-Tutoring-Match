@@ -1,0 +1,43 @@
+.gr {
+  color: var(--grn);
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul.pagination li {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+ul.pagination li a {
+  text-decoration: none;
+  color: var(--grn);
+  font-size: 1rem;
+}
+ul.pagination li.active a {
+  font-weight: 800;
+}
+ul.pagination li.active {
+  font-weight: 800;
+}
+ul.pagination li a:hover,
+ul.pagination li a.active {
+  color: var(--grn);
+}
+.page-selection {
+  width: 48px;
+  height: 30px;
+  color: var(--grn);
+}
