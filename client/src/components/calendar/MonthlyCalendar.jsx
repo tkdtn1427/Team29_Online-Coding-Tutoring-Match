@@ -15,7 +15,6 @@ import { GetUser } from '../../redux/user/UserReducer';
 
 function MonthlyCalendar() {
   const { user } = useSelector(state => state.user);
-  console.log('user:', user);
 
   const dispatch = useDispatch();
 
@@ -23,7 +22,6 @@ function MonthlyCalendar() {
   useEffect(() => {
     dispatch(GetUser());
   }, []);
-  console.log('role:', role);
 
   const [isOpen, setIsOpen] = useState(false);
   const openLessonModal = () => {
