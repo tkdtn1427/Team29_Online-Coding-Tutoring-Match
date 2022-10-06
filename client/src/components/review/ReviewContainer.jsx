@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
@@ -11,6 +11,12 @@ function ReviewContainer() {
   const dispatch = useDispatch();
   const { user, loading } = useSelector(state => state.user);
 
+  const [status, setStatus] = useState(false);
+
+  const onChangeStatus = () => {
+    setStatus(!status);
+  };
+
   useEffect(() => {
     dispatch(GetUser());
   }, []);
@@ -21,8 +27,8 @@ function ReviewContainer() {
         ''
       ) : (
         <Container>
-          <ReviewForm user={user} />
-          <ReviewBox user={user} />
+          <ReviewForm user={user} onChangeStatus={onChangeStatus} />
+          <ReviewBox user={user} onChangeStatus={onChangeStatus} status={status} />
         </Container>
       )}
     </>

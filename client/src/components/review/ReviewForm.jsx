@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Formik, Form } from 'formik';
@@ -11,7 +11,7 @@ import { UploadReview } from '../../utils/apis/API/ReviewAPI';
 import FormController from '../form/formControl/FormController';
 import { TextMode } from '../buttons/ColorMode.jsx';
 
-function ReviewForm({ user }) {
+function ReviewForm({ user, onChangeStatus }) {
   const params = useParams();
   const { role } = getUser();
 
@@ -35,12 +35,15 @@ function ReviewForm({ user }) {
   const validationSchema = Yup.object({
     reputation: Yup.string().required('평점을 선택하세요'),
     content: Yup.string().required('내용을 입력하세요'),
+    lessonid: Yup.string().required('코드를 입력하세요'),
   });
 
-  const onSubmit = async values => {
+  useEffect(() => {
     setTeacherIds(params.id);
     setStudentIds(user.studentId);
+  }, []);
 
+  const onSubmit = async values => {
     await UploadReview({
       postReviewForm: {
         teacherId: teacherIds,
@@ -49,7 +52,9 @@ function ReviewForm({ user }) {
         content: values.content,
         reputation: values.reputation,
       },
-    });
+    })
+      .then(onChangeStatus)
+      .then();
   };
 
   const isRignt = () => {
@@ -97,11 +102,12 @@ const Container = styled.div`
   .error {
     font-size: var(--r);
     color: var(--org);
-    margin: 10px 0 0 20px;
+    margin: 10px 0 0 15px;
+    position: absolute;
   }
 
   .starWrp {
-    padding: 20px 20px;
+    padding: 30px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
