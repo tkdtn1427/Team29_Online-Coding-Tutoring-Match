@@ -6,7 +6,7 @@ import FormController from '../formControl/FormController';
 import { TextMode } from '../../buttons/ColorMode.jsx';
 import { UpdateLesson, RemoveLesson } from '../../../utils/apis/API/LessonAPI';
 
-function LessonChangeForm({ lesson }) {
+function LessonChangeForm({ lesson, onClose }) {
   const mon = [{ key: '월', value: '1' }];
   const tue = [{ key: '화', value: '2' }];
   const wed = [{ key: '수', value: '3' }];
@@ -73,12 +73,12 @@ function LessonChangeForm({ lesson }) {
         time: values.time,
       },
       tutoringId: lesson.tutoringId,
-    });
+    }).then(() => onClose());
   };
 
   // 강의 삭제
   const hadleDelet = async () => {
-    await RemoveLesson({ tutoringId: lesson.tutoringId });
+    await RemoveLesson({ tutoringId: lesson.tutoringId }).then(() => onClose());
   };
 
   return (
