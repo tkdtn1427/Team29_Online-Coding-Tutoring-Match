@@ -31,8 +31,7 @@ async function RemoveLesson({ tutoringId }) {
   }
 }
 
-// 특정 선생님 과외 검색
-// date가 안들어오면 전체 조회(?)
+// 내 과외 조회
 async function SearchLesson({ date }) {
   const { userId } = getUser();
   try {
@@ -43,4 +42,14 @@ async function SearchLesson({ date }) {
   }
 }
 
-export { UpdateLesson, UploadLesson, RemoveLesson, SearchLesson };
+// 선생님 과외 조회
+async function SearchGlobalLesson({ userId, date }) {
+  try {
+    const result = await authRequest.get(`/v1/tutorings/${userId}?date=${date}`);
+    return result.data;
+  } catch (err) {
+    console.log('에러', err);
+  }
+}
+
+export { UpdateLesson, UploadLesson, RemoveLesson, SearchLesson, SearchGlobalLesson };

@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import CalendarNav from './CalendarNav.jsx';
 import CalendarBody from './CalendarBody.jsx';
 import Schedule from '../form/Schedule--nomal.jsx';
 
-import { SearchLesson } from '../../utils/apis/API/LessonAPI';
+import { SearchGlobalLesson } from '../../utils/apis/API/LessonAPI';
 
 function MonthlyCalendar() {
+  const params = useParams();
+  console.log(params);
+
   const [isOpen, setIsOpen] = useState(false);
   const openLessonModal = () => {
     setIsOpen(!isOpen);
@@ -31,7 +35,7 @@ function MonthlyCalendar() {
 
   // 초기상태 오늘로 설정
   useEffect(() => {
-    SearchLesson({ date: changedDate }).then(res => setLesson(res));
+    SearchGlobalLesson({ userId: params.id, date: changedDate }).then(res => setLesson(res));
   }, []);
 
   // 날짜 클릭시
@@ -40,7 +44,7 @@ function MonthlyCalendar() {
 
     setSelectedDate(day);
 
-    await SearchLesson({ date: sltdate }).then(res => setLesson(res));
+    await SearchGlobalLesson({ userId: params.id, date: sltdate }).then(res => setLesson(res));
   };
 
   return (
