@@ -51,8 +51,8 @@ function SignupForm() {
     };
     await SignUp({ signupForm, role: values.role }).then(data => {
       setResponse(data);
+      onClickButton();
     });
-    if (response) onClickButton();
   };
 
   return (
