@@ -1,33 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from '@emotion/styled';
 
-import { GetUser } from '../../redux/user/UserReducer';
 import { getUser } from '../../utils/Localstorage';
 import { UploadReview } from '../../utils/apis/API/ReviewAPI';
 
 import FormController from '../form/formControl/FormController';
 import { TextMode } from '../buttons/ColorMode.jsx';
 
-function ReviewForm() {
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+function ReviewForm({ user }) {
   const params = useParams();
-  const { user } = useSelector(state => state.user);
   const { role } = getUser();
-
-  useEffect(() => {
-    dispatch(GetUser());
-    setIsLoading(false);
-  }, []);
 
   const [teacherIds, setTeacherIds] = useState();
   const [studentIds, setStudentIds] = useState();
-  const [tutoringIds, setTutoringIds] = useState();
 
   const reputationOption = [
     { key: '1점', value: '1' },
@@ -51,7 +40,6 @@ function ReviewForm() {
   const onSubmit = async values => {
     setTeacherIds(params.id);
     setStudentIds(user.studentId);
-    setTutoringIds(user.tutoringList[0].tutoringId);
 
     await UploadReview({
       postReviewForm: {
@@ -64,24 +52,35 @@ function ReviewForm() {
     });
   };
 
+  const isRignt = () => {
+    let nowId = '';
+    if (params.id < 10) nowId = `@000${params.id}`;
+    if (params.id > 9) nowId = `@00${params.id}`;
+
+    const data = user.tutoringList.map(el => el.teacherId);
+
+    if (data.indexOf(nowId) > 0) return true;
+    return false;
+  };
+
   return (
     <Container>
       {role === 'student' ? (
-        // isLoading ? null : user?.tutoringList[0]?.studentId === user.code ? (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-          {formik => (
-            <Form>
-              <div className="starWrp">
-                <FormController control="radio" name="reputation" options={reputationOption} />
-                <FormController control="input" name="lessonid" label="강의 코드" />
-                <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등룩'} />
-              </div>
-              <FormController control="textarea" name="content" />
-            </Form>
-          )}
-        </Formik>
-      ) : // ) : null
-      null}
+        isRignt() === true ? (
+          <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+            {formik => (
+              <Form>
+                <div className="starWrp">
+                  <FormController control="radio" name="reputation" options={reputationOption} />
+                  <FormController control="input" name="lessonid" label="강의 코드" />
+                  <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등룩'} />
+                </div>
+                <FormController control="textarea" name="content" />
+              </Form>
+            )}
+          </Formik>
+        ) : null
+      ) : null}
     </Container>
   );
 }

@@ -1,30 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 
-import ProfileImg from '../profileImg/ProfileImg.jsx';
-import picturelogo from '../../assets/img/picturelogo.png';
 import { GetReviews } from '../../utils/apis/API/ReviewAPI';
 import Stars from '../star/Stars.jsx';
 import ReviewChangeModal from '../modal/ReviewChangeModal.jsx';
 
-function ReviewBox() {
+function ReviewBox({ user }) {
   const params = useParams();
-  const [data, setData] = useState([{ reputation: 5 }]);
-  const { user } = useSelector(state => state.user);
-
-  console.log('user:', user);
-  console.log('data:', data);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     GetReviews({ teacherId: params.id, page: 1, size: 5 }).then(res => setData(res.data));
   }, []);
-
-  const setImgSrc = () => {
-    if (data.image !== 'x') return data.image;
-    return picturelogo;
-  };
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,27 +22,28 @@ function ReviewBox() {
 
   return (
     <Container>
-      {data.map((el, idx) => (
-        <Wrp key={idx}>
-          <div className="viewer">
-            <div className="star-wrp">
-              <Stars scores={el.reputation} width="20px" height="20px" />
-              <div className="repu">{el.reputation}</div>
-            </div>
-            <div className="content">{el.content}</div>
-          </div>
+      {data === null
+        ? null
+        : data.map((el, idx) => (
+            <Wrp key={idx}>
+              <div className="viewer">
+                <div className="star-wrp">
+                  <Stars scores={el.reputation} width="20px" height="20px" />
+                  <div className="repu">{el.reputation}</div>
+                </div>
+                <div className="content">{el.content}</div>
+              </div>
 
-          <div className="info-wrp">
-            <ProfileImg width="30px" height="30px" src={setImgSrc} />
-            <div className="nick">{el.nickName}</div>
-            <div className="date">{el.date}</div>
-            <button className={el.studentId === user.studentId ? 'btn' : 'btn--no'} onClick={openChangeModal}>
-              수정
-            </button>
-          </div>
-          {isOpen && <ReviewChangeModal onClose={openChangeModal} contentId={el.reviewId} />}
-        </Wrp>
-      ))}
+              <div className="info-wrp">
+                <div className="nick">{el.nickName}</div>
+                <div className="date">{el.date}</div>
+                <button className={el.studentId === user.studentId ? 'btn' : 'btn--no'} onClick={openChangeModal}>
+                  수정
+                </button>
+              </div>
+              {isOpen && <ReviewChangeModal onClose={openChangeModal} contentId={el.reviewId} />}
+            </Wrp>
+          ))}
     </Container>
   );
 }
