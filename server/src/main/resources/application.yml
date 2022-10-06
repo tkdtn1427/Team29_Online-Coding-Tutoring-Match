@@ -1,0 +1,81 @@
+
+spring:
+  #  h2:
+  #    console:
+  #      enabled: true
+  #      path: /h2
+  #      settings:
+  #        web-allow-others: true
+  config:
+    import: 'aws-parameterstore:'
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${spring.datasource.url}
+    #      url: jdbc:h2:mem:test
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    hibernate:
+      ddl-auto: update  # (1) ??? ?? ??
+    show-sql: true      # (2) SQL ?? ??
+    properties:
+      hibernate:
+        format_sql: true  # (3) SQL pretty print
+
+  #spring Oauth2 ?? ??
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#                        clientId: $
+#                        clientSecret: $
+#            scope:
+#              - email
+#              - profile
+
+aws:
+  paramstore:
+    enabled: true
+    prefix: /spring-boot-aws
+    name: pre-029
+    profileSeparator: _
+
+#server:
+#  port: 8088
+
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        orm:
+#          jpa: DEBUG
+
+mail:
+  smtp:
+    host: smtp.gmail.com
+    port: 587
+    username: ${mail.smtp.username}
+    password: ${mail.smtp.password}
+    auth: true
+    starttls:
+      enable: true
+  subject:
+    member:
+      registration: Nice Meet you! We are Iguana!
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${cloud.aws.credentials.accessKey}
+      secretKey: ${cloud.aws.credentials.secretKey}
+    s3:
+      bucket: ${cloud.aws.s3.bucket}
+      dir: /profile
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
