@@ -10,7 +10,6 @@ import { SearchGlobalLesson } from '../../utils/apis/API/LessonAPI';
 
 function MonthlyCalendar() {
   const params = useParams();
-  console.log(params);
 
   const [isOpen, setIsOpen] = useState(false);
   const openLessonModal = () => {

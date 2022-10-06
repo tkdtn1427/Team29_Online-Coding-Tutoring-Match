@@ -73,9 +73,11 @@ function MonthlyCalendar() {
         </Week>
         <CalendarBody year={year} month={month} day={day} selectedDate={selectedDate} onDateClick={onDateClick} />
       </CalendarWrp>
-      <Schedule lesson={lesson} role={role} />
-      {role === 'student' ? null : <TextMode mode={'ORANGE'} text={'강의 등록'} onClick={openLessonModal} />}
-      {isOpen && <LessonModal onClose={openLessonModal} />}
+      <div className="wrp">
+        {role === 'student' ? null : <TextMode mode={'ORANGE'} text={'강의 등록'} onClick={openLessonModal} />}
+        {isOpen && <LessonModal onClose={openLessonModal} />}
+        <Schedule lesson={lesson} role={role} />
+      </div>
     </Container>
   );
 }
@@ -90,7 +92,6 @@ const Container = styled.div`
 const CalendarWrp = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: fit-content;
   height: auto;
   text-align: center;
