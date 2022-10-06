@@ -42,7 +42,7 @@ public class TutoringService {
         this.tutoringMapper = tutoringMapper;
     }
 
-    public Tutoring createdTutoring(Tutoring tutoring, long teacherId, long studentId){
+    public Tutoring createdTutoring(Tutoring tutoring, long studentId, long teacherId){
         Teacher teacher = teacherService.findVerfiedTeacher(teacherId);
         Student student = studentService.findVerfiedStudent(studentId);
         tutoring.setStudent(student);
