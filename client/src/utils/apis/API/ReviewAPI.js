@@ -12,10 +12,9 @@ async function UploadReview({ postReviewForm }) {
 }
 
 // 후기 수정
-async function UpdateReview({ editReviewForm }) {
-  const { userId } = getUser();
+async function UpdateReview({ editReviewForm, Id }) {
   try {
-    const result = await authRequest.patch(`v1/reviews/update/${userId}`, editReviewForm);
+    const result = await authRequest.patch(`v1/reviews/update/${Id}`, editReviewForm);
     return result.data;
   } catch (err) {
     console.log(err);
@@ -23,10 +22,9 @@ async function UpdateReview({ editReviewForm }) {
 }
 
 // 후기 삭제
-async function DeleteReview() {
-  const { userId } = getUser();
+async function DeleteReview({ Id }) {
   try {
-    const result = await authRequest.delete(`v1/reviews/delete/${userId}`);
+    const result = await authRequest.delete(`v1/reviews/delete/${Id}`);
     return result;
   } catch (err) {
     console.log(err);
