@@ -10,7 +10,7 @@ import Alert from '../../assets/svg/Alert.jsx';
 import LoginModal from '../modal/LoginModal.jsx';
 import LoginReducer from '../../redux/login/LoginReducer';
 import { removeUser, getUser } from '../../utils/Localstorage';
-import Sidebar from '../sidebar/Sidebar.jsx';
+import Sidebar from '../sidebar/SideBar.jsx';
 
 function Navbar() {
   const { loginState } = useSelector(state => state.loginState);
