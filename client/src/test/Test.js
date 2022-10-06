@@ -1,16 +1,14 @@
-import { Field, ErrorMessage } from 'formik';
-import TextError from './TextError';
+import React, { useState } from 'react';
+import '../components/pagenation/Pagenation.css';
+import Pagenation from '../components/pagenation/Pagenation';
 
-function Test(props) {
-  const { label, name, ...rest } = props;
+function Test() {
+  const [page, setPage] = useState(1);
+  const handlePageChange = page => {
+    setPage(page);
+  };
 
-  return (
-    <div className="form-control">
-      <label htmlFor={name}>{label}</label>
-      <Field type="date" id={name} name={name} {...rest} />
-      <ErrorMessage name={name} component={TextError} />
-    </div>
-  );
+  return <Pagenation page={page} count={100} setPage={handlePageChange} />;
 }
 
 export default Test;
