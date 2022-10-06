@@ -24,7 +24,7 @@ function LessonRegForm() {
     end_pd: '',
     day: [],
     time: [
-      { dummy: '' },
+      {},
       { start_time_mon: '', end_time_mon: '' },
       { start_time_tue: '', end_time_tue: '' },
       { start_time_wed: '', end_time_wed: '' },
@@ -42,8 +42,8 @@ function LessonRegForm() {
     studentId: Yup.string().required('아이디를 입력하세요'),
     start_pd: Yup.date().required('날짜를 선택하세요').nullable(),
     end_pd: Yup.date().required('날짜를 선택하세요').nullable(),
-    day: Yup.array().required('요일을 선택하세요'),
-    time: Yup.array().required('시간을 선택하세요'),
+    day: Yup.array().required('요일을 선택하세요').nullable(),
+    time: Yup.array().required('시간을 선택하세요').nullable(),
   });
 
   const onSubmit = async values => {
@@ -67,9 +67,8 @@ function LessonRegForm() {
 
       result[key] = days[key];
       values.time = [result];
+      console.log('timetable', values.time);
     }
-
-    console.log('timetable', values.time);
 
     // 강의 등록
     await UploadLesson({
@@ -160,7 +159,9 @@ function LessonRegForm() {
               </div>
             </div>
             <div className="btn">
-              <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등록 '} />
+              <button className="grn" type="submit" disabled={!formik.isValid}>
+                등록
+              </button>
             </div>
           </Form>
         )}
@@ -232,6 +233,15 @@ const Container = styled.div`
   .times {
     display: flex;
     gap: 10px;
+  }
+
+  .grn {
+    cursor: pointer;
+    padding: 6px 12px;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    background-color: var(--grn);
   }
 
   input[type='text'],

@@ -14,8 +14,7 @@ function ReviewContainer() {
 const Container = styled.div`
   align-self: center;
 
-  border: 1px solid red;
-  width: 1000px;
+  width: 800px;
 
   display: flex;
   flex-direction: column;

@@ -7,17 +7,22 @@ import * as Yup from 'yup';
 import styled from '@emotion/styled';
 
 import { GetUser } from '../../redux/user/UserReducer';
+import { getUser } from '../../utils/Localstorage';
 import { UploadReview } from '../../utils/apis/API/ReviewAPI';
 
 import FormController from '../form/formControl/FormController';
 import { TextMode } from '../buttons/ColorMode.jsx';
 
 function ReviewForm() {
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
   const params = useParams();
   const { user } = useSelector(state => state.user);
-  const dispatch = useDispatch();
+  const { role } = getUser();
+
   useEffect(() => {
     dispatch(GetUser());
+    setIsLoading(false);
   }, []);
 
   const [teacherIds, setTeacherIds] = useState();
@@ -35,6 +40,7 @@ function ReviewForm() {
   const initialValues = {
     reputation: '',
     content: '',
+    lessonid: '',
   };
 
   const validationSchema = Yup.object({
@@ -51,26 +57,31 @@ function ReviewForm() {
       postReviewForm: {
         teacherId: teacherIds,
         studentId: studentIds,
-        tutoringId: tutoringIds,
+        tutoringId: values.lessonid,
         content: values.content,
         reputation: values.reputation,
       },
-    }).then(res => console.log(res.data));
+    });
   };
 
   return (
     <Container>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-        {formik => (
-          <Form>
-            <div className="starWrp">
-              <FormController control="radio" name="reputation" options={reputationOption} />
-              <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등룩'} />
-            </div>
-            <FormController control="textarea" name="content" />
-          </Form>
-        )}
-      </Formik>
+      {role === 'student' ? (
+        // isLoading ? null : user?.tutoringList[0]?.studentId === user.code ? (
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+          {formik => (
+            <Form>
+              <div className="starWrp">
+                <FormController control="radio" name="reputation" options={reputationOption} />
+                <FormController control="input" name="lessonid" label="강의 코드" />
+                <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'등룩'} />
+              </div>
+              <FormController control="textarea" name="content" />
+            </Form>
+          )}
+        </Formik>
+      ) : // ) : null
+      null}
     </Container>
   );
 }
@@ -114,10 +125,22 @@ const Container = styled.div`
 
   textarea {
     resize: none;
-    width: 800px;
+    width: 600px;
     height: 150px;
     padding: 10px 20px;
     border: 1px solid var(--liblk);
+
+    :focus {
+      outline: 2px solid var(--grn);
+      transition: outline 150ms ease-in-out;
+    }
+  }
+
+  input {
+    margin-left: 10px;
+    width: 50px;
+    border: 1px solid var(--liblk);
+    border-radius: 50px;
 
     :focus {
       outline: 2px solid var(--grn);

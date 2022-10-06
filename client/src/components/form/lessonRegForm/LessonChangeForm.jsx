@@ -22,7 +22,7 @@ function LessonChangeForm({ lesson }) {
     end_pd: lesson.end_pd,
     day: [],
     time: [
-      { dummy: '' },
+      {},
       { start_time_mon: '', end_time_mon: '' },
       { start_time_tue: '', end_time_tue: '' },
       { start_time_wed: '', end_time_wed: '' },
@@ -93,12 +93,17 @@ function LessonChangeForm({ lesson }) {
                 <FormController control="date" label="시작 일자" name="start_pd" />
                 <FormController control="date" label="종료 일자" name="end_pd" />
                 <div className="btn">
-                  <TextMode type="submit" disabled={!formik.isValid} mode={'GREEN'} text={'수정'} />
-                  <TextMode type="button" onClick={hadleDelet} mode={'ORANGE'} text={'삭제'} />
+                  <button className="grn" type="submit" disabled={!formik.isValid}>
+                    수정
+                  </button>
+                  <button className="org" type="button" onClick={hadleDelet}>
+                    삭제
+                  </button>
                 </div>
               </div>
 
               <div className="daytimewrp">
+                <span>시간을 꼭 선택해주세요</span>
                 <div className="days">
                   <div className="chkbox">
                     <FormController control="checkbox" name="day" options={mon} />
@@ -258,6 +263,24 @@ const Container = styled.div`
 
   input[type='checkbox']:checked {
     border: 0.4em solid var(--grn);
+  }
+
+  .grn {
+    cursor: pointer;
+    padding: 6px 12px;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    background-color: var(--grn);
+  }
+
+  .org {
+    cursor: pointer;
+    padding: 6px 12px;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    background-color: var(--org);
   }
 `;
 

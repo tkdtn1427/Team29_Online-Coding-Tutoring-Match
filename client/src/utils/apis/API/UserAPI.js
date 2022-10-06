@@ -3,9 +3,18 @@ import { getUser, removeUser } from '../../Localstorage';
 
 // 서버가 role 해결해주면 url 고쳐놓기
 
-// 회원정보 조회
+// 내 정보 조회
 async function GetUserInfo() {
   const { role, userId } = getUser();
+  try {
+    const result = await authRequest.get(`/v1/${role}s/myPage/${userId}`);
+    return result.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function GetUserSpec({ role, userId }) {
   try {
     const result = await authRequest.get(`/v1/${role}s/myPage/${userId}`);
     return result.data;
@@ -48,4 +57,4 @@ async function DeleteUserInfo() {
   }
 }
 
-export { GetUserInfo, PatchUserInfo, DeleteUserInfo, PatchPassword };
+export { GetUserInfo, GetUserSpec, PatchUserInfo, DeleteUserInfo, PatchPassword };
