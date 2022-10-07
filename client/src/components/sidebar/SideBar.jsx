@@ -17,18 +17,20 @@ function Sidebar({ onClose }) {
   return (
     <SidebarModal onClose={onClose}>
       <Head>CHAT LIST</Head>
-      {chatList.map((e, i) => (
-        <div key={i}>
-          <List
-            key={i}
-            onClick={() => {
-              setOpenPopup(true);
-            }}>
-            {e.roomName}
-          </List>
-          {openPopup && <RenderInWindow onClose={() => setOpenPopup(false)} roomId={e.roomId} />}
-        </div>
-      ))}
+      {chatList.length === 0
+        ? ''
+        : chatList.map((e, i) => (
+            <div key={i}>
+              <List
+                key={i}
+                onClick={() => {
+                  setOpenPopup(true);
+                }}>
+                {e.roomName}
+              </List>
+              {openPopup && <RenderInWindow onClose={() => setOpenPopup(false)} roomId={e.roomId} />}
+            </div>
+          ))}
     </SidebarModal>
   );
 }
