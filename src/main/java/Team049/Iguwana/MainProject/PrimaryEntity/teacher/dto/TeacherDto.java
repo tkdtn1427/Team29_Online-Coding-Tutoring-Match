@@ -44,10 +44,8 @@ public class TeacherDto {
 
         private long teacherId;
 
-        @NotBlank(message = "이름은 공백이 아니어야 합니다.")
         private String name;
 
-        @NotBlank(message = "비밀번호는 공백이 아니어야 합니다.")
         private String password;
 
         private String career;
