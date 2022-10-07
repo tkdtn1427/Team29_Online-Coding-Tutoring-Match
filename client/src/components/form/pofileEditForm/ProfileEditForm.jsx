@@ -33,11 +33,19 @@ function ProfileEditForm({ onClose }) {
   });
 
   const onSubmit = values => {
-    const editForm = {
-      aboutMe: values.aboutMe,
-      nickName: values.nickName,
-      skillTableList: EditTags,
-    };
+    const editForm =
+      role === 'student'
+        ? {
+            aboutMe: values.aboutMe,
+            nickName: values.nickName,
+            skillTableList: EditTags,
+          }
+        : {
+            aboutMe: values.aboutMe,
+            nickName: values.nickName,
+            skillTableList: EditTags,
+            career: values.career,
+          };
 
     PatchUserInfo({ editForm }).then(() => {
       dispatch(GetUser());
