@@ -64,7 +64,7 @@ async function GetAccessToken() {
 
 async function GetTeachers(arrange) {
   try {
-    const result = await authAPI.get(`/v1/teachers?page=1&size=8&arrange=${arrange}&skill=x`);
+    const result = await authAPI.get(`/v1/teachers?page=1&size=100&arrange=${arrange}&skill=x`);
     console.log(result.data);
     return result.data;
   } catch (err) {

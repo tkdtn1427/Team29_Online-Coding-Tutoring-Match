@@ -3,6 +3,9 @@ import { GetTeachers } from '../../utils/apis/AuthAPI';
 
 const TeacherList = createAsyncThunk('GET_TEACHERS', async arrange => {
   const response = await GetTeachers(arrange);
+  if (arrange === 'nickName') {
+    response.data.reverse();
+  }
   return response;
 });
 
@@ -14,6 +17,7 @@ const TeachersReducer = createSlice({
       const filteredTeachers = state.teachers.filter(teacher =>
         teacher.nickName.toLowerCase().includes(action.payload.toLowerCase())
       );
+
       return {
         ...state,
         filteredTeachers: [...filteredTeachers],
