@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { getUser } from '../../Localstorage';
 
-const chatAPI = axios.create({ baseURL: 'https://seb039pre029.ga', timeout: 1000 });
+const chatAPI = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL, timeout: 1000 });
 
 async function CreateRoom(teacherId) {
   const { role, userId } = getUser();
