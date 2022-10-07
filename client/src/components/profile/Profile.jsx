@@ -8,7 +8,7 @@ import PorfileEditModal from '../modal/PorfileEditModal.jsx';
 import { getUser } from '../../utils/Localstorage';
 import picturelogo from '../../assets/img/picturelogo.png';
 import { UploadImage, UpdateImage, RemoveImage } from '../../utils/apis/API/ImageAPI';
-import { GetUser } from '../../redux/user/UserReducer';
+import { GetUser, UserInfoReducer } from '../../redux/user/UserReducer';
 import ColorStackList from '../techstack/ColorStackList.jsx';
 
 function Profile() {
@@ -60,11 +60,12 @@ function Profile() {
     if (user && user.imageUrl !== 'x') return user.imageUrl;
     return picturelogo;
   };
-
+  // 서버에서 먼저 삭제하고 다시 받아서 랜더링
   const removeHandler = () => {
-    dispatch({ ...user, imageUrl: 'x' });
     setPreview(null);
-    RemoveImage();
+    RemoveImage().then(() => {
+      dispatch(GetUser());
+    });
   };
 
   return (

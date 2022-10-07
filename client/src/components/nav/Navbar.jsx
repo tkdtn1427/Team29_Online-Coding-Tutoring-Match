@@ -57,7 +57,7 @@ function Navbar() {
             onClick={() => {
               removeUser();
               dispatch(LoginReducer.actions.logOut());
-              navigate('/main');
+              navigate('/');
             }}
           />
           {chatModalOpen && <Sidebar onClose={openChatModal} />}

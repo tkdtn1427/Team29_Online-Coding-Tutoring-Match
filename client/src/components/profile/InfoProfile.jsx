@@ -1,36 +1,32 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ProfileImg from '../profileImg/ProfileImg.jsx';
 import { TextMode } from '../buttons/ColorMode.jsx';
 import { GetOneTeacher } from '../../utils/apis/AuthAPI';
 import picturelogo from '../../assets/img/picturelogo.png';
-import { UploadImage, UpdateImage, RemoveImage } from '../../utils/apis/API/ImageAPI';
 import RenderInWindow from '../chat/ChatBtn';
 import { CreateRoom } from '../../utils/apis/API/ChatApi';
 import Stars from '../star/Stars.jsx';
 import ColorStackList from '../techstack/ColorStackList.jsx';
+import { getUser } from '../../utils/Localstorage';
+import LoginModal from '../modal/LoginModal.jsx';
 
 function InfoProfile() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState({});
-  const [preview, setPreview] = useState(null);
-  const [file, setFile] = useState(null);
   const [roomId, setRoomId] = useState(null);
-  const hiddenFileInput = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(roomId);
+  const { role } = getUser();
+  const params = useParams();
+  const [modalOpen, setModalOpen] = useState(false);
+
   const toggleChatRoom = () => {
     setIsOpen(!isOpen);
   };
-
-  const location = useLocation();
-  const params = useParams();
-  console.log(params.id);
-
-  // useEffect(() => {
-  //   GetUserInfo().then(data => setUser(data));
-  // }, []);
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
 
   useEffect(() => {
     GetOneTeacher(params.id).then(data => {
@@ -39,41 +35,30 @@ function InfoProfile() {
     });
   }, []);
 
-  const imageSelectHandler = event => {
-    const imageFile = event.target.files[0];
-    setFile(imageFile);
-
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(imageFile);
-    fileReader.onload = event => {
-      setPreview({
-        imgSrc: event.target.result,
-        fileName: imageFile.name,
-      });
-    };
-
-    if (setImgSrc() !== picturelogo) UpdateImage(imageFile);
-    else UploadImage(imageFile);
-  };
-
-  // 1.버튼을 누르면 handleClick 동작
-  // 2. ref한게 클릭을 시킴
-  //    여기서 ref한게 input임
-  // 3. input을 클릭하게됨
-  const handleClick = event => {
-    hiddenFileInput.current.click();
-  };
-
   const setImgSrc = () => {
-    if (preview && preview.imgSrc) return preview.imgSrc;
     if (user && user.imageUrl !== 'x') return user.imageUrl;
     return picturelogo;
   };
 
-  const removeHandler = () => {
-    setUser({ ...user, imageUrl: 'x' });
-    setPreview(null);
-    RemoveImage();
+  const FaqComponent = role => {
+    if (!role) {
+      return <TextMode mode={'GREEN'} text={'문의하기'} onClick={toggleModal} />;
+    }
+    if (role === 'teacher') {
+      return '';
+    }
+    return (
+      <TextMode
+        mode={'GREEN'}
+        text={'문의하기'}
+        onClick={() => {
+          toggleChatRoom();
+          CreateRoom(params.id).then(data => {
+            setRoomId(data.roomId);
+          });
+        }}
+      />
+    );
   };
 
   return (
@@ -82,38 +67,13 @@ function InfoProfile() {
         <Container>
           <div className="picture">
             <ProfileImg width="300px" height="300px" src={setImgSrc()} />
-            {location.pathname === '/mypage' ? (
-              <div className="btnWrap">
-                <TextMode mode={'ORANGE'} text={'삭제'} onClick={removeHandler} />
-                <TextMode mode={'GREEN'} text={'등록'} onClick={handleClick} />
-                <input
-                  id="image"
-                  type="file"
-                  ref={hiddenFileInput}
-                  style={{ display: 'none' }}
-                  onChange={imageSelectHandler}
-                />
-              </div>
-            ) : (
-              ''
-            )}
           </div>
           <Wrapper>
             <div className="nameWrap">
               <p>{user.nickName}</p>
               <span>{user.code}</span>
-
-              <TextMode
-                mode={'GREEN'}
-                text={'문의하기'}
-                onClick={() => {
-                  toggleChatRoom();
-                  CreateRoom(params.id).then(data => {
-                    setRoomId(data.roomId);
-                  });
-                }}
-              />
-
+              {FaqComponent(role)}
+              {modalOpen && <LoginModal onClose={toggleModal} />}
               {roomId && <RenderInWindow onClose={toggleChatRoom} roomId={roomId} />}
             </div>
             <div className="st">
