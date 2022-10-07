@@ -11,7 +11,7 @@ const RenderInWindow = props => {
 
   useEffect(() => {
     if (container) {
-      newWindow.current = window.open(`http://29iguwana.vercel.app/chat/${props.roomId}`, '', 'width=600, height=600');
+      newWindow.current = window.open(`https://29iguwana.vercel.app/chat/${props.roomId}`, '', 'width=600, height=600');
       newWindow.current.document.body.appendChild(container);
       const curWindow = newWindow.current;
       return () => {
