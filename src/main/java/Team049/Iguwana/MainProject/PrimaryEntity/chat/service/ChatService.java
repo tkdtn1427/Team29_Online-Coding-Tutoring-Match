@@ -33,6 +33,7 @@ public class ChatService {
     public void handleMessage(WebSocketSession session, ChatMessage chatMessage, ObjectMapper objectMapper, ChatRoom chatRoom) throws IOException {
         boolean loadFile = false;
         String lot = chatMessage.getRole().equals("student") ? "s)" : "t)";
+        System.out.println(lot);
         if(chatMessage.getMessageType() == ChatMessage.MessageType.LEAVE){
             chatRoom.getSessions().remove(session);
 
