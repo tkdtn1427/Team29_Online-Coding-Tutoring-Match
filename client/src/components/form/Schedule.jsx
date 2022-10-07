@@ -26,7 +26,11 @@ function Schedule({ lesson, role }) {
                 <TextMode mode={'GREEN'} text={Object.values(e)} key={i} onClick={openLessonChangeModal} />
               )
             )}
-            <div>{el.subject}</div>
+            <div className="spec">
+              <div className="sub">{el.subject}</div>
+              <div className="lsid">{el.tutoringId}</div>
+              <div className="tid">{el.teacherId}</div>
+            </div>
             {isOpen && <LessonChangeModal onClose={openLessonChangeModal} lesson={lesson[idx]} />}
           </Wrap>
         ))
@@ -38,22 +42,53 @@ function Schedule({ lesson, role }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 200px;
-  margin-top: 60px;
+  min-width: 300px;
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid var(--liblk);
 `;
 
 const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 0 0 10px 0;
-
-  div {
-    margin: 0 0 0 10px;
-  }
 
   .st {
     font-weight: bold;
+    margin: 30px;
+  }
+
+  .spec {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 20px 0px;
+    gap: 8px;
+  }
+
+  .sub {
+    font-size: var(--r);
+    font-weight: bold;
+    margin-left: 12px;
+  }
+
+  .lsid {
+    padding: 4px 6px;
+    color: var(--grey0);
+    font-family: var(--mono);
+    font-size: var(--s);
+    border-radius: 50px;
+    background-color: var(--org);
+    margin-left: 20px;
+  }
+
+  .tid {
+    padding: 4px 6px;
+    color: var(--grey0);
+    font-family: var(--mono);
+    font-size: var(--s);
+    border-radius: 50px;
+    background-color: var(--grn);
   }
 `;
 

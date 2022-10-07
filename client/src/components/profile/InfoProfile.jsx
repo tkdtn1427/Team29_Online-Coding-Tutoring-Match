@@ -28,6 +28,7 @@ function InfoProfile() {
     setModalOpen(!modalOpen);
   };
 
+
   useEffect(() => {
     GetOneTeacher(params.id).then(data => {
       setUser(data);
