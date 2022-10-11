@@ -47,5 +47,4 @@ public class ScheduleService {
     public void everyDay_M_8_58_RepeatJob(){
         emailRepository.deleteAll();
     }
-
 }

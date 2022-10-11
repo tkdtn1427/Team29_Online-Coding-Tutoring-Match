@@ -6,6 +6,7 @@ import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.repository.TeacherRepository;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import Team049.Iguwana.MainProject.oauth.PrincipalDetails;
+import Team049.Iguwana.MainProject.response.ErrorResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
