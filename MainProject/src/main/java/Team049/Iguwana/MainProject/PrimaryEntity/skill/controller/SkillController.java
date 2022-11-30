@@ -1,6 +1,5 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.skill.controller;
 
-
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.dto.SkillDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.mapper.SkillMapper;

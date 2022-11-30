@@ -8,16 +8,11 @@ import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.service.TeacherService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/v1/chat")

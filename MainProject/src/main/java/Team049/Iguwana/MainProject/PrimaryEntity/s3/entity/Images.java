@@ -1,7 +1,5 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.s3.entity;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

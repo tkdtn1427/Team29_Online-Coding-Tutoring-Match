@@ -4,15 +4,12 @@ import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.dto.TutoringDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.entity.Tutoring;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.mapper.TutoringMapper;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
-import Team049.Iguwana.MainProject.dto.MultiResponseDto;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -50,7 +47,6 @@ public class TutoringController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    //정도윤 수정, 페이지네이션 제거하기
     @GetMapping("/{teacher-id}")
     public ResponseEntity getTutoring(@Positive @PathVariable("teacher-id") long teacherId,
                                       @RequestParam String date){

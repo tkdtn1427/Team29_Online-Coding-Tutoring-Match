@@ -13,57 +13,41 @@ repositories {
 }
 
 dependencies {
-	//jpa 관련
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	//spring web 관련
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	//파라미터 스토어 관련 정보 추가
 	implementation group: 'io.awspring.cloud', name: 'spring-cloud-starter-aws-parameter-store-config'
 
-	// aws mysql 사용시에 적용
 	runtimeOnly 'mysql:mysql-connector-java'
-//	 인메모리 h2 사용시에 적용
 //	runtimeOnly 'com.h2database:h2'
 
-	//lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	//spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	//spring 개발 관련 툴 세팅
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	//JWT 관련 디펜던시 추가
 	implementation 'com.auth0:java-jwt:3.19.2'
 
-	//Mapstruct 관련 (Mapping)
 	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-	//spring test 관련
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// OAuth2 관련 디펜던시 추가
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-	// 이메일 관련 생성시에 필요함
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-	//aws 클라우드 관련 작업할 때 필요
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-	// WebSocket 관련
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
-  //파라미터 스토어 관련 정보 추가
 dependencyManagement {
 	imports {
 		mavenBom "io.awspring.cloud:spring-cloud-aws-dependencies:2.3.3"

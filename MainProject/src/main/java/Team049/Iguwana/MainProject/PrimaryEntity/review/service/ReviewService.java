@@ -78,9 +78,7 @@ public class ReviewService {
             return false;
         }
     }
-    
-    // Teacher 쪽에서 리뷰 목록 가져오기 위한 코드
-    //리턴 타입 Page<Review>에서 List<ReviewDto.Response>로 변경 -도윤
+
     public Page<Review> findByTeacherId(int page, int size,String arrange, long teacherId){
         teacherService.findVerfiedTeacher(teacherId);
         Page<Review> reviewPage = reviewRepository.findByteacherId(teacherId,

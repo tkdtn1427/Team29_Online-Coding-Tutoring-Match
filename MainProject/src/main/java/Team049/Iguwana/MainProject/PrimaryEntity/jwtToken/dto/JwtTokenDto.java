@@ -14,7 +14,7 @@ import java.util.List;
 
 public class JwtTokenDto {
     @Getter
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class Refresh {
         @NotNull(message = "UserId can't blank")
         private long userId;

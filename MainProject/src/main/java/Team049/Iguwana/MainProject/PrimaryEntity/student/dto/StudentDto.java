@@ -12,7 +12,7 @@ import java.util.List;
 
 public class StudentDto {
     @Getter
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class Join {
 
         @NotBlank(message = "이름은 공백이 아니어야 합니다.")
@@ -32,7 +32,7 @@ public class StudentDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class Patch {
         private long studentId;
 
@@ -44,16 +44,6 @@ public class StudentDto {
 
         private String password;
     }
-
-//    @Getter
-//    @Setter
-//    @AllArgsConstructor // TODO 테스트를 위해 추가됨
-//    public static class Password {
-//        private long studentId;
-//
-//        @NotBlank(message = "비밀번호는 공백이 아니어야 합니다.")
-//        private String password;
-//    }
 
     @Getter
     @Setter
@@ -82,7 +72,7 @@ public class StudentDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class SkillList {
 
         private String name;
@@ -91,7 +81,7 @@ public class StudentDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class SkillResponse {
 
         private long skillId;

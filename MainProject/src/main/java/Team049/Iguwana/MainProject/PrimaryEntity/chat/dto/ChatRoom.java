@@ -1,20 +1,10 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.chat.dto;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.entity.Room;
-import Team049.Iguwana.MainProject.PrimaryEntity.chat.repository.ChatRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -39,8 +29,6 @@ public class ChatRoom {
     }
 
     public static ChatRoom load(Room room){
-        System.out.println("studentId : " + room.getStudentId());
-        System.out.println(room.getTeacherId());
         ChatRoom newChatRoom = new ChatRoom();
         newChatRoom.setRoomId(room.getRoomId());
         newChatRoom.setRoomName(room.getRoomName());

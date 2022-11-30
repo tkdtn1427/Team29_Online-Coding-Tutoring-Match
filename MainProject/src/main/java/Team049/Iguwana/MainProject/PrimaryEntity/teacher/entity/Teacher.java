@@ -1,9 +1,7 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.review.entity.Review;
-//import Team049.Iguwana.MainProject.PrimaryEntity.s3.entity.Images;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.entity.Tutoring;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +33,7 @@ public class Teacher {
 
     @Column
     private String roles;
-    //double 형으로 수정
+
     @Column
     private double reputation;
 
@@ -56,10 +54,6 @@ public class Teacher {
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.REMOVE)
     private List<Review> reviewList = new ArrayList<>();
-
-    /*@JsonManagedReference
-    @OneToOne(mappedBy = "teacher", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private Images image;*/
 
     public void addReview(Review review) {
         this.reviewList.add(review);
@@ -89,18 +83,7 @@ public class Teacher {
         return new ArrayList<>();
     }
 
-    //리뷰 개수 카운트 추가
     private int count;
 
-    /*@JsonManagedReference
-    @OneToOne(mappedBy = "teacher", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private Images image;
-
-    public void setImage(Images image) {
-        this.image = image;
-        if (image.getTeacher() != this) {
-            image.setTeacher(this);
-        }
-    }*/
     private String imageUrl="x";
 }

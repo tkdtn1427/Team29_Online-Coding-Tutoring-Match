@@ -3,7 +3,6 @@ package Team049.Iguwana.MainProject.response;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import lombok.Getter;
 
-
 @Getter
 public class ErrorResponse {
     private int status;

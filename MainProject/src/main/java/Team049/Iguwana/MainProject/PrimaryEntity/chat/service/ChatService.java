@@ -2,11 +2,7 @@ package Team049.Iguwana.MainProject.PrimaryEntity.chat.service;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.dto.ChatMessage;
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.dto.ChatRoom;
-import Team049.Iguwana.MainProject.PrimaryEntity.chat.entity.Room;
 import Team049.Iguwana.MainProject.PrimaryEntity.chat.repository.ChatRepository;
-import Team049.Iguwana.MainProject.PrimaryEntity.chat.repository.RoomRepository;
-import Team049.Iguwana.MainProject.exception.BusinessLogicException;
-import Team049.Iguwana.MainProject.exception.ExceptionCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -128,8 +122,6 @@ public class ChatService {
         File file = new File(System.getProperty("user.dir")+ "/messageFile/" + roomId);
         if(file.exists())
             file.delete();
-        else
-            System.out.println("파일 존재하지않음");
     }
 
 

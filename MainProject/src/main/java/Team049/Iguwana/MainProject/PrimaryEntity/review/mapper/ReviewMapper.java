@@ -33,7 +33,6 @@ public interface ReviewMapper {
     @Mapping(target = "teacherId", expression = "java(review.getTeacher().getTeacherId())")
     ReviewDto.Response reviewToReviewResponse(Review review);
 
-    //아래 코드 추가 -도윤
     default List<ReviewDto.Response> reviewToReviewResponses(List<Review> reviews, StudentService studentService){
         List<ReviewDto.Response> responses = new ArrayList<>();
         for(Review review : reviews){

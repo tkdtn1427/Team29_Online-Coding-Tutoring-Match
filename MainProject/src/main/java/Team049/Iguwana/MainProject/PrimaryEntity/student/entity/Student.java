@@ -1,6 +1,5 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.student.entity;
 
-import Team049.Iguwana.MainProject.PrimaryEntity.review.entity.Review;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.entity.Tutoring;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

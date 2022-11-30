@@ -52,7 +52,6 @@ public class TutoringService {
 
     public Tutoring updateTutoring(Tutoring tutoring){
         Tutoring findTutoring = findVerfiedTutoring(tutoring.getTutoringId());
-        System.out.println(tutoring.getTime());
 
         Optional.ofNullable(tutoring.getSubject()).ifPresent(subject -> findTutoring.setSubject(subject));
         Optional.ofNullable(tutoring.getContent()).ifPresent(content -> findTutoring.setContent(content));
@@ -93,7 +92,6 @@ public class TutoringService {
         return Long.parseLong(str);
     }
 
-    //정도윤 수정, 페이지 네이션 제거
     public List<Tutoring> findTutorings(long teacherId){
         List<Tutoring> tutoringPage = tutoringRepository.findByTeacherId(teacherId);
         return tutoringPage;

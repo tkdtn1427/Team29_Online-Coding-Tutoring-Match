@@ -6,7 +6,6 @@ import Team049.Iguwana.MainProject.PrimaryEntity.review.mapper.ReviewMapper;
 import Team049.Iguwana.MainProject.PrimaryEntity.review.service.ReviewService;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
 import Team049.Iguwana.MainProject.dto.MultiResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/reviews")
@@ -65,9 +63,6 @@ public class ReviewController {
             ) {
         Page<Review> reviews = reviewService.findByTeacherId(page-1,size,arrange,teacherId);
         List<Review> list = reviews.getContent();
-        for(Review tmp : list){
-
-        }
         return new ResponseEntity<>(new MultiResponseDto<>(reviewMapper.reviewToReviewResponses(list, studentService), reviews),
                 HttpStatus.OK);
     }

@@ -60,7 +60,6 @@ public class ChatRepository {
                 teacherRooms.get(create.getTeacherId()).add(chatRoom.getRoomId());
             }
             oneToOneRooms.add(new OneToOneRoom(create.getStudentId(), create.getTeacherId(), chatRoom.getRoomId()));
-            // 저장
             roomService.saveRoom(chatRoom.getStudentId(), chatRoom.getTeacherId(), chatRoom.getRoomId(), chatRoom.getRoomName());
 
         }else{

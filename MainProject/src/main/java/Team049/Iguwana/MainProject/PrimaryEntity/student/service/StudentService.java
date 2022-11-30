@@ -1,6 +1,5 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.student.service;
 
-
 import Team049.Iguwana.MainProject.PrimaryEntity.email.entity.Email;
 import Team049.Iguwana.MainProject.PrimaryEntity.email.repository.EmailRepository;
 
@@ -10,11 +9,9 @@ import Team049.Iguwana.MainProject.PrimaryEntity.skill.repository.SkillRepositor
 
 import Team049.Iguwana.MainProject.PrimaryEntity.student.dto.StudentDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
-import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.StudentSkill;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentSkillRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.service.TeacherService;
-import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
 import Team049.Iguwana.MainProject.event.MemberRegistrationApplicationEvent;
 import Team049.Iguwana.MainProject.exception.BusinessLogicException;
 import Team049.Iguwana.MainProject.exception.ExceptionCode;
@@ -24,8 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -58,7 +53,6 @@ public class StudentService {
         this.emailRepository = emailRepository;
     }
 
-    //jungdoyoon 수정분
     public void createStudent(Student student){
         verifyExistsEMail(student.getEmail());
         teacherService.verifyExistsEMail(student.getEmail());
@@ -80,7 +74,6 @@ public class StudentService {
         studentRepository.save(student);*/
     }
 
-    //정도윤 : 이메일 관련 삭제 기능 추가
     public void deleteStudent(long studentId){
         Student student = findVerfiedStudent(studentId);
         Optional<Email> email =emailRepository.findByEmail(student.getEmail());
@@ -115,14 +108,6 @@ public class StudentService {
 
         return studentRepository.save(findStudent);
     }
-
-//    public void updatePassword(Student student){
-//        Student findStudent = findVerfiedStudent(student.getStudentId());
-//
-//        findStudent.setPassword(transPassword(student.getPassword()));
-//        studentRepository.save(findStudent);
-//    }
-
 
     public void verifyExistsEMail(String email){
         Optional<Student> optionalStudent = studentRepository.findByEmail(email);

@@ -17,7 +17,6 @@ public class ScheduleService {
         this.emailRepository = emailRepository;
     }
 
-    // [현재 날짜 및 시간을 확인하는 메소드]
     public static String getNowDateTime24() {
 
         long time = System.currentTimeMillis();
@@ -26,7 +25,6 @@ public class ScheduleService {
         return str;
     }
 
-    // [2초 후 3초마다 반복 실행 스케줄링]
 //@Scheduled(fixedDelay = 3000,  initialDelay = 2000)
 //    public void threeRepeatJob(){
 //        System.out.println("\n");
@@ -37,12 +35,6 @@ public class ScheduleService {
 //        System.out.println("\n");
 //    }
 
-
-
-
-
-    // [매일 오전 8시 58분에 실행되는 스케줄링]
-    // [* 초(0-59)     * 분(0-59)　 　* 시간(0-23)　 　* 일(1-31)　　*　월(1-12)　　* 요일(0-7)]
     @Scheduled(cron = "0 58 4 * * *")
     public void everyDay_M_8_58_RepeatJob(){
         emailRepository.deleteAll();

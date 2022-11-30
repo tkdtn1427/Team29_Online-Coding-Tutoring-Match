@@ -1,6 +1,5 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.review.entity;
 
-import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
 import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Setter

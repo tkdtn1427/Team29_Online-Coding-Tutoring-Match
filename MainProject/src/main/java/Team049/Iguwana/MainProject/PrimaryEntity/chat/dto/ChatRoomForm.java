@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class ChatRoomForm {
     @Getter
     @Setter
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class Create {
         @NotBlank
         private long studentId;

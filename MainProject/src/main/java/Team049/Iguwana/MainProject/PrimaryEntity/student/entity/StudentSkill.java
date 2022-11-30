@@ -1,7 +1,6 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.student.entity;
 
 import Team049.Iguwana.MainProject.PrimaryEntity.skill.entity.Skill;
-import Team049.Iguwana.MainProject.PrimaryEntity.teacher.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

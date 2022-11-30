@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class TutoringDto {
     @Getter
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class Register {
         @NotNull(message = "TeacherId can't blank.")
         private String teacherId;
@@ -39,7 +39,7 @@ public class TutoringDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     public static class Patch {
         private long tutoringId;
 
@@ -56,7 +56,7 @@ public class TutoringDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor // TODO 테스트를 위해 추가됨
+    @AllArgsConstructor
     @NoArgsConstructor
     public static class Response {
         private long tutoringId;

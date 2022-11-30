@@ -51,8 +51,6 @@ public interface StudentMapper {
         return student;
     }
 
-//    Student studentPasswordToStudent(StudentDto.Password requestBody);
-
     default StudentDto.Response studentToStudentResponse(Student requestBody, TutoringMapper tutoringMapper){
         StudentDto.Response response = new StudentDto.Response();
         response.setStudentId(requestBody.getStudentId());

@@ -8,8 +8,6 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 
 public class SkillDto {
-
-
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor

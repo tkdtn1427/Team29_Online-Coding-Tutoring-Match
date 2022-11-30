@@ -1,6 +1,5 @@
 package Team049.Iguwana.MainProject.PrimaryEntity.teacher.service;
 
-
 import Team049.Iguwana.MainProject.PrimaryEntity.email.entity.Email;
 import Team049.Iguwana.MainProject.PrimaryEntity.email.repository.EmailRepository;
 
@@ -42,9 +41,6 @@ public class TeacherService {
     private final ApplicationEventPublisher publisher;
     private Random random = new Random();
     private final EmailRepository emailRepository;
-
-
-    //Sangsoo 추가분 
     private final JwtTokenService jwtTokenService;
 
     public TeacherService(TeacherRepository teacherRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
@@ -185,7 +181,7 @@ public class TeacherService {
                     return response;
                 }).collect(Collectors.toList());
     }*/
-    //수정 - 평판 변경 로직
+
     public void updateReputation(long teacherId, double reputation, double preReputation, String str){
         Teacher teacher = findVerfiedTeacher(teacherId);
         int reviewCount = teacher.getCount();

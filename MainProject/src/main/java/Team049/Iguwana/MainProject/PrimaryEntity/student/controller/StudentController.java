@@ -3,10 +3,9 @@ package Team049.Iguwana.MainProject.PrimaryEntity.student.controller;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.dto.StudentDto;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.entity.Student;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.mapper.StudentMapper;
-import Team049.Iguwana.MainProject.PrimaryEntity.student.repository.StudentRepository;
 import Team049.Iguwana.MainProject.PrimaryEntity.student.service.StudentService;
 import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.mapper.TutoringMapper;
-import Team049.Iguwana.MainProject.PrimaryEntity.tutoring.service.TutoringService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +29,6 @@ public class StudentController {
         this.tutoringMapper = tutoringMapper;
     }
 
-    //jungdoyoon 수정분
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.OK)
     public String joinStudent(@Validated @RequestBody StudentDto.Join join){
@@ -69,13 +67,4 @@ public class StudentController {
         studentService.setCode(response);
         return new ResponseEntity(response, HttpStatus.OK);
     }
-
-//    @PatchMapping("/password/{student-id}")
-//    public ResponseEntity updatePassword(@PathVariable("student-id") long studentId,
-//                                         @RequestBody StudentDto.Password password){
-//        password.setStudentId(studentId);
-//        Student student = studentMapper.studentPasswordToStudent(password);
-//        studentService.updatePassword(student);
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
 }

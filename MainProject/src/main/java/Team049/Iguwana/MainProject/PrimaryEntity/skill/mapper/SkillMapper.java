@@ -8,7 +8,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SkillMapper {
-
     Skill skillPostToSkill(SkillDto.Post requestBody);
 
     SkillDto.Response skillToResponse(Skill skill);
